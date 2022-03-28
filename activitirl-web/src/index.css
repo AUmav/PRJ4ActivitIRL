@@ -13,19 +13,23 @@ code {
 }
 
 
+/*
+https://stackoverflow.com/questions/42188291/vertically-align-text-with-different-font-sizes-in-navigation-bar 
+http://jsfiddle.net/mdqf81da/ 
+*/
 .navigation-bar{
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   background-color: aqua;
-  padding: 20px;
+  padding: 5px 20px 10px 20px;
 }
 
 .navigation-bar > h1{
   display: inline-block;
 }
 
-.nav > li {
+.nav > ul > li {
   display: inline-block;
   padding-left: 20px;
 }
@@ -55,9 +59,20 @@ code {
   font-size: 15px;
 }
 
-.activity-post{
+.post-container{
+  margin:20px;
+  padding: 14px;
   border-style: solid;
   border-width: 1px;
+  background-color: aquamarine;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/*https://css-tricks.com/how-to-make-a-media-query-less-card-component/ */
+.activity-post{
+  flex: 1 1 45ch;
   background-color: #fdfd96;
   margin: 10px;
   text-align: left;
@@ -65,6 +80,7 @@ code {
 
 .activity-details{
   padding: 10px 20px;
+  height: 250px;
 }
 
 .image-container{

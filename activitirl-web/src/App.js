@@ -12,7 +12,6 @@ import InfoElement from './components/InfoElement';
 import PostContainer from './components/PostContainer';
 
 
-
 function App() {
   return (
     <Router>
@@ -29,6 +28,6 @@ function App() {
 }
 
 const FAQ = () => {
-  return <h2>hahah</h2>
+  return <h2>FAQ</h2>
 }
 export default App;

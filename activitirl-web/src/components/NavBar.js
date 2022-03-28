@@ -5,15 +5,17 @@ const NavBar = () => {
         <div className="navigation-bar">
             <Link to="/"><h1>ActivityIRL</h1></Link>
             <div className="nav">
-                <li>
-                    <Link to="/faq">FAQ</Link>
-                </li>
-                <li>
-                    <Link to="/join">Opret bruger</Link>
-                </li>
-                <li>
-                    <Link to="/login">Log ind</Link>
-                </li>
+                <ul>
+                    <li>
+                        <Link to="/faq">FAQ</Link>
+                    </li>
+                    <li>
+                        <Link to="/join">Opret bruger</Link>
+                    </li>
+                    <li>
+                        <Link to="/login">Log ind</Link>
+                    </li>
+                </ul>
             </div>
             
         </div>
