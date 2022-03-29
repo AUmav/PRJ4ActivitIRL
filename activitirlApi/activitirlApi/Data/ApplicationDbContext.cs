@@ -1,4 +1,5 @@
 ﻿using ActivitIRLApi.Models;
+using ActivitIRLApi.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ActivitIRLApi.Data
@@ -8,6 +9,8 @@ namespace ActivitIRLApi.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
            : base(options) { }
 
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

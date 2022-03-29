@@ -1,11 +1,37 @@
 {
   "Version": 1,
-  "Hash": "qbPQVNj/EX+KlU5TtuijcjtsJFSYASk1QLj1NkTfhsg=",
+  "Hash": "noSgQDBY2l7KGni2M74wznbGKljwfyCJnBcrcDMDrXo=",
   "Source": "ActivitIRLApi",
   "BasePath": "_content/ActivitIRLApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "ActivitIRLApi\\wwwroot",
+      "Source": "ActivitIRLApi",
+      "ContentRoot": "C:\\Users\\marti\\Source\\Repos\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\wwwroot\\",
+      "BasePath": "_content/ActivitIRLApi",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\marti\\Source\\Repos\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\wwwroot\\lib\\index.html",
+      "SourceId": "ActivitIRLApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\marti\\Source\\Repos\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\wwwroot\\",
+      "BasePath": "_content/ActivitIRLApi",
+      "RelativePath": "lib/index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\index.html"
+    }
+  ]
 }

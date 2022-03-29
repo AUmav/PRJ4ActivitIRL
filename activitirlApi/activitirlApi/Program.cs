@@ -1,29 +1,52 @@
-//var builder = WebApplication.CreateBuilder(args);
 
-//// Add services to the container.
+using ActivitIRLApi.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 
-//builder.Services.AddControllers();
-//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
+var builder = WebApplication.CreateBuilder(args);
 
-//var app = builder.Build();
+//Add services to the container.
 
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
+builder.Services.AddControllers();
 
-//app.UseHttpsRedirection();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//app.UseAuthorization();
+//Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-//app.MapControllers();
+var app = builder.Build();
 
-//app.Run();
+//Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
+app.UseHttpsRedirection();
+
+app.UseAuthentication();
+
+app.MapControllers();
+
+app.Run();
+
+/*
+Den skulle gerne køre fra program.cs nu. Jeg kan stadig ikke tilføje scaffolded controllers. 
+Får bare noget fejlmeddelelser. Ved ikke lige hvad det er.
+ */
+
+
+/*
+ * 
+ * ------------------------------------------------------------------------------------------
+ * 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -50,4 +73,4 @@ namespace ActivitIRLApi
                 });
     }
 }
-
+*/
