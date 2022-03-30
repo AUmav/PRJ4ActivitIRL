@@ -19,6 +19,6 @@
 
         public int? UserId { get; set; } //Primary key
 
-        public List<string>? preferences { get; set; }
+        //public List<string>? preferences { get; set; }
     }
 }

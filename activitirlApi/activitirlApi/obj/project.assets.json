@@ -10071,19 +10071,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\marti\\.nuget\\packages\\": {}
+    "C:\\Users\\Malene Ann Vo\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\marti\\Source\\Repos\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\ActivitIRLApi.csproj",
+      "projectUniqueName": "D:\\OneDrive - Aarhus Universitet\\5.sem\\PRJ4\\main\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\ActivitIRLApi.csproj",
       "projectName": "ActivitIRLApi",
-      "projectPath": "C:\\Users\\marti\\Source\\Repos\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\ActivitIRLApi.csproj",
-      "packagesPath": "C:\\Users\\marti\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\marti\\Source\\Repos\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\obj\\",
+      "projectPath": "D:\\OneDrive - Aarhus Universitet\\5.sem\\PRJ4\\main\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\ActivitIRLApi.csproj",
+      "packagesPath": "C:\\Users\\Malene Ann Vo\\.nuget\\packages\\",
+      "outputPath": "D:\\OneDrive - Aarhus Universitet\\5.sem\\PRJ4\\main\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\marti\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Malene Ann Vo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10158,7 +10162,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

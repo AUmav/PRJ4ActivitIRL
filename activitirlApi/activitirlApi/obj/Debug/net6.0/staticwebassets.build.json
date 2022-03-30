@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "noSgQDBY2l7KGni2M74wznbGKljwfyCJnBcrcDMDrXo=",
+  "Hash": "Caq8BvIV/4ph43xN4Xh2p0rrJwByjRNSWOF2h4hZ78Q=",
   "Source": "ActivitIRLApi",
   "BasePath": "_content/ActivitIRLApi",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "ActivitIRLApi\\wwwroot",
       "Source": "ActivitIRLApi",
-      "ContentRoot": "C:\\Users\\marti\\Source\\Repos\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\wwwroot\\",
+      "ContentRoot": "D:\\OneDrive - Aarhus Universitet\\5.sem\\PRJ4\\main\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\wwwroot\\",
       "BasePath": "_content/ActivitIRLApi",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\marti\\Source\\Repos\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\wwwroot\\lib\\index.html",
+      "Identity": "D:\\OneDrive - Aarhus Universitet\\5.sem\\PRJ4\\main\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\wwwroot\\lib\\index.html",
       "SourceId": "ActivitIRLApi",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\marti\\Source\\Repos\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\wwwroot\\",
+      "ContentRoot": "D:\\OneDrive - Aarhus Universitet\\5.sem\\PRJ4\\main\\PRJ4ActivitIRL\\activitirlApi\\activitirlApi\\wwwroot\\",
       "BasePath": "_content/ActivitIRLApi",
       "RelativePath": "lib/index.html",
       "AssetKind": "All",
