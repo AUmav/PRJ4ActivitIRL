@@ -1,8 +1,7 @@
 import ActivityDetails from './ActivityDetails';
 import ImageContainer from './ImageContainer'
 
-const ActivityPost = (data) => {
-    console.log("hello", data);
+const ActivityPost = ({data}) => {
     return (
         <div className="activity-post">
             <ImageContainer/>
