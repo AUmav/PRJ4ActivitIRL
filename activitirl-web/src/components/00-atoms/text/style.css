@@ -1,0 +1,16 @@
+h2 {
+    font-weight: 900;
+    color: var(--primary-color);
+}
+
+.smallText {
+    font-size: 0.8em;
+    color: black;
+}
+
+.smallErrorText {
+    font-size: 0.8em;
+    color: red;
+}
+
+

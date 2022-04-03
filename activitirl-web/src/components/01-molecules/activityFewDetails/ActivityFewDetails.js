@@ -1,10 +1,10 @@
-// skal evt ændres til større container ? 
+import TitleText from "../../00-atoms/text/TitleText"
 
-const ActivityDetails = ({data}) => {
+const ActivityFewDetails = ({data}) => {
     console.log("activity", data)
     return (
         <div className="activity-details">
-            <h2>Title {data.strDrink}</h2> 
+           <TitleText title={data.strDrink}/>
             <p>Aktivitet</p>
             <p>Lokation</p>
             <p>Dato</p>
@@ -12,4 +12,4 @@ const ActivityDetails = ({data}) => {
     )
 }
 
-export default ActivityDetails
+export default ActivityFewDetails

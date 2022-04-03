@@ -1,0 +1,14 @@
+.post-container{
+    margin:20px;
+    padding: 14px;
+    border-radius: 5px;
+    background-color: var(--secondary-color);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+ .post-container > a, .post-container > a:hover {
+     flex: 1 1 45ch;
+     color: var(--default-font-color)
+ }

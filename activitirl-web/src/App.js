@@ -8,8 +8,10 @@ import {
 import logo from './logo.svg';
 import './App.css';
 import NavBar from './components/NavBar'
-import InfoElement from './components/InfoElement';
-import PostContainer from './components/PostContainer';
+import LoginForm from "./components/02-organisms/forms/loginForm/LoginForm";
+import CreateUserForm from "./components/02-organisms/forms/createUserForm/CreateUserForm";
+import HomePage from "./components/04-pages/homePage/HomePage";
+import ActivityDetails from "./components/03-templates/ActivityDetails";
 
 
 function App() {
@@ -17,10 +19,12 @@ function App() {
     <Router>
       <div className="App">
         <NavBar/>
-        <InfoElement/>
           <Routes>
-            <Route path="/" element={<PostContainer/>} />
+            <Route path="/" element={<HomePage/>} />
             <Route path="/faq" element={<FAQ/>} />
+            <Route path="/login" element={<LoginForm/>}/>
+            <Route path="/join" element={<CreateUserForm/>}/>
+            <Route path="/activity/:id" element={<ActivityDetails/>}/>
           </Routes>
       </div>
     </Router>

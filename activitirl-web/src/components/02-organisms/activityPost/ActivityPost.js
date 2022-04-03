@@ -1,5 +1,6 @@
-import ActivityDetails from './ActivityDetails';
-import ImageContainer from './ImageContainer'
+import ActivityDetails from '../../01-molecules/activityFewDetails/ActivityFewDetails';
+import ImageContainer from '../../00-atoms/images/ImageContainer'
+import './style.css'
 
 const ActivityPost = ({data}) => {
     return (

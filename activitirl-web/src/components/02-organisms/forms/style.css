@@ -1,0 +1,24 @@
+.loginForm{
+    display: inline-block;
+    background-color: var(--secondary-color);
+    padding: 20px 50px 40px;
+    text-align: left;
+    border-radius: 5px;
+    margin: 20px
+}
+
+.alignRight{
+    text-align: right;
+    margin: 5px;
+}
+
+hr {
+    margin: 15px 0px 20px;
+    border: none;
+    height: 1px;
+    background-color: var(--primary-color);
+}
+
+.redirectText{
+    display: flex;    
+}

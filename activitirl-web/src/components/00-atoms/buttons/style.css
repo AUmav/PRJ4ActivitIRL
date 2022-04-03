@@ -1,0 +1,20 @@
+.btn {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-style: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: var(--default-font);
+    font-weight: 500;
+    font-size: 1em; 
+}
+
+.big-btn {
+    font-size: 1.5em;
+}
+
+.btn:hover {
+    color: var(--tertiary-color)
+}

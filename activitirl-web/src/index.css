@@ -1,10 +1,32 @@
-body {
+/*https://stackoverflow.com/questions/40769551/how-to-use-google-fonts-in-react-js*/
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900");
+
+/*
+https://www.codegrepper.com/code-examples/css/set+root+primary+color+css
+*/
+:root {
+  --primary-color: #8869db;
+  --secondary-color: lavender;
+  --tertiary-color: #fff;
+
+  --default-font: 'Inter';
+
+}
+
+/*body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  font-size: 15px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+*/
+
+body {
+  font-family: var(--default-font);
+  color: #310e63
 }
 
 code {
@@ -12,7 +34,15 @@ code {
     monospace;
 }
 
+a {
+  color: var(--secondary-color);
+  text-decoration: dashed;
+  outline: none;
+}
 
+a:hover {
+  color: var(--tertiary-color);
+}
 /*
 https://stackoverflow.com/questions/42188291/vertically-align-text-with-different-font-sizes-in-navigation-bar 
 http://jsfiddle.net/mdqf81da/ 
@@ -21,7 +51,7 @@ http://jsfiddle.net/mdqf81da/
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  background-color: aqua;
+  background-color: var(--primary-color);
   padding: 5px 20px 10px 20px;
 }
 
@@ -32,50 +62,6 @@ http://jsfiddle.net/mdqf81da/
 .nav > ul > li {
   display: inline-block;
   padding-left: 20px;
-}
-
-.info-element{
-  margin:20px;
-  padding: 14px;
-  border-style: solid;
-  border-width: 1px;
-  background-color: aquamarine;
-  display: flex;
-  align-items: center;
-}
-
-.info-element-child{
-  flex: 1;
-}
-
-.btn {
-  background: #000;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 15px;
-}
-
-.post-container{
-  margin:20px;
-  padding: 14px;
-  border-style: solid;
-  border-width: 1px;
-  background-color: aquamarine;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-/*https://css-tricks.com/how-to-make-a-media-query-less-card-component/ */
-.activity-post{
-  flex: 1 1 45ch;
-  background-color: #fdfd96;
-  margin: 10px;
-  text-align: left;
 }
 
 .activity-details{

@@ -1,3 +1,5 @@
+import './style.css'
+
 const Button = ({text}) => {
     return (
         <button className="btn">

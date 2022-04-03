@@ -1,0 +1,12 @@
+/*https://css-tricks.com/how-to-make-a-media-query-less-card-component/ */
+.activity-post{
+    flex: 1 1 45ch;
+    background-color: var(--tertiary-color);
+    margin: 20px 15px;
+    text-align: left;
+    border-radius: 5px;
+    outline: solid;
+    outline-width: 2px;
+    outline-color: var(--primary-color)
+  }
+  

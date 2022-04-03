@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import ActivityPost from "./ActivityPost"
-import InfoElement from "./InfoElement"
+import ActivityPost from "../../02-organisms/activityPost/ActivityPost";
+import {Link} from "react-router-dom"
+import './style.css'
 
 // https://reactjs.org/docs/faq-ajax.html
 const PostContainer = () => {
@@ -8,8 +9,8 @@ const PostContainer = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
 
-    let url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita"
-    let url2 = "https://localhost:44392/api/event"
+    let url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=mar"
+    //let url2 = "https://localhost:44392/api/event"
     useEffect(() => {
         console.log("effect")
         fetch(url, {
@@ -40,10 +41,13 @@ const PostContainer = () => {
         return <div>Loading...</div>
     } else {
         return(
-            <div className="post-container">
-                {items.map((item) => (
-                    <ActivityPost data = {item}/>
-                ))}
+            <div className="post-container">   
+                    {items.map((item) => (
+                        <Link to={`/activity/${item.idDrink}`}>
+                            <ActivityPost data = {item}/>
+                        </Link>
+                    ))}
+               
             </div>
         );
     }
@@ -51,19 +55,4 @@ const PostContainer = () => {
 }
 
 
-const fetchActivities = async () => {
-    let url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita"
-    try {
-        let response = await fetch(url)
-        let activities = await response.json();
-        return activities;
-    }
-    catch (error) {
-        console.log(error);
-    }
-}
-
-
-
-
-export default PostContainer
+export default PostContainer;
