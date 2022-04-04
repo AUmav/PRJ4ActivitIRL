@@ -98,7 +98,7 @@ const CreateUserForm = () => {
                 <LabelInputSet labelText="" name="password2" type="password" value={password2} placeholderText="Gentag password" onChange={handlePwChange2}/>
 
                 <div className='alignRight'>
-                    <SubmitButton text="Log ind"/>
+                    <SubmitButton text="Opret"/>
                 </div>
             </form>
 
