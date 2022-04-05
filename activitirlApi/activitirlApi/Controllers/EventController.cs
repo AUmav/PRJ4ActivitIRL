@@ -30,7 +30,7 @@ namespace ActivitIRLApi.Controllers
         }
 
 
-        [HttpGet("/DummyEvent")]
+        [HttpGet("api/DummyEvent")]
         public EventDTO GetDummyEvent()
         {
             var @event = new EventDTO() { Title = "Aarhus Event", City= "Aarhus C", ZipCode = 8000, Activity = "Fodboldt" };
