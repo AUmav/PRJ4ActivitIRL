@@ -12,6 +12,10 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    
+    defaults:
+      run:
+        working-directory: ./activitirlApi
 
     steps:
       - uses: actions/checkout@v2
