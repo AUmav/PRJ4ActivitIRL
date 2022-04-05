@@ -29,6 +29,16 @@ namespace ActivitIRLApi.Controllers
             return await _context.Events.ToListAsync();
         }
 
+
+        [HttpGet("/DummyEvent")]
+        public EventDTO GetDummyEvent()
+        {
+            var @event = new EventDTO() { Title = "Aarhus Event", City= "Aarhus C", ZipCode = 8000, Activity = "Fodboldt" };
+
+            return @event;
+
+        }
+
         // GET: api/Event/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Event>> GetEvent(int id)

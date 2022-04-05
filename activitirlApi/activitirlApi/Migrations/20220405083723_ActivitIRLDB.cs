@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ActivitIRLApi.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class ActivitIRLDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

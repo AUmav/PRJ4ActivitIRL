@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ActivitIRLApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220330085426_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220405083723_ActivitIRLDB")]
+    partial class ActivitIRLDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
