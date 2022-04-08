@@ -10,7 +10,6 @@ const PostContainer = () => {
     const [items, setItems] = useState([]);
 
     let url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=mar"
-    //let url2 = "https://localhost:44392/api/event"
     useEffect(() => {
         console.log("effect")
         fetch(url, {

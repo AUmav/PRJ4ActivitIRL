@@ -10,6 +10,7 @@ https://www.codegrepper.com/code-examples/css/set+root+primary+color+css
   --tertiary-color: #fff;
 
   --default-font: 'Inter';
+  --default-font-color: #310e63;
 
 }
 
@@ -26,7 +27,7 @@ https://www.codegrepper.com/code-examples/css/set+root+primary+color+css
 
 body {
   font-family: var(--default-font);
-  color: #310e63
+  color: var(--default-font-color);
 }
 
 code {
@@ -36,7 +37,7 @@ code {
 
 a {
   color: var(--secondary-color);
-  text-decoration: dashed;
+  text-decoration: none;
   outline: none;
 }
 

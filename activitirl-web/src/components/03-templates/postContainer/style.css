@@ -9,6 +9,6 @@
   }
 
  .post-container > a, .post-container > a:hover {
-     flex: 1 1 45ch;
+     flex: 1 1 40ch;
      color: var(--default-font-color)
  }
