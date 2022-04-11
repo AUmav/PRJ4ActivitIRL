@@ -55,7 +55,8 @@ const LoginForm = () => {
                         let token = result.jwt;
                         console.log("login succesful");
                         console.log(token);
-                        alert("Succesful login");
+                        localStorage.setItem("loginToken", token)
+                        window.location.replace("/");
 
                     }
                 },

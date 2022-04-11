@@ -1,0 +1,29 @@
+.dropDown{
+    list-style: none;
+    position: absolute;
+    width: 17ch;
+    text-align: left;
+    background-color: var(--secondary-color);
+    margin-top: 10px;
+}
+.dropDown> a {
+    color: var(--default-font-color);
+}
+.dropDown > a:hover {
+    color: var(--primary-color)
+}
+
+.dropDownItem{
+    padding: 15px;
+}
+.dropDownItem:hover{
+    background-color: var(--tertiary-color);
+    cursor: pointer;
+}
+
+
+.userHeader{
+    text-align: left;
+    width: 150px;
+    cursor: pointer;
+}

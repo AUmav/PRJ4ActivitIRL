@@ -8,10 +8,10 @@ import {
 import logo from './logo.svg';
 import './App.css';
 import NavBar from './components/NavBar'
-import LoginForm from "./components/02-organisms/forms/loginForm/LoginForm";
-import CreateUserForm from "./components/02-organisms/forms/createUserForm/CreateUserForm";
 import HomePage from "./components/04-pages/homePage/HomePage";
 import ActivityDetails from "./components/03-templates/ActivityDetails";
+import LoginPage from "./components/04-pages/LoginPage";
+import CreateUserPage from "./components/04-pages/CreateUserPage";
 
 
 function App() {
@@ -22,13 +22,20 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage/>} />
             <Route path="/faq" element={<FAQ/>} />
-            <Route path="/login" element={<LoginForm/>}/>
-            <Route path="/join" element={<CreateUserForm/>}/>
+            <Route path="/login" element={<LoginPage/>}/>
+            <Route path="/join" element={<CreateUserPage/>}/>
             <Route path="/activity/:id" element={<ActivityDetails/>}/>
+            <Route path="/logout" element={<LogOut/>}/>
           </Routes>
       </div>
     </Router>
   );
+}
+
+const LogOut = () => {
+  localStorage.removeItem("loginToken");
+  window.location.replace("/");
+
 }
 
 const FAQ = () => {

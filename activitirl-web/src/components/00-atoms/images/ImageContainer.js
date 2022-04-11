@@ -4,7 +4,6 @@ const ImageContainer = () => {
             <img className="post-image" src={require("../../../images/pastel-sport.jpg")}/>
         </div>
     )
-
 }
 
 export default ImageContainer
