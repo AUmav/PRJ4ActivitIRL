@@ -11,12 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Add services to the container.
 
-   
-
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddAutoMapper(typeof(Program));
 // https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-6.0
 builder.Services.AddCors(options =>
 {

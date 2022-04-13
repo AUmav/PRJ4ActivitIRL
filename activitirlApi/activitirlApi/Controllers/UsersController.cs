@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using ActivitIRLApi.Data;
 using ActivitIRLApi.Models.Entities;
 using ActivitIRLApi.Models.DTOs;
+using AutoMapper;
 
 namespace ActivitIRLApi.Controllers
 {
@@ -17,10 +18,13 @@ namespace ActivitIRLApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public UsersController(ApplicationDbContext context)
+        public UsersController(ApplicationDbContext context,IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
+             
         }
 
         // GET: api/Users
@@ -80,10 +84,13 @@ namespace ActivitIRLApi.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> CreateUser([FromBody]UserCreateDTO user)
         {
-            User domainUser
-            _context.Users.Add(user);
+            User domainUser = _mapper.Map<User>(user);  
+
+            _context.Users.Add(domainUser);
             await _context.SaveChangesAsync();
 
+            UserGetDTO userCreateDTO = _mapper.Map<UserGetDTO>(domainUser);
+            
             return CreatedAtAction("GetUser", new { id = domainUser.UserId }, user);
         }
 
