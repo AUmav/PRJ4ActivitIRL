@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ActivitIRLApi.Data;
 using ActivitIRLApi.Models;
+using AutoMapper;
+using ActivitIRLApi.Models.DTOs;
 
 namespace ActivitIRLApi.Controllers
 {
@@ -16,10 +18,12 @@ namespace ActivitIRLApi.Controllers
     public class EventController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public EventController(ApplicationDbContext context)
+        public EventController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Event
@@ -31,26 +35,26 @@ namespace ActivitIRLApi.Controllers
 
 
         [HttpGet("DummyEvent")]
-        public EventDTO GetDummyEvent()
+        public EventGetPublicDTO GetDummyEvent()
         {
-            var @event = new EventDTO() { Title = "Aarhus Event", City= "Aarhus C", ZipCode = 8000, Activity = "Fodbold" };
+            var PublicEvent = new EventGetPublicDTO() { EventId = 1, Title = "Aarhus Event", City = "Aarhus C", ZipCode = 8000, Activity = "Fodbold" };
 
-            return @event;
+            return PublicEvent;
 
         }
 
         // GET: api/Event/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Event>> GetEvent(int id)
+        public async Task<ActionResult<EventGetPublicDTO>> GetEvent(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
+            Event PublicEvent = await _context.Events.FindAsync(id);
 
-            if (@event == null)
+            if (PublicEvent == null && PublicEvent.IsHidden)
             {
                 return NotFound();
             }
 
-            return @event;
+            return _mapper.Map<EventGetPublicDTO>(PublicEvent);
         }
 
         // PUT: api/Event/5
@@ -87,12 +91,19 @@ namespace ActivitIRLApi.Controllers
         // POST: api/Event
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Event>> PostEvent(Event @event)
+        public async Task<ActionResult<EventGetPrivateDTO>> CreateEvent([FromBody] EventCreateDTO CreateDTO)
         {
-            _context.Events.Add(@event);
+            Event domainEvent = _mapper.Map<Event>(CreateDTO);
+
+            domainEvent.CreatedBy = (Models.Entities.User)_context.Users.Where(u => u.Alias == CreateDTO.CreatedBy.Alias);
+
+            _context.Events.Add(_mapper.Map<Event>(domainEvent));
+
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEvent", new { id = @event.EventId }, @event);
+            EventGetPrivateDTO privateEvent = _mapper.Map<EventGetPrivateDTO>(domainEvent);
+            
+            return CreatedAtAction("GetEvent", new { id = privateEvent.EventId }, privateEvent);
         }
 
         // DELETE: api/Event/5

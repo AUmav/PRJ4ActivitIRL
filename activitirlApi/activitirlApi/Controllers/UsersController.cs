@@ -38,16 +38,16 @@ namespace ActivitIRLApi.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int? id)
+        public async Task<ActionResult<UserGetDTO>> GetUser(int? id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var domainUser = await _context.Users.FindAsync(id);
 
-            if (user == null)
+            if (domainUser == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return _mapper.Map<UserGetDTO>(domainUser);
         }
 
         // PUT: api/Users/5

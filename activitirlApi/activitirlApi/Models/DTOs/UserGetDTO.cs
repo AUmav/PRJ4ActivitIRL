@@ -5,6 +5,8 @@ namespace ActivitIRLApi.Models.DTOs
     public class UserGetDTO
     {
         public int UserId { get; set; }
+        [MaxLength(255)]
+        public string? Alias { get; set; }
         [MaxLength(80)]
         public string? FirstName { get; set; }
         [MaxLength(80)]

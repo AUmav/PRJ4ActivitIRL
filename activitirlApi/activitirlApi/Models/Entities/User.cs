@@ -4,6 +4,9 @@ namespace ActivitIRLApi.Models.Entities
 {
     public class User
     {
+        [MaxLength(255)]
+        public string? Alias { get; set; }
+        [MaxLength(80)]
         public string? FirstName { get; set; }
         [MaxLength(80)]
         public string? LastName { get; set; }
