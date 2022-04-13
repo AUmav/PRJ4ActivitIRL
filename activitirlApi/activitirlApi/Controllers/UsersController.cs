@@ -29,9 +29,11 @@ namespace ActivitIRLApi.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<UserGetDTO>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var domainUser = await _context.Users.ToListAsync();
+           
+            return _mapper.Map<UserGetDTO>(domainUser);
         }
 
         // GET: api/Users/5
@@ -91,7 +93,7 @@ namespace ActivitIRLApi.Controllers
 
             UserGetDTO userCreateDTO = _mapper.Map<UserGetDTO>(domainUser);
             
-            return CreatedAtAction("GetUser", new { id = domainUser.UserId }, user);
+            return CreatedAtAction("GetUser", new { id = userCreateDTO.UserId }, userCreateDTO);
         }
 
         // DELETE: api/Users/5
