@@ -31,22 +31,46 @@ namespace ActivitIRLApi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"), 1L, 1);
 
                     b.Property<string>("Comments")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EventId")
+                    b.Property<int>("CreatedByUserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("CreatedInEventId")
                         .HasColumnType("int");
 
                     b.HasKey("CommentId");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("CreatedInEventId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("ActivitIRLApi.Models.Entities.Preference", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Preferences");
                 });
 
             modelBuilder.Entity("ActivitIRLApi.Models.Entities.User", b =>
@@ -58,42 +82,54 @@ namespace ActivitIRLApi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserId"), 1L, 1);
 
                     b.Property<int?>("ApartmentNumber")
+                        .HasMaxLength(10)
                         .HasColumnType("int");
 
-                    b.Property<string>("Birthdate")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("Birthdate")
+                        .HasMaxLength(20)
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("EmailAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(254)
+                        .HasColumnType("nvarchar(254)");
 
                     b.Property<int?>("EventId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("PWHash")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<int?>("PhoneNumber")
+                        .HasMaxLength(50)
                         .HasColumnType("int");
 
                     b.Property<string>("StreetName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int?>("ZipCode")
+                        .HasMaxLength(50)
                         .HasColumnType("int");
 
                     b.HasKey("UserId");
@@ -132,7 +168,7 @@ namespace ActivitIRLApi.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Hidden")
+                    b.Property<bool>("IsHidden")
                         .HasColumnType("bit");
 
                     b.Property<int>("MaxAge")
@@ -166,11 +202,28 @@ namespace ActivitIRLApi.Migrations
 
             modelBuilder.Entity("ActivitIRLApi.Models.Entities.Comment", b =>
                 {
-                    b.HasOne("ActivitIRLApi.Models.Event", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("EventId")
+                    b.HasOne("ActivitIRLApi.Models.Entities.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ActivitIRLApi.Models.Event", "CreatedIn")
+                        .WithMany("Comments")
+                        .HasForeignKey("CreatedInEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("CreatedIn");
+                });
+
+            modelBuilder.Entity("ActivitIRLApi.Models.Entities.Preference", b =>
+                {
+                    b.HasOne("ActivitIRLApi.Models.Entities.User", null)
+                        .WithMany("preferences")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ActivitIRLApi.Models.Entities.User", b =>
@@ -178,6 +231,11 @@ namespace ActivitIRLApi.Migrations
                     b.HasOne("ActivitIRLApi.Models.Event", null)
                         .WithMany("ListOfUsers")
                         .HasForeignKey("EventId");
+                });
+
+            modelBuilder.Entity("ActivitIRLApi.Models.Entities.User", b =>
+                {
+                    b.Navigation("preferences");
                 });
 
             modelBuilder.Entity("ActivitIRLApi.Models.Event", b =>

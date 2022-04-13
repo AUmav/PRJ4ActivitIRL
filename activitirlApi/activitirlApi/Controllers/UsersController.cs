@@ -8,28 +8,33 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ActivitIRLApi.Data;
 using ActivitIRLApi.Models.Entities;
+using ActivitIRLApi.Models.DTOs;
+using AutoMapper;
 
 namespace ActivitIRLApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public UserController(ApplicationDbContext context)
+        public UsersController(ApplicationDbContext context,IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
+             
         }
 
-        // GET: api/User
+        // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
         }
 
-        // GET: api/User/5
+        // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int? id)
         {
@@ -43,7 +48,7 @@ namespace ActivitIRLApi.Controllers
             return user;
         }
 
-        // PUT: api/User/5
+        // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int? id, User user)
@@ -74,18 +79,22 @@ namespace ActivitIRLApi.Controllers
             return NoContent();
         }
 
-        // POST: api/User
+        // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> CreateUser([FromBody]UserCreateDTO user)
         {
-            _context.Users.Add(user);
+            User domainUser = _mapper.Map<User>(user);  
+
+            _context.Users.Add(domainUser);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            UserGetDTO userCreateDTO = _mapper.Map<UserGetDTO>(domainUser);
+            
+            return CreatedAtAction("GetUser", new { id = domainUser.UserId }, user);
         }
 
-        // DELETE: api/User/5
+        // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int? id)
         {
