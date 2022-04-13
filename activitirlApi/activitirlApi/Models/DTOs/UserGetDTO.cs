@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ActivitIRLApi.Models.Entities
+namespace ActivitIRLApi.Models.DTOs
 {
-    public class User
+    public class UserGetDTO
     {
+        public int UserId { get; set; }
         [MaxLength(80)]
         public string? FirstName { get; set; }
         [MaxLength(80)]
@@ -14,8 +15,6 @@ namespace ActivitIRLApi.Models.Entities
         public DateTime? Birthdate { get; set; }
         [MaxLength(254)]
         public string? EmailAddress { get; set; }
-        [MaxLength(60)]
-        public string? PWHash { get; set; }
         [MaxLength(50)]
         public int? PhoneNumber { get; set; }
         [MaxLength(50)]
@@ -28,9 +27,5 @@ namespace ActivitIRLApi.Models.Entities
         public int? ZipCode { get; set; }
         [MaxLength(50)]
         public string? Country { get; set; }
-        [Key]
-        public int? UserId { get; set; } //Primary key
-
-        public List<Preference>? preferences { get; set; }
     }
 }

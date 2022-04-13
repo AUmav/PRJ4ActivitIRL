@@ -20,7 +20,7 @@ namespace ActivitIRLApi.Models
         public string? State { get; set; }
         public string? Country { get; set; }
 
-        public bool Hidden { get; set; }
+        public bool IsHidden { get; set; }
         public int MinAge { get; set; }
         public int MaxAge { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -28,10 +28,11 @@ namespace ActivitIRLApi.Models
 
         public List<User>? ListOfUsers { get; set; } //Kunne ikke lave med UserId
 
+        public User? CreatedBy; // Foreign key
         //picture JPEG
 
         public List<Comment>? Comments { get; set; } //Foreign key
 
-        public int UserId; // Foreign key
+        
     }
 }
