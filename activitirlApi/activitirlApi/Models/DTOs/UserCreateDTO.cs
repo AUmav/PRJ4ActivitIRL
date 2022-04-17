@@ -10,6 +10,8 @@ namespace ActivitIRLApi.Models.DTOs
         public string? FirstName { get; set; }
         [MaxLength(80)]
         public string? LastName { get; set; }
+        [MaxLength(255)]
+        public string? Password { get; set; }
         [MaxLength(80)]
         public string? Gender { get; set; }
         [MaxLength(20)]

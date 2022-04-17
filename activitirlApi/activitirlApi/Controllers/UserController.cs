@@ -10,28 +10,33 @@ using ActivitIRLApi.Data;
 using ActivitIRLApi.Models.Entities;
 using ActivitIRLApi.Models.DTOs;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using ActivitIRLApi.Authentication;
 
 namespace ActivitIRLApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _content;
         private readonly IMapper _mapper;
+        private readonly PasswordHashManager _passwordHasher;
 
-        public UsersController(ApplicationDbContext context,IMapper mapper)
+        public UserController(ApplicationDbContext content,IMapper mapper)
         {
-            _context = context;
+            _content = content;
             _mapper = mapper;
-             
+            _passwordHasher = new PasswordHashManager();
         }
+
+
 
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<UserGetDTO>> GetUsers()
         {
-            var domainUser = await _context.Users.ToListAsync();
+            var domainUser = await _content.Users.ToListAsync();
            
             return _mapper.Map<UserGetDTO>(domainUser);
         }
@@ -40,7 +45,7 @@ namespace ActivitIRLApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserGetDTO>> GetUser(int? id)
         {
-            var domainUser = await _context.Users.FindAsync(id);
+            var domainUser = await _content.Users.FindAsync(id);
 
             if (domainUser == null)
             {
@@ -60,11 +65,11 @@ namespace ActivitIRLApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _content.Entry(user).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _content.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -83,13 +88,25 @@ namespace ActivitIRLApi.Controllers
 
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<User>> CreateUser([FromBody]UserCreateDTO user)
         {
-            User domainUser = _mapper.Map<User>(user);  
+            if(_content.Users.Any( u => u.Alias == user.Alias || u.EmailAddress == user.EmailAddress))
+            {
+                Ok("Alias Or Email Exists");
+            }
 
-            _context.Users.Add(domainUser);
-            await _context.SaveChangesAsync();
+            User domainUser = _mapper.Map<User>(user);
+
+            _passwordHasher.CreatePasswordHash(user.Password, out byte[] PWHash, out byte[] PWSalt);
+
+            domainUser.PWHash = PWHash;
+
+            domainUser.PWSalt = PWSalt;
+
+            _content.Users.Add(domainUser);
+            await _content.SaveChangesAsync();
 
             UserGetDTO userCreateDTO = _mapper.Map<UserGetDTO>(domainUser);
             
@@ -100,21 +117,21 @@ namespace ActivitIRLApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int? id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _content.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            _content.Users.Remove(user);
+            await _content.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool UserExists(int? id)
         {
-            return _context.Users.Any(e => e.UserId == id);
+            return _content.Users.Any(e => e.UserId == id);
         }
     }
 }

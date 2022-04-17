@@ -17,12 +17,12 @@ namespace ActivitIRLApi.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _content;
         private readonly IMapper _mapper;
 
-        public EventController(ApplicationDbContext context, IMapper mapper)
+        public EventController(ApplicationDbContext content, IMapper mapper)
         {
-            _context = context;
+            _content = content;
             _mapper = mapper;
         }
 
@@ -30,7 +30,7 @@ namespace ActivitIRLApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
         {
-            return await _context.Events.ToListAsync();
+            return await _content.Events.ToListAsync();
         }
 
 
@@ -47,7 +47,7 @@ namespace ActivitIRLApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<EventGetPublicDTO>> GetEvent(int id)
         {
-            Event PublicEvent = await _context.Events.FindAsync(id);
+            Event PublicEvent = await _content.Events.FindAsync(id);
 
             if (PublicEvent == null && PublicEvent.IsHidden)
             {
@@ -67,11 +67,11 @@ namespace ActivitIRLApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(@event).State = EntityState.Modified;
+            _content.Entry(@event).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _content.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -95,11 +95,11 @@ namespace ActivitIRLApi.Controllers
         {
             Event domainEvent = _mapper.Map<Event>(CreateDTO);
 
-            domainEvent.CreatedBy = (Models.Entities.User)_context.Users.Where(u => u.Alias == CreateDTO.CreatedBy.Alias);
+            domainEvent.CreatedBy = (Models.Entities.User)_content.Users.Where(u => u.Alias == CreateDTO.CreatedBy.Alias);
 
-            _context.Events.Add(_mapper.Map<Event>(domainEvent));
+            _content.Events.Add(_mapper.Map<Event>(domainEvent));
 
-            await _context.SaveChangesAsync();
+            await _content.SaveChangesAsync();
 
             EventGetPrivateDTO privateEvent = _mapper.Map<EventGetPrivateDTO>(domainEvent);
             
@@ -110,21 +110,21 @@ namespace ActivitIRLApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvent(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
+            var @event = await _content.Events.FindAsync(id);
             if (@event == null)
             {
                 return NotFound();
             }
 
-            _context.Events.Remove(@event);
-            await _context.SaveChangesAsync();
+            _content.Events.Remove(@event);
+            await _content.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool EventExists(int id)
         {
-            return _context.Events.Any(e => e.EventId == id);
+            return _content.Events.Any(e => e.EventId == id);
         }
     }
 }

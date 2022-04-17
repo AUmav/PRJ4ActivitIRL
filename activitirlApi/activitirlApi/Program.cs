@@ -5,6 +5,10 @@ using System.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +30,26 @@ builder.Services.AddCors(options =>
                           builder.AllowAnyOrigin();
                       });
 });
+
+    
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
 
 builder.Services.AddControllers();
 
@@ -49,6 +73,8 @@ app.UseHttpsRedirection();
 app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllers();
 

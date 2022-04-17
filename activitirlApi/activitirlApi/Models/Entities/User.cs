@@ -16,8 +16,10 @@ namespace ActivitIRLApi.Models.Entities
         public DateTime? Birthdate { get; set; }
         [MaxLength(254)]
         public string? EmailAddress { get; set; }
-        [MaxLength(60)]
-        public string? PWHash { get; set; }
+        [MaxLength(255)]
+        public byte[] PWHash { get; set; }
+        [MaxLength(255)]
+        public byte[] PWSalt { get; set; }
         [MaxLength(50)]
         public int? PhoneNumber { get; set; }
         [MaxLength(50)]

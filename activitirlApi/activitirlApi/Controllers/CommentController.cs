@@ -15,25 +15,25 @@ namespace ActivitIRLApi.Controllers
     [ApiController]
     public class CommentController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _content;
 
-        public CommentController(ApplicationDbContext context)
+        public CommentController(ApplicationDbContext content)
         {
-            _context = context;
+            _content = content;
         }
 
         // GET: api/Comment
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Comment>>> GetComments()
         {
-            return await _context.Comments.ToListAsync();
+            return await _content.Comments.ToListAsync();
         }
 
         // GET: api/Comment/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Comment>> GetComment(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
+            var comment = await _content.Comments.FindAsync(id);
 
             if (comment == null)
             {
@@ -53,11 +53,11 @@ namespace ActivitIRLApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(comment).State = EntityState.Modified;
+            _content.Entry(comment).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _content.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,8 +79,8 @@ namespace ActivitIRLApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Comment>> PostComment(Comment comment)
         {
-            _context.Comments.Add(comment);
-            await _context.SaveChangesAsync();
+            _content.Comments.Add(comment);
+            await _content.SaveChangesAsync();
 
             return CreatedAtAction("GetComment", new { id = comment.CommentId }, comment);
         }
@@ -89,21 +89,21 @@ namespace ActivitIRLApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteComment(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
+            var comment = await _content.Comments.FindAsync(id);
             if (comment == null)
             {
                 return NotFound();
             }
 
-            _context.Comments.Remove(comment);
-            await _context.SaveChangesAsync();
+            _content.Comments.Remove(comment);
+            await _content.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool CommentExists(int id)
         {
-            return _context.Comments.Any(e => e.CommentId == id);
+            return _content.Comments.Any(e => e.CommentId == id);
         }
     }
 }
