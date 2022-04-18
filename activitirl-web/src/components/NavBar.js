@@ -8,7 +8,7 @@ const NavBar = () => {
 
     return(
         <div className="navigation-bar">
-            <Link to="/"><h1>ActivityIRL</h1></Link>
+            <Link to="/"><h1>ActivitIRL</h1></Link>
             
             {/* If not logged in*/}
             {!token && 

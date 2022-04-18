@@ -1,7 +1,8 @@
 .formInputText {
     font-size: 1em;
     padding: 10px;
-    margin: 10px;
+    margin-left: 10px;
+    margin-bottom: 15px;
     outline-style: solid;
     outline-color: lightgray;
     outline-width: 1px;
@@ -16,12 +17,34 @@
     outline-color: var(--primary-color);
 }
 
+.formInputTextArea {
+    font-size: 1em;
+    padding: 10px;
+    margin-left: 10px;
+    margin-bottom: 15px;
+    outline-style: solid;
+    outline-color: lightgray;
+    outline-width: 1px;
+    border-style: none;
+    border-radius: 3px;
+    font-family: var(--default-font);
+    vertical-align: top;
+}
+
+.formInputTextArea:focus{
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: var(--primary-color);
+}
+
+
+
 ::placeholder{
     color: lightgray;
 }
 
 label{
     display: inline-block;
-    width: 80px;
+    width: 90px;
     text-align: left;
 }
