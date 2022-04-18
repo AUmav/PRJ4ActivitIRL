@@ -5,10 +5,8 @@ namespace ActivitIRLApi.Models.DTOs
     public class UserLoginDTO
     {
         [MaxLength(254)]
-        public string EmailAddress { get; set; }
+        public string EmailAddressOrAlias { get; set; }
         [MaxLength(60)]
-        public byte[] Password { get; set; }
-        [MaxLength(255)]
-        public UserAliasDTO UserAlias { get; set; }
+        public string Password { get; set; }
     }
 }

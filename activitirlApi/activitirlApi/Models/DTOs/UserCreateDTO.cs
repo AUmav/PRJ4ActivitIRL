@@ -15,21 +15,19 @@ namespace ActivitIRLApi.Models.DTOs
         [MaxLength(80)]
         public string? Gender { get; set; }
         [MaxLength(20)]
-        public DateTime? Birthdate { get; set; }
+        public string? DateOfBirth { get; set; }
         [MaxLength(254)]
         public string? EmailAddress { get; set; }
-        [MaxLength(60)]
-        public string? PWHash { get; set; }
         [MaxLength(50)]
-        public int? PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         [MaxLength(50)]
         public string? StreetName { get; set; }
         [MaxLength(10)]
-        public int? ApartmentNumber { get; set; }
+        public string? ApartmentNumber { get; set; }
         [MaxLength(50)]
         public string? City { get; set; }
         [MaxLength(50)]
-        public int? ZipCode { get; set; }
+        public string? ZipCode { get; set; }
         [MaxLength(50)]
         public string? Country { get; set; }
     }

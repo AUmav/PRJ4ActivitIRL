@@ -26,66 +26,15 @@ namespace ActivitIRLApi.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/Event
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
-        {
-            return await _content.Events.ToListAsync();
-        }
 
 
         [HttpGet("DummyEvent")]
         public EventGetPublicDTO GetDummyEvent()
         {
-            var PublicEvent = new EventGetPublicDTO() { EventId = 1, Title = "Aarhus Event", City = "Aarhus C", ZipCode = 8000, Activity = "Fodbold" };
+            var PublicEvent = new EventGetPublicDTO() { EventId = "1", Title = "Aarhus Event", City = "Aarhus C", ZipCode = "8000", Activity = "Fodbold" };
 
             return PublicEvent;
 
-        }
-
-        // GET: api/Event/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<EventGetPublicDTO>> GetEvent(int id)
-        {
-            Event PublicEvent = await _content.Events.FindAsync(id);
-
-            if (PublicEvent == null && PublicEvent.IsHidden)
-            {
-                return NotFound();
-            }
-
-            return _mapper.Map<EventGetPublicDTO>(PublicEvent);
-        }
-
-        // PUT: api/Event/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEvent(int id, Event @event)
-        {
-            if (id != @event.EventId)
-            {
-                return BadRequest();
-            }
-
-            _content.Entry(@event).State = EntityState.Modified;
-
-            try
-            {
-                await _content.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EventExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         // POST: api/Event
@@ -95,7 +44,7 @@ namespace ActivitIRLApi.Controllers
         {
             Event domainEvent = _mapper.Map<Event>(CreateDTO);
 
-            domainEvent.CreatedBy = (Models.Entities.User)_content.Users.Where(u => u.Alias == CreateDTO.CreatedBy.Alias);
+            domainEvent.CreatedBy = (Models.Entities.User)_content.Users.Where(u => u.Alias == CreateDTO.CreatedBy);
 
             _content.Events.Add(_mapper.Map<Event>(domainEvent));
 

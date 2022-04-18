@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ActivitIRLApi.Migrations
 {
-    public partial class MIG01 : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,18 +43,21 @@ namespace ActivitIRLApi.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Alias = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: true),
                     Gender = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: true),
-                    Birthdate = table.Column<DateTime>(type: "datetime2", maxLength: 20, nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", maxLength: 20, nullable: true),
                     EmailAddress = table.Column<string>(type: "nvarchar(254)", maxLength: 254, nullable: true),
-                    PWHash = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    PWHash = table.Column<byte[]>(type: "varbinary(255)", maxLength: 255, nullable: false),
+                    PWSalt = table.Column<byte[]>(type: "varbinary(255)", maxLength: 255, nullable: false),
                     PhoneNumber = table.Column<int>(type: "int", maxLength: 50, nullable: true),
                     StreetName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ApartmentNumber = table.Column<int>(type: "int", maxLength: 10, nullable: true),
                     City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ZipCode = table.Column<int>(type: "int", maxLength: 50, nullable: true),
                     Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Role = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     EventId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -128,6 +131,20 @@ namespace ActivitIRLApi.Migrations
                 name: "IX_Preferences_UserId",
                 table: "Preferences",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Alias",
+                table: "Users",
+                column: "Alias",
+                unique: true,
+                filter: "[Alias] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_EmailAddress",
+                table: "Users",
+                column: "EmailAddress",
+                unique: true,
+                filter: "[EmailAddress] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_EventId",

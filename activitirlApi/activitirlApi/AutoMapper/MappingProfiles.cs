@@ -9,6 +9,7 @@ namespace ActivitIRLApi.AutoMapper
     {
         public MappingProfiles()
         {
+            CreateMap<string, DateTime>().ConvertUsing(new DateTimeTypeConverter());
             CreateMap<UserCreateDTO, User>();
             CreateMap<User, UserGetDTO>();
             CreateMap<Event, EventGetPrivateDTO>();
@@ -17,4 +18,13 @@ namespace ActivitIRLApi.AutoMapper
 
         }
     }
+
+    public class DateTimeTypeConverter : ITypeConverter<string, DateTime>
+    {
+        public DateTime Convert(string source, DateTime destination, ResolutionContext context)
+        {
+            return System.Convert.ToDateTime(source);
+        }
+    }
 }
+

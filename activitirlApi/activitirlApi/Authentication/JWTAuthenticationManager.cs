@@ -1,4 +1,5 @@
 ﻿using ActivitIRLApi.Data;
+using ActivitIRLApi.Models.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -11,43 +12,39 @@ namespace ActivitIRLApi.Authentication
 {
     public interface IJWTAuthenticationManager
     {
-        string Authenticate(string username, string password);
+        string Authenticate(User user);
     }
 
     public class JWTAuthenticationManager : IJWTAuthenticationManager
     {
-        private readonly ApplicationDbContext _context;
 
-        private readonly string tokenKey;
+        private IConfiguration _config;
 
-        public JWTAuthenticationManager(string tokenKey)
+        public JWTAuthenticationManager(IConfiguration config)
         {
-            this.tokenKey = tokenKey;
+            _config = config;
         }
 
-        public string Authenticate(string username, string password)
-        {
-            //if (!users.Any(u => u.Key == username && u.Value == password))
-            //{
-            //    return null;
-            //}
-
-            var tokenhandler = new jwtsecuritytokenhandler();
-            var key = encoding.ascii.getbytes(tokenkey);
-            var tokendescriptor = new securitytokendescriptor
+        public string Authenticate(User user) 
+        { 
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
-                subject = new claimsidentity(new claim[]
+                Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new claim(claimtypes.name, username)
+                    new Claim(ClaimTypes.NameIdentifier, user.Alias),
+                    new Claim(ClaimTypes.Email, user.EmailAddress),
+                    new Claim(ClaimTypes.Role, user.Role),
+                    new Claim(ClaimTypes.DateOfBirth, user.DateOfBirth.ToString())
                 }),
-                expires = datetime.utcnow.addhours(1),
-                signingcredentials = new signingcredentials(
-                    new symmetricsecuritykey(key),
-                    securityalgorithms.hmacsha256signature)
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
             };
-            var token = tokenhandler.createtoken(tokendescriptor);
-            return tokenhandler.writetoken(token);
-            return "LOL";
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token); 
         }
     }
 }

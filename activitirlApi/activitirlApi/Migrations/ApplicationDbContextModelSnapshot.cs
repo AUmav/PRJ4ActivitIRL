@@ -81,13 +81,13 @@ namespace ActivitIRLApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserId"), 1L, 1);
 
+                    b.Property<string>("Alias")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<int?>("ApartmentNumber")
                         .HasMaxLength(10)
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("Birthdate")
-                        .HasMaxLength(20)
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("City")
                         .HasMaxLength(50)
@@ -96,6 +96,10 @@ namespace ActivitIRLApi.Migrations
                     b.Property<string>("Country")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasMaxLength(20)
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
                         .HasMaxLength(254)
@@ -116,13 +120,24 @@ namespace ActivitIRLApi.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)");
 
-                    b.Property<string>("PWHash")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                    b.Property<byte[]>("PWHash")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varbinary(255)");
+
+                    b.Property<byte[]>("PWSalt")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varbinary(255)");
 
                     b.Property<int?>("PhoneNumber")
                         .HasMaxLength(50)
                         .HasColumnType("int");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("StreetName")
                         .HasMaxLength(50)
@@ -133,6 +148,14 @@ namespace ActivitIRLApi.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("Alias")
+                        .IsUnique()
+                        .HasFilter("[Alias] IS NOT NULL");
+
+                    b.HasIndex("EmailAddress")
+                        .IsUnique()
+                        .HasFilter("[EmailAddress] IS NOT NULL");
 
                     b.HasIndex("EventId");
 
