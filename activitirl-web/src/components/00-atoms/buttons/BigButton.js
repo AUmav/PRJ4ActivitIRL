@@ -1,8 +1,8 @@
 import './style.css'
 
-const BigButton = ({text}) => {
+const BigButton = ({text, onPress}) => {
     return (
-        <button className="btn big-btn">
+        <button type="button" className="btn big-btn" onClick={onPress}>
             {text}
         </button>
     )

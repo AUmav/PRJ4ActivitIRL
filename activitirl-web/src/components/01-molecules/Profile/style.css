@@ -1,0 +1,15 @@
+.profilePicture {
+    border-radius: 50%;
+    height: 30px;
+}
+
+.profile{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 35px;
+}
+
+.profile-name{
+    margin: 10px;
+}

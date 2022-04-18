@@ -11,7 +11,7 @@ import NavBar from './components/NavBar'
 import LoginForm from "./components/02-organisms/forms/loginForm/LoginForm";
 import CreateUserForm from "./components/02-organisms/forms/createUserForm/CreateUserForm";
 import HomePage from "./components/04-pages/homePage/HomePage";
-import ActivityDetails from "./components/03-templates/ActivityDetails";
+import ActivityDetails from "./components/03-templates/ActivityDetails/ActivityDetails";
 
 
 function App() {

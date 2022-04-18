@@ -1,0 +1,20 @@
+.parameter-icon-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 35px;
+}
+
+.limits{
+    font-size: small;
+    text-align: left;
+    color: var(--primary-color);
+    margin-left: 10px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;   
+    line-height: 0px;
+}
+
+
