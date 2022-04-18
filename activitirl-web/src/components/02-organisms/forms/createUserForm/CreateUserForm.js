@@ -12,6 +12,7 @@ import LabelInputSet from '../../../01-molecules/forms/LabelInputSet';
 const CreateUserForm = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [birthday, setBirthday] = useState("");
     const [email, setEmail] = useState("");
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
@@ -22,6 +23,10 @@ const CreateUserForm = () => {
     
     const handleLastNameChange = (event) => {
         setLastName(event.target.value);
+    }
+
+    const handleBirthdayChange = (event) => {
+        setBirthday(event.target.value);
     }
 
     const handleEmailChange = (event) => {
@@ -43,12 +48,19 @@ const CreateUserForm = () => {
         if (password1 !== password2) {
             alert("Passwords don't match");
         }
+
         else {
 
+        // SKIFT URL
         let url = "https://localhost:44368/api/account/login"
         let user = {
             "email" : email,
             "password": password1,
+            "firstName" : firstName,
+            "lastName" : lastName,
+            "birthday" : birthday,
+
+            
         }
 
         console.log(user);
@@ -72,9 +84,7 @@ const CreateUserForm = () => {
                     console.log("result", result);
 
                     if(result !== undefined){
-                        let token = result.jwt;
                         console.log("user creation succesful");
-                        console.log(token);
                         alert("User succesfully created");
 
                     }
@@ -94,6 +104,7 @@ const CreateUserForm = () => {
                 <LabelInputSet labelText="Fornavn" name="firstName" type="text" value={firstName} placeholderText="Fornavn" onChange={handleFirstNameChange}/>
                 <LabelInputSet labelText="Efternavn" name="lastName" type="text" value={lastName} placeholderText="Efternavn" onChange={handleLastNameChange}/>
                 <LabelInputSet labelText="E-mail" name="e-mail" type="text" value={email} placeholderText="E-mail" onChange={handleEmailChange}/>
+                <LabelInputSet labelText="Fødselsdag" name="birthday" type="date" value={birthday} placeholderText="YYYY-MM-DD" onChange={handleBirthdayChange}/>
                 <LabelInputSet labelText="Password" name="password1" type="password" value={password1} placeholderText="Password" onChange={handlePwChange1}/>
                 <LabelInputSet labelText="" name="password2" type="password" value={password2} placeholderText="Gentag password" onChange={handlePwChange2}/>
 

@@ -32,7 +32,7 @@ const PostContainer = () => {
             }
         )
     }, [])
-    console.log(items);
+    //console.log(items);
 
     if (error) {
         return <div>Error: {error.message}</div>
@@ -42,7 +42,7 @@ const PostContainer = () => {
         return(
             <div className="post-container">   
                     {items.map((item) => (
-                        <Link to={`/activity/${item.idDrink}`}>
+                        <Link key={item.idDrink} to={`/activity/${item.idDrink}`}>
                             <ActivityPost data = {item}/>
                         </Link>
                     ))}

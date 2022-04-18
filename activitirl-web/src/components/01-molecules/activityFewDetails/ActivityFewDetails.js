@@ -1,7 +1,7 @@
 import TitleText from "../../00-atoms/text/TitleText"
 
 const ActivityFewDetails = ({data}) => {
-    console.log("activity", data)
+    //console.log("activity", data)
     return (
         <div className="activity-details">
            <TitleText title={data.strDrink}/>
