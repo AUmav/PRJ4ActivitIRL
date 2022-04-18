@@ -13,6 +13,7 @@ import ActivityDetails from "./components/03-templates/ActivityDetails";
 import LoginPage from "./components/04-pages/LoginPage";
 import CreateUserPage from "./components/04-pages/CreateUserPage";
 import CreateActivityForm from "./components/02-organisms/forms/createActivityForm/createActivityForm";
+import CreateActivityPage from "./components/04-pages/CreateActivityPage";
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
             <Route path="/join" element={<CreateUserPage/>}/>
             <Route path="/activity/:id" element={<ActivityDetails/>}/>
             <Route path="/logout" element={<LogOut/>}/>
-            <Route path="/create" element={<CreateActivityForm/>}/>
+            <Route path="/activity/create" element={<CreateActivityPage/>}/>
           </Routes>
       </div>
     </Router>
