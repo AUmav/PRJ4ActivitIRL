@@ -23,9 +23,9 @@ const LoginForm = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        let url = "https://localhost:44368/api/account/login"
+        let url = "https://prj4-api.azurewebsites.net/api/login"
         let user = {
-            "email" : email,
+            "emailAddressOrAlias" : email,
             "password": password,
         }
 
@@ -35,7 +35,8 @@ const LoginForm = () => {
                 method: "POST",
                 body: JSON.stringify(user),
                 headers: new Headers({
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
                 })
             })
             .then(response => {
@@ -52,7 +53,7 @@ const LoginForm = () => {
                     console.log("result", result);
 
                     if(result !== undefined){
-                        let token = result.jwt;
+                        let token = result;
                         console.log("login succesful");
                         console.log(token);
                         localStorage.setItem("loginToken", token)

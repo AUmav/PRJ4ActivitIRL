@@ -1,6 +1,7 @@
 import jwtDecode from "jwt-decode"
 import { useState } from "react";
 import {Link} from "react-router-dom"
+import ProfilePictureName from "../../01-molecules/Profile/ProfilePictureName";
 import "./style.css"
 
 
@@ -12,7 +13,7 @@ const UserNavigation = () => {
     
     let token = localStorage.getItem("loginToken")
     let payload = jwtDecode(token);
-    let email = payload[`http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress`]; // get email from payload
+    let email = payload["email"]; // get email from payload
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);

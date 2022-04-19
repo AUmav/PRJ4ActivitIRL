@@ -10,11 +10,7 @@ import jwtDecode from 'jwt-decode';
 // https://www.freecodecamp.org/news/beginner-react-project-build-basic-forms-using-react-hooks/
 const CreateActivityForm = () => {
     let token = localStorage.getItem("loginToken");
-    let email = "";
-    if(token){
-        let payload = jwtDecode(token);
-        email = payload[`http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress`]; // get email from payload
-    }
+
     const [activity, setActivity] = useState("");
     const [title, setTitle] = useState("");
     const [zipCode, setZipCode] = useState("");
@@ -63,7 +59,6 @@ const CreateActivityForm = () => {
             "address" : address,
             "eventDate" : eventDate,
             "description" : description,
-            "email" : email,
         }
 
         console.log(event);
@@ -72,6 +67,7 @@ const CreateActivityForm = () => {
                 method: "POST",
                 body: JSON.stringify(event),
                 headers: new Headers({
+                    'Authorization': 'Bearer ' + token,
                     "Content-Type": "application/json"
                 })
             })
@@ -119,7 +115,7 @@ const CreateActivityForm = () => {
                     <LabelInputSet labelText="Adresse" name="address" type="text" value={address} placeholderText="Adresse 1" onChange={handleAddressChange}/>
                     {submitted && !address && <SmallErrorText text="Indtast venligst en addresse"/>}
 
-                    <LabelInputSet labelText="Dato" name="eventDate" type="date" value={eventDate} placeholderText="YYYY-MM-DD" onChange={handleEventDateChange}/>
+                    <LabelInputSet labelText="Dato" name="eventDate" type="datetime-local" value={eventDate} placeholderText="YYYY-MM-DD" onChange={handleEventDateChange}/>
                     {submitted && !eventDate && <SmallErrorText text="Indtast venligst en dato"/>}
 
 

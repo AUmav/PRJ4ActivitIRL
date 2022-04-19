@@ -38,9 +38,6 @@ const NavBar = () => {
                             <Link to="/activity/create">Opret opslag</Link>
                         </li>
                         <li>
-                            <Link to="/logout">Log ud</Link>
-                        </li>
-                        <li>
                             <UserNavigation/>
                         </li>
                     </ul>

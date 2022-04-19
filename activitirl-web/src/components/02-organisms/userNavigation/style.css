@@ -26,4 +26,5 @@
     text-align: left;
     width: 150px;
     cursor: pointer;
+    color: var(--tertiary-color)
 }
