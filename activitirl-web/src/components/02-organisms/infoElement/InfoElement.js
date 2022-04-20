@@ -3,6 +3,10 @@ import TitleText from "../../00-atoms/text/TitleText"
 import './style.css'
 
 const InfoElement = () => {
+    const buttonPress = () => {
+        window.location.replace("/login");
+    }
+
     return(
         <div className="info-element">
             <div className="info-element-child">
@@ -12,7 +16,7 @@ const InfoElement = () => {
                 </div>
             </div>
             <div className="info-element-child">
-                <BigButton text='Log ind'/>
+                <BigButton text='Log ind' onPress={buttonPress}/>
             </div>
         </div>
     )

@@ -5,8 +5,8 @@
 https://www.codegrepper.com/code-examples/css/set+root+primary+color+css
 */
 :root {
-  --primary-color: #8869db;
-  --secondary-color: lavender;
+  --primary-color: #4bb36a;
+  --secondary-color: rgb(194, 243, 207);
   --tertiary-color: #fff;
 
   --default-font: 'Inter';
