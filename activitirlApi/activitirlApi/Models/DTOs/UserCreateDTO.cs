@@ -4,20 +4,17 @@ namespace ActivitIRLApi.Models.DTOs
 {
     public class UserCreateDTO
     {
+
+        [MaxLength(80)]
+        public string FirstName { get; set; }
+        [MaxLength(80)]
+        public string LastName { get; set; }
         [MaxLength(255)]
-        public string? Alias { get; set; }
-        [MaxLength(80)]
-        public string? FirstName { get; set; }
-        [MaxLength(80)]
-        public string? LastName { get; set; }
-        [MaxLength(255)]
-        public string? Password { get; set; }
-        [MaxLength(80)]
-        public string? Gender { get; set; }
+        public string Password { get; set; }
         [MaxLength(20)]
-        public string? DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
         [MaxLength(254)]
-        public string? EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
         [MaxLength(50)]
         public string? PhoneNumber { get; set; }
         [MaxLength(50)]

@@ -29,9 +29,6 @@ namespace ActivitIRLApi.Controllers
             _typeValidater = new InputTypeValidation();
         }
 
-
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<UserCreateDTO>> CreateUser([FromBody] UserCreateDTO userCreateDTOData)

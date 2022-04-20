@@ -1,7 +1,8 @@
-﻿
+﻿using ActivitIRLApi.Models.Entities;
+
 namespace ActivitIRLApi.Models.DTOs
 {
-    public class EventCreateDTO
+    public class EventGetSignedupDTO
     {
         public string Title { get; set; }
         public string Date { get; set; }
@@ -18,7 +19,14 @@ namespace ActivitIRLApi.Models.DTOs
 
         public string? MinAge { get; set; }
         public string? MaxAge { get; set; }
-    
+        public string NumberOfUsers { get; set; }
+
         public string? RegistrationDeadline { get; set; }
+        
+        public string CreatedBy { get; set; }
+        public string ProfilePicture { get; set; }
+        public string CommentList { get; set; }
+
+
     }
 }

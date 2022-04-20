@@ -25,7 +25,7 @@ namespace ActivitIRLApi.Models
         public int MaxAge { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime RegistrationDeadline { get; set; }
-
+        public int NumberOfUsers { get; set; } // Derived. 
         public List<User>? ListOfUsers { get; set; } //Kunne ikke lave med UserId
 
         public User? CreatedBy; // Foreign key

@@ -29,9 +29,9 @@ namespace ActivitIRLApi.Controllers
 
 
         [HttpGet("DummyEvent")]
-        public EventGetPublicDTO GetDummyEvent()
+        public EventGetPublicListDTO GetDummyEvent()
         {
-            var PublicEvent = new EventGetPublicDTO() { EventId = "1", Title = "Aarhus Event", City = "Aarhus C", ZipCode = "8000", Activity = "Fodbold" };
+            var PublicEvent = new EventGetPublicListDTO() { EventId = "1", Title = "Aarhus Event", City = "Aarhus C", ZipCode = "8000", Activity = "Fodbold" };
 
             return PublicEvent;
 
@@ -39,21 +39,21 @@ namespace ActivitIRLApi.Controllers
 
         // POST: api/Event
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<EventGetPrivateDTO>> CreateEvent([FromBody] EventCreateDTO CreateDTO)
-        {
-            Event domainEvent = _mapper.Map<Event>(CreateDTO);
+        //[HttpPost]
+        //public async Task<ActionResult<EventGetPrivateDTO>> CreateEvent([FromBody] EventCreateDTO CreateDTO)
+        //{
+        //    Event domainEvent = _mapper.Map<Event>(CreateDTO);
 
-            domainEvent.CreatedBy = (Models.Entities.User)_content.Users.Where(u => u.Alias == CreateDTO.CreatedBy);
+        //    domainEvent.CreatedBy = (Models.Entities.User)_content.Users.Where(u => u.Alias == CreateDTO.CreatedBy);
 
-            _content.Events.Add(_mapper.Map<Event>(domainEvent));
+        //    _content.Events.Add(_mapper.Map<Event>(domainEvent));
 
-            await _content.SaveChangesAsync();
+        //    await _content.SaveChangesAsync();
 
-            EventGetPrivateDTO privateEvent = _mapper.Map<EventGetPrivateDTO>(domainEvent);
+        //    EventGetPrivateDTO privateEvent = _mapper.Map<EventGetPrivateDTO>(domainEvent);
             
-            return CreatedAtAction("GetEvent", new { id = privateEvent.EventId }, privateEvent);
-        }
+        //    return CreatedAtAction("GetEvent", new { id = privateEvent.EventId }, privateEvent);
+        //}
 
         // DELETE: api/Event/5
         [HttpDelete("{id}")]

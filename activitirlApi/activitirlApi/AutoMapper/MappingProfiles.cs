@@ -12,8 +12,8 @@ namespace ActivitIRLApi.AutoMapper
             CreateMap<string, DateTime>().ConvertUsing(new DateTimeTypeConverter());
             CreateMap<UserCreateDTO, User>();
             CreateMap<User, UserGetDTO>();
-            CreateMap<Event, EventGetPrivateDTO>();
-            CreateMap<Event, EventGetPublicDTO>();
+            CreateMap<Event, Event>();
+            CreateMap<Event, EventGetPublicListDTO>();
             CreateMap<EventCreateDTO, Event>();
 
         }
