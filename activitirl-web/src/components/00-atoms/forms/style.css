@@ -8,6 +8,7 @@
     outline-width: 1px;
     border-style: none;
     border-radius: 3px;
+    width: 15em;
     font-family: var(--default-font);
 }
 
@@ -16,6 +17,27 @@
     outline-width: 2px;
     outline-color: var(--primary-color);
 }
+
+.formInputTextShort {
+    font-size: 1em;
+    padding: 10px;
+    margin-left: 10px;
+    margin-bottom: 15px;
+    outline-style: solid;
+    outline-color: lightgray;
+    outline-width: 1px;
+    border-style: none;
+    border-radius: 3px;
+    width: 3em;
+    font-family: var(--default-font);
+}
+
+.formInputText:focus{
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: var(--primary-color);
+}
+
 
 .formInputTextArea {
     font-size: 1em;
@@ -29,6 +51,7 @@
     border-radius: 3px;
     font-family: var(--default-font);
     vertical-align: top;
+    width: 15em;
 }
 
 .formInputTextArea:focus{
@@ -37,14 +60,35 @@
     outline-color: var(--primary-color);
 }
 
-
-
 ::placeholder{
     color: lightgray;
 }
 
 label{
     display: inline-block;
-    width: 90px;
+    width: 100px;
     text-align: left;
+}
+
+@media screen and (max-width:640px){
+    label{
+        display: block;
+        text-align: left;
+        width: auto;
+        margin-bottom: 5px;
+    }
+    .formInputText {
+        margin-left: 0px;
+        width: 80%;
+    }
+
+    .formInputTextShort {
+        margin-left: 0px;
+    }
+
+    .formInputTextArea {
+        margin-left: 0px;
+        width: 80%;
+        height: 8em;
+    }
 }

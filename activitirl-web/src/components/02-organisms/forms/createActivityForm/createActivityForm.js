@@ -5,7 +5,7 @@ import '../style.css'
 import LabelInputSet from '../../../01-molecules/forms/LabelInputSet';
 import SmallErrorText from '../../../00-atoms/text/SmallErrorText';
 import LabelInputTextAreaSet from '../../../01-molecules/forms/LabelInputTextAreaSet';
-import jwtDecode from 'jwt-decode';
+import LabelInputSetShort from '../../../01-molecules/forms/LabelInputSetShort';
 
 // https://www.freecodecamp.org/news/beginner-react-project-build-basic-forms-using-react-hooks/
 const CreateActivityForm = () => {
@@ -17,7 +17,9 @@ const CreateActivityForm = () => {
     const [city, setCity] = useState("");
     const [address, setAddress] = useState("");
     const [eventDate, setEventDate] = useState("");
-    const [ageRange, setAgeRange] = useState("");
+    const [lastDate, setLastDate] = useState("");
+    const [ageRangeLower, setAgeRangeLower] = useState("");
+    const [ageRangeUpper, setAgeRangeUpper] = useState("");
     const [description, setDescription] = useState("");
     const [submitted, setSubmitted] = useState(false);
 
@@ -39,8 +41,14 @@ const CreateActivityForm = () => {
     const handleEventDateChange = (event) => {
         setEventDate(event.target.value);
     }
-    const handleAgeRangeChange = (event) => {
-        setAgeRange(event.target.value);
+    const handleLastDateChange = (event) => {
+        setLastDate(event.target.value);
+    }
+    const handleAgeRangeLowerChange = (event) => {
+        setAgeRangeLower(event.target.value);
+    }
+    const handleAgeRangeUpperChange = (event) => {
+        setAgeRangeUpper(event.target.value);
     }
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
@@ -50,7 +58,7 @@ const CreateActivityForm = () => {
         e.preventDefault();
 
         // SKIFT URL
-        let url = "https://localhost:44368/api/account/login"
+        let url = "https://localhost:44368/api/event"
         let event = {
             "activity" : activity,
             "title" : title,
@@ -58,7 +66,10 @@ const CreateActivityForm = () => {
             "city" : city,
             "address" : address,
             "eventDate" : eventDate,
+            "lastDate" : lastDate,
             "description" : description,
+            "ageLowerLimit" : ageRangeLower,
+            "ageUpperLimit" : ageRangeUpper,
         }
 
         console.log(event);
@@ -86,7 +97,6 @@ const CreateActivityForm = () => {
 
                     if(result !== undefined){
                         
-
                     }
                 },
                 (error) => {
@@ -98,29 +108,38 @@ const CreateActivityForm = () => {
 
     if(token){
         return (
-            <div className='loginForm'>
+            <div className='activityForm'>
                 <TitleText title="Opret opslag"/>
 
                 <form onSubmit={handleSubmit}>
-                    <LabelInputSet labelText="Aktivitet" name="activity" type="text" value={activity} placeholderText="Aktivitet" onChange={handleActivityChange}/>
+                    <LabelInputSet labelText="Titel*" name="title" type="text" value={title} placeholderText="Titel" onChange={handleTitleChange}/>
+                    {submitted && !title && <SmallErrorText text="Indtast venligst en titel på dit opslag"/>}
+
+
+                    <LabelInputSet labelText="Aktivitet*" name="activity" type="text" value={activity} placeholderText="Aktivitet" onChange={handleActivityChange}/>
                     {submitted && !activity && <SmallErrorText text="Indtast venligst en aktivitet"/>}
 
                     <div>
-                        <LabelInputSet labelText="Post nr." name="zipCode" type="text" value={zipCode} placeholderText="8000" onChange={handleZipCodeChange}/>
+                        <LabelInputSetShort labelText="Post nr.*" name="zipCode" type="text" value={zipCode} placeholderText="8000" onChange={handleZipCodeChange}/>
                         {submitted && !zipCode && <SmallErrorText text="Indtast venligst et postnummer"/>}
-                        <LabelInputSet labelText="By" name="City" type="text" value={city} placeholderText="Aarhus C" onChange={handleCityChange}/>
+                        <LabelInputSet labelText="By*" name="City" type="text" value={city} placeholderText="Aarhus C" onChange={handleCityChange}/>
                         {submitted && !city && <SmallErrorText text="Indtast venligst en by"/>}
                     </div>
 
-                    <LabelInputSet labelText="Adresse" name="address" type="text" value={address} placeholderText="Adresse 1" onChange={handleAddressChange}/>
+                    <LabelInputSet labelText="Adresse*" name="address" type="text" value={address} placeholderText="Adresse 1" onChange={handleAddressChange}/>
                     {submitted && !address && <SmallErrorText text="Indtast venligst en addresse"/>}
 
-                    <LabelInputSet labelText="Dato" name="eventDate" type="datetime-local" value={eventDate} placeholderText="YYYY-MM-DD" onChange={handleEventDateChange}/>
+                    <LabelInputSet labelText="Dato*" name="eventDate" type="datetime-local" value={eventDate} placeholderText="YYYY-MM-DD" onChange={handleEventDateChange}/>
                     {submitted && !eventDate && <SmallErrorText text="Indtast venligst en dato"/>}
 
-
-                    <LabelInputTextAreaSet labelText="Beskrivelse" name="description" value={description} placeholderText="Besrkivelse" cols= "40" rows="5" onChange={handleDescriptionChange}/>
+                    <LabelInputTextAreaSet labelText="Beskrivelse*" name="description" value={description} placeholderText="Beskrivelse" onChange={handleDescriptionChange}/>
                     {submitted && !description && <SmallErrorText text="Indtast venligst en beskrivelse"/>}
+
+                    <LabelInputSet labelText="Sidste frist (tilmelding)" name="lastDate" type="datetime-local" value={lastDate} placeholderText="YYYY-MM-DD" onChange={handleLastDateChange}/>
+
+                    <LabelInputSetShort labelText="Aldersgrænse (Nedre)" name="ageRangeLower" type="number" value={ageRangeLower} placeholderText="18" onChange={handleAgeRangeLowerChange}/>
+                    <LabelInputSetShort labelText="Aldersgrænse (Øvre)" name="ageRangeUpper" type="number" value={ageRangeUpper} placeholderText="18" onChange={handleAgeRangeUpperChange}/>
+
 
                     <div className='alignRight'>
                         <SubmitButton text="Opret opslag"/>

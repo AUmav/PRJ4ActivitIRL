@@ -1,18 +1,15 @@
-import { Link, BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import UserNavigation from "./02-organisms/userNavigation/UserNavigation";
 
 const NavBar = () => {
     let token = localStorage.getItem("loginToken")
-
-    console.log("hej", token);
-
     return(
         <div className="navigation-bar">
             <Link to="/"><h1>ActivitIRL</h1></Link>
             
             {/* If not logged in*/}
             {!token && 
-                <div className="nav">
+                <nav>
                     <ul>
                         <li>
                             <Link to="/faq">FAQ</Link>
@@ -24,12 +21,13 @@ const NavBar = () => {
                             <Link to="/login">Log ind</Link>
                         </li>
                     </ul>
-                </div>
+                </nav>
             }
 
             {/* If logged in*/}
             {token && 
-                <div className="nav">
+                <nav>
+                    <button className="hamburger">hello</button>
                     <ul>
                         <li>
                             <Link to="/faq">FAQ</Link>
@@ -41,9 +39,8 @@ const NavBar = () => {
                             <UserNavigation/>
                         </li>
                     </ul>
-                </div>
+                </nav>
             }
-
 
         </div>
     )

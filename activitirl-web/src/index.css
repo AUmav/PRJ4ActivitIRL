@@ -60,9 +60,12 @@ http://jsfiddle.net/mdqf81da/
   display: inline-block;
 }
 
-.nav > ul > li {
+nav > ul > li {
   display: inline-block;
   padding-left: 20px;
+}
+nav > button.hamburger {
+  display: none;
 }
 
 .activity-details{
@@ -78,4 +81,8 @@ http://jsfiddle.net/mdqf81da/
   height: 200px;
   width: 100%;
   object-fit: cover;
+}
+
+@media screen and (max-width : 760px){
+
 }
