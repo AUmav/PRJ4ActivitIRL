@@ -1,6 +1,6 @@
 ﻿namespace ActivitIRLApi.Models
 {
-    public class EventGetPublicListDTO
+    public class EventGetPublicDTO
     {
         public string EventId { get; set; }
         public string Title { get; set; }

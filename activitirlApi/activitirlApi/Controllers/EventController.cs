@@ -10,6 +10,9 @@ using ActivitIRLApi.Data;
 using ActivitIRLApi.Models;
 using AutoMapper;
 using ActivitIRLApi.Models.DTOs;
+using ActivitIRLApi.Models.Entities;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ActivitIRLApi.Controllers
 {
@@ -26,54 +29,82 @@ namespace ActivitIRLApi.Controllers
             _mapper = mapper;
         }
 
-
-
-        [HttpGet("DummyEvent")]
-        public EventGetPublicListDTO GetDummyEvent()
+       
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<EventGetSignedupDTO>> CreateEvent([FromBody] EventCreateDTO CreateDTO)
         {
-            var PublicEvent = new EventGetPublicListDTO() { EventId = "1", Title = "Aarhus Event", City = "Aarhus C", ZipCode = "8000", Activity = "Fodbold" };
+            Event domainEvent = _mapper.Map<Event>(CreateDTO);
 
-            return PublicEvent;
+            User user = GetCurrentUser();
 
+            domainEvent.CreatedBy = _content.Users.FirstOrDefault(u => u.EmailAddress == user.EmailAddress);
+
+            domainEvent.NumberOfUsers = 1;
+
+            domainEvent.CreatedAt = DateTime.Now;   
+
+            _content.Events.Add(_mapper.Map<Event>(domainEvent));
+
+            await _content.SaveChangesAsync();
+
+            EventGetSignedupDTO privateEvent = _mapper.Map<EventGetSignedupDTO>(domainEvent);
+
+            return CreatedAtAction("GetEvent", new { id = privateEvent.EventId }, privateEvent);
         }
 
-        // POST: api/Event
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<EventGetPrivateDTO>> CreateEvent([FromBody] EventCreateDTO CreateDTO)
-        //{
-        //    Event domainEvent = _mapper.Map<Event>(CreateDTO);
-
-        //    domainEvent.CreatedBy = (Models.Entities.User)_content.Users.Where(u => u.Alias == CreateDTO.CreatedBy);
-
-        //    _content.Events.Add(_mapper.Map<Event>(domainEvent));
-
-        //    await _content.SaveChangesAsync();
-
-        //    EventGetPrivateDTO privateEvent = _mapper.Map<EventGetPrivateDTO>(domainEvent);
-            
-        //    return CreatedAtAction("GetEvent", new { id = privateEvent.EventId }, privateEvent);
-        //}
-
         // DELETE: api/Event/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEvent(int id)
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<ActionResult<EventGetDTO>> GetEvent(int id)
         {
+
             var @event = await _content.Events.FindAsync(id);
             if (@event == null)
             {
                 return NotFound();
             }
 
-            _content.Events.Remove(@event);
-            await _content.SaveChangesAsync();
 
-            return NoContent();
+            return _mapper.Map<EventGetDTO>(@event);
         }
+
+        [HttpGet]
+        public async Task<ActionResult<List<EventGetPublicDTO>>> GetEventList()
+        {
+            List<Event> @event = await _content.Events.OrderByDescending(p => p.EventId).Take(20).ToListAsync();
+            if (@event == null)
+            {
+                return NotFound();
+            }
+
+            return _mapper.Map<List<EventGetPublicDTO>>(@event);
+        }
+
+
 
         private bool EventExists(int id)
         {
             return _content.Events.Any(e => e.EventId == id);
+        }
+
+        private User GetCurrentUser()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+
+            if (identity != null)
+            {
+                var userClaims = identity.Claims;
+
+                return new User
+                {
+                    EmailAddress = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
+                    Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value,
+                    Gender = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Gender)?.Value,
+                    DateOfBirth = DateTime.Parse(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.DateOfBirth)?.Value)
+                };
+            }
+            return null;
         }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ActivitIRLApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220418192439_test")]
-    partial class test
+    [Migration("20220427235255_28042022")]
+    partial class _28042022
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -203,6 +203,9 @@ namespace ActivitIRLApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("MinAge")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfUsers")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RegistrationDeadline")

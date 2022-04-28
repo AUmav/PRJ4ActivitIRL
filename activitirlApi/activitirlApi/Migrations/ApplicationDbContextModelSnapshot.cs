@@ -203,6 +203,9 @@ namespace ActivitIRLApi.Migrations
                     b.Property<int>("MinAge")
                         .HasColumnType("int");
 
+                    b.Property<int>("NumberOfUsers")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("RegistrationDeadline")
                         .HasColumnType("datetime2");
 

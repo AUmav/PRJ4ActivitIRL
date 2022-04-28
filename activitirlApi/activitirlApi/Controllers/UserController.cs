@@ -44,7 +44,6 @@ namespace ActivitIRLApi.Controllers
             return _mapper.Map<UserGetDTO>(domainUser);
         }
 
-        // DELETE: api/Users/5
         [HttpDelete]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(UserGetDTO userGetDTO)
@@ -68,7 +67,6 @@ namespace ActivitIRLApi.Controllers
 
                 return new User
                 {
-                    Alias = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value,
                     EmailAddress = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
                     Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value,
                     Gender = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Gender)?.Value,

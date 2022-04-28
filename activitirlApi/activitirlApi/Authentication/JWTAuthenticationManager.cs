@@ -33,7 +33,6 @@ namespace ActivitIRLApi.Authentication
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.Alias),
                     new Claim(ClaimTypes.Email, user.EmailAddress),
                     new Claim(ClaimTypes.Role, user.Role),
                     new Claim(ClaimTypes.DateOfBirth, user.DateOfBirth.ToString())

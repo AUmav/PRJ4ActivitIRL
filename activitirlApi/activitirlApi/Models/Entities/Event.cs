@@ -23,7 +23,7 @@ namespace ActivitIRLApi.Models
         public bool IsHidden { get; set; }
         public int MinAge { get; set; }
         public int MaxAge { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } //Derived
         public DateTime RegistrationDeadline { get; set; }
         public int NumberOfUsers { get; set; } // Derived. 
         public List<User>? ListOfUsers { get; set; } //Kunne ikke lave med UserId

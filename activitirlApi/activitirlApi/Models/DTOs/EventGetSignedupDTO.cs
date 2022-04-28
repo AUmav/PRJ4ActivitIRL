@@ -4,6 +4,7 @@ namespace ActivitIRLApi.Models.DTOs
 {
     public class EventGetSignedupDTO
     {
+        public string EventId { get; set; }
         public string Title { get; set; }
         public string Date { get; set; }
         public string Activity { get; set; }
@@ -25,7 +26,7 @@ namespace ActivitIRLApi.Models.DTOs
         
         public string CreatedBy { get; set; }
         public string ProfilePicture { get; set; }
-        public string CommentList { get; set; }
+        public List<Comment> CommentList { get; set; }
 
 
     }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ActivitIRLApi.Migrations
 {
-    public partial class test : Migration
+    public partial class _28042022 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,7 +30,8 @@ namespace ActivitIRLApi.Migrations
                     MinAge = table.Column<int>(type: "int", nullable: false),
                     MaxAge = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RegistrationDeadline = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    RegistrationDeadline = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NumberOfUsers = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

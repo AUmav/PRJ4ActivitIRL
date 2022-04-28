@@ -1,8 +1,10 @@
-﻿namespace ActivitIRLApi.Models.DTOs
-{
-    public class EventGet
-    {
+﻿using ActivitIRLApi.Models.Entities;
 
+namespace ActivitIRLApi.Models.DTOs
+{
+    public class EventGetDTO
+    {
+        public string EventId { get; set; }
         public string Title { get; set; }
         public string Date { get; set; }
         public string Activity { get; set; }
@@ -21,7 +23,7 @@
         public string NumberOfUsers { get; set; }
         public string CreatedBy { get; set; }
         public string ProfilePicture { get; set; }
-        public string CommentList { get; set; }
+        public List<Comment> CommentList { get; set; }
 
     }
 }
