@@ -52,14 +52,13 @@ const CreateUserForm = () => {
         else {
 
         // SKIFT URL
-        let url = "https://localhost:44368/api/account/login"
+        let url = "https://prj4-api.azurewebsites.net/api/register"
         let user = {
-            "email" : email,
+            "emailAddress" : email,
             "password": password1,
             "firstName" : firstName,
             "lastName" : lastName,
-            "birthday" : birthday,
-
+            "dateOfBirth" : birthday,
             
         }
 
@@ -76,7 +75,7 @@ const CreateUserForm = () => {
                     alert("Couldn't create user");
                 }
                 else{
-                    return response.json();
+                    return response;
                 }
             })
             .then(

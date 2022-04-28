@@ -24,6 +24,7 @@ const LoginForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         let url = "https://prj4-api.azurewebsites.net/api/login"
+        //let url = "https://localhost:5001/api/login"
         let user = {
             "emailAddressOrAlias" : email,
             "password": password,
@@ -53,11 +54,16 @@ const LoginForm = () => {
                     console.log("result", result);
 
                     if(result !== undefined){
-                        let token = result;
-                        console.log("login succesful");
-                        console.log(token);
-                        localStorage.setItem("loginToken", token)
-                        window.location.replace("/");
+                        if(result === "Wrong Password" || result === "Invalid Username or Email"){
+                            alert("Wrong login");
+                        }
+                        else {
+                            let token = result;
+                            console.log("login succesful");
+                            console.log(token);
+                            localStorage.setItem("loginToken", token)
+                            window.location.replace("/");
+                        }
 
                     }
                 },

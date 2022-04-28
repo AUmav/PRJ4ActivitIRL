@@ -4,9 +4,9 @@ const ActivityFewDetails = ({data}) => {
     //console.log("activity", data)
     return (
         <div className="activity-details">
-           <TitleText title={data.strDrink}/>
-            <p>Aktivitet</p>
-            <p>Lokation</p>
+           <TitleText title={data.title}/>
+            <p>{data.activity}</p>
+            <p>{data.zipCode} {data.city}</p>
             <p>Dato</p>
         </div>
     )

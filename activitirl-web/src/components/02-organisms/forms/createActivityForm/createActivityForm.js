@@ -15,7 +15,8 @@ const CreateActivityForm = () => {
     const [title, setTitle] = useState("");
     const [zipCode, setZipCode] = useState("");
     const [city, setCity] = useState("");
-    const [address, setAddress] = useState("");
+    const [street, setStreet] = useState("");
+    const [streetNumber, setStreetNumber] = useState("");
     const [eventDate, setEventDate] = useState("");
     const [lastDate, setLastDate] = useState("");
     const [ageRangeLower, setAgeRangeLower] = useState("");
@@ -35,8 +36,11 @@ const CreateActivityForm = () => {
     const handleCityChange = (event) => {
         setCity(event.target.value);
     }
-    const handleAddressChange = (event) => {
-        setAddress(event.target.value);
+    const handleStreetChange = (event) => {
+        setStreet(event.target.value);
+    }
+    const handleStreetNumberChange = (event) => {
+        setStreetNumber(event.target.value);
     }
     const handleEventDateChange = (event) => {
         setEventDate(event.target.value);
@@ -58,19 +62,22 @@ const CreateActivityForm = () => {
         e.preventDefault();
 
         // SKIFT URL
-        let url = "https://localhost:44368/api/event"
+        let url = "https://prj4-api.azurewebsites.net/api/event"
         let event = {
             "activity" : activity,
             "title" : title,
             "zipCode": zipCode,
             "city" : city,
-            "address" : address,
-            "eventDate" : eventDate,
-            "lastDate" : lastDate,
+            "streetName" : street,
+            "apartmentNumber" : streetNumber,
+            "date" : eventDate,
+            "registrationDeadline" : lastDate,
             "description" : description,
-            "ageLowerLimit" : ageRangeLower,
-            "ageUpperLimit" : ageRangeUpper,
+            "minAge" : ageRangeLower === "" ? null : ageRangeLower,
+            "maxAge" : ageRangeUpper === "" ? null : ageRangeUpper,
+            "country" : "Danmark"
         }
+        
 
         console.log(event);
 
@@ -126,8 +133,11 @@ const CreateActivityForm = () => {
                         {submitted && !city && <SmallErrorText text="Indtast venligst en by"/>}
                     </div>
 
-                    <LabelInputSet labelText="Adresse*" name="address" type="text" value={address} placeholderText="Adresse 1" onChange={handleAddressChange}/>
-                    {submitted && !address && <SmallErrorText text="Indtast venligst en addresse"/>}
+                    <LabelInputSet labelText="Vejnavn*" name="street" type="text" value={street} placeholderText="Adresse" onChange={handleStreetChange}/>
+                    {submitted && !street && <SmallErrorText text="Indtast venligst et vejnavn"/>}
+
+                    <LabelInputSet labelText="Vejnr.*" name="streetNumber" type="text" value={streetNumber} placeholderText="2" onChange={handleStreetNumberChange}/>
+                    {submitted && !streetNumber && <SmallErrorText text="Indtast venligst et vej nr."/>}
 
                     <LabelInputSet labelText="Dato*" name="eventDate" type="datetime-local" value={eventDate} placeholderText="YYYY-MM-DD" onChange={handleEventDateChange}/>
                     {submitted && !eventDate && <SmallErrorText text="Indtast venligst en dato"/>}
