@@ -50,7 +50,7 @@ namespace ActivitIRLApi.Controllers
 
             EventGetSignedupDTO privateEvent = _mapper.Map<EventGetSignedupDTO>(domainEvent);
 
-            privateEvent.CreatedBy = domainEvent.CreatedBy.EmailAddress;
+            privateEvent.CreatedBy = domainEvent.CreatedBy.FirstName + " " + domainEvent.CreatedBy.LastName;
 
             return CreatedAtAction("GetEvent", new { id = privateEvent.EventId }, privateEvent);
         }
