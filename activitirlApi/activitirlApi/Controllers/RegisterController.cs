@@ -41,8 +41,9 @@ namespace ActivitIRLApi.Controllers
             }
 
             User user = _mapper.Map<User>(userCreateDTOData);
+            // u.Alias == user.Alias ||
 
-            if (_content.Users.Any(u => u.Alias == user.Alias || u.EmailAddress == user.EmailAddress))
+            if (_content.Users.Any(u =>  u.EmailAddress == user.EmailAddress))
             {
                 return Ok("Alias Or Email Exists");
             }
