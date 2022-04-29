@@ -18,11 +18,13 @@ const CreateActivityForm = () => {
     const [street, setStreet] = useState("");
     const [streetNumber, setStreetNumber] = useState("");
     const [eventDate, setEventDate] = useState("");
-    const [lastDate, setLastDate] = useState("");
+    const [registrationDeadline, setRegistrationDeadline] = useState("");
     const [ageRangeLower, setAgeRangeLower] = useState("");
     const [ageRangeUpper, setAgeRangeUpper] = useState("");
     const [description, setDescription] = useState("");
     const [submitted, setSubmitted] = useState(false);
+
+    const [dataValid, setDataValid] = useState(false);
 
     const handleActivityChange = (event) => {
         setActivity(event.target.value);
@@ -45,8 +47,8 @@ const CreateActivityForm = () => {
     const handleEventDateChange = (event) => {
         setEventDate(event.target.value);
     }
-    const handleLastDateChange = (event) => {
-        setLastDate(event.target.value);
+    const handleRegistrationDeadline = (event) => {
+        setRegistrationDeadline(event.target.value);
     }
     const handleAgeRangeLowerChange = (event) => {
         setAgeRangeLower(event.target.value);
@@ -58,59 +60,72 @@ const CreateActivityForm = () => {
         setDescription(event.target.value);
     }
     
+    const checkDataValid = () => {
+        if ((zipCode.length === 4) && title && activity && city && street && streetNumber && eventDate && description){
+            setDataValid(true);
+        }
+        else {
+            setDataValid(false);
+        }
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // SKIFT URL
-        let url = "https://prj4-api.azurewebsites.net/api/event"
-        let event = {
-            "activity" : activity,
-            "title" : title,
-            "zipCode": zipCode,
-            "city" : city,
-            "streetName" : street,
-            "apartmentNumber" : streetNumber,
-            "date" : eventDate,
-            "registrationDeadline" : lastDate,
-            "description" : description,
-            "minAge" : ageRangeLower === "" ? null : ageRangeLower,
-            "maxAge" : ageRangeUpper === "" ? null : ageRangeUpper,
-            "country" : "Danmark"
-        }
-        
+        checkDataValid();
+        if(dataValid){
+            let url = "https://prj4-api.azurewebsites.net/api/event"
+            let event = {
+                "activity" : activity,
+                "title" : title,
+                "zipCode": zipCode,
+                "city" : city,
+                "streetName" : street,
+                "apartmentNumber" : streetNumber,
+                "date" : eventDate,
+                "registrationDeadline" : registrationDeadline === "" ? null : registrationDeadline,
+                "description" : description,
+                "minAge" : ageRangeLower === "" ? null : ageRangeLower,
+                "maxAge" : ageRangeUpper === "" ? null : ageRangeUpper,
+                "country" : "Danmark"
+            }
+            
+            console.log(event);
 
-        console.log(event);
-
-        fetch(url, {
-                method: "POST",
-                body: JSON.stringify(event),
-                headers: new Headers({
-                    'Authorization': 'Bearer ' + token,
-                    "Content-Type": "application/json"
+            fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify(event),
+                    headers: new Headers({
+                        'Authorization': 'Bearer ' + token,
+                        "Content-Type": "application/json"
+                    })
                 })
-            })
-            .then(response => {
-                if(!response.ok){
-                    alert("Something went wrong");
-                }
-                else{
-                    return response.json();
-                }
-            })
-            .then(
-                (result) => {
-                    setSubmitted(true);
-                    console.log("result", result);
-
-                    if(result !== undefined){
-                        
+                .then(response => {
+                    if(!response.ok){
+                        alert("Something went wrong");
                     }
-                },
-                (error) => {
-                    setSubmitted(true);
-                    alert("Error: " + error)
-                }
-            )
+                    else{
+                        return response.json();
+                    }
+                })
+                .then(
+                    (result) => {
+                        setSubmitted(true);
+                        console.log("result", result);
+
+                        if(result !== undefined){
+                            
+                        }
+                    },
+                    (error) => {
+                        setSubmitted(true);
+                        alert("Error: " + error)
+                    }
+                )
+        }
+        else {
+            setSubmitted(true);
+        }
     }
 
     if(token){
@@ -127,8 +142,8 @@ const CreateActivityForm = () => {
                     {submitted && !activity && <SmallErrorText text="Indtast venligst en aktivitet"/>}
 
                     <div>
-                        <LabelInputSetShort labelText="Post nr.*" name="zipCode" type="text" value={zipCode} placeholderText="8000" onChange={handleZipCodeChange}/>
-                        {submitted && !zipCode && <SmallErrorText text="Indtast venligst et postnummer"/>}
+                        <LabelInputSetShort labelText="Post nr.*" name="zipCode" type="number" value={zipCode} placeholderText="8000" onChange={handleZipCodeChange}/>
+                        {submitted && !(zipCode.length === 4) && <SmallErrorText text="Indtast venligst et postnummer (4 cifre)"/>}
                         <LabelInputSet labelText="By*" name="City" type="text" value={city} placeholderText="Aarhus C" onChange={handleCityChange}/>
                         {submitted && !city && <SmallErrorText text="Indtast venligst en by"/>}
                     </div>
@@ -136,16 +151,16 @@ const CreateActivityForm = () => {
                     <LabelInputSet labelText="Vejnavn*" name="street" type="text" value={street} placeholderText="Adresse" onChange={handleStreetChange}/>
                     {submitted && !street && <SmallErrorText text="Indtast venligst et vejnavn"/>}
 
-                    <LabelInputSet labelText="Vejnr.*" name="streetNumber" type="text" value={streetNumber} placeholderText="2" onChange={handleStreetNumberChange}/>
+                    <LabelInputSetShort labelText="Vejnr.*" name="streetNumber" type="text" value={streetNumber} placeholderText="2" onChange={handleStreetNumberChange}/>
                     {submitted && !streetNumber && <SmallErrorText text="Indtast venligst et vej nr."/>}
 
                     <LabelInputSet labelText="Dato*" name="eventDate" type="datetime-local" value={eventDate} placeholderText="YYYY-MM-DD" onChange={handleEventDateChange}/>
                     {submitted && !eventDate && <SmallErrorText text="Indtast venligst en dato"/>}
 
-                    <LabelInputTextAreaSet labelText="Beskrivelse*" name="description" value={description} placeholderText="Beskrivelse" onChange={handleDescriptionChange}/>
+                    <LabelInputTextAreaSet labelText="Beskrivelse*" rows="15" name="description" value={description} placeholderText="Beskrivelse" onChange={handleDescriptionChange}/>
                     {submitted && !description && <SmallErrorText text="Indtast venligst en beskrivelse"/>}
 
-                    <LabelInputSet labelText="Sidste frist (tilmelding)" name="lastDate" type="datetime-local" value={lastDate} placeholderText="YYYY-MM-DD" onChange={handleLastDateChange}/>
+                    <LabelInputSet labelText="Sidste frist (tilmelding)" name="registrationDeadline" type="datetime-local" value={registrationDeadline} placeholderText="YYYY-MM-DD" onChange={handleRegistrationDeadline}/>
 
                     <LabelInputSetShort labelText="Aldersgrænse (Nedre)" name="ageRangeLower" type="number" value={ageRangeLower} placeholderText="18" onChange={handleAgeRangeLowerChange}/>
                     <LabelInputSetShort labelText="Aldersgrænse (Øvre)" name="ageRangeUpper" type="number" value={ageRangeUpper} placeholderText="18" onChange={handleAgeRangeUpperChange}/>
@@ -162,7 +177,7 @@ const CreateActivityForm = () => {
     else{
         return (
             <div>
-                <h1>Log ind først!</h1>
+                <h1>Log ind først</h1>
             </div>
         )
     }
