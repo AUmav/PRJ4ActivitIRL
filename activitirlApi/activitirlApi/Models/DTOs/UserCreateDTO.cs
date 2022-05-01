@@ -4,7 +4,6 @@ namespace ActivitIRLApi.Models.DTOs
 {
     public class UserCreateDTO
     {
-
         [MaxLength(80)]
         public string FirstName { get; set; }
         [MaxLength(80)]

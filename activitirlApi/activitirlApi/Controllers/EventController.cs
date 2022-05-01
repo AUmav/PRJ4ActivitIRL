@@ -50,8 +50,6 @@ namespace ActivitIRLApi.Controllers
 
             EventGetSignedupDTO privateEvent = _mapper.Map<EventGetSignedupDTO>(domainEvent);
 
-            privateEvent.CreatedBy = domainEvent.CreatedBy.FirstName + " " + domainEvent.CreatedBy.LastName;
-
             return CreatedAtAction("GetEvent", new { id = privateEvent.EventId }, privateEvent);
         }
 
@@ -61,12 +59,11 @@ namespace ActivitIRLApi.Controllers
         public async Task<ActionResult<EventGetDTO>> GetEvent(int id)
         {
 
-            var @event = await _content.Events.FindAsync(id);
+            Event @event = await _content.Events.Include(e => e.CreatedBy).FirstOrDefaultAsync(u => u.EventId == id);
             if (@event == null)
             {
                 return NotFound();
             }
-
 
             return _mapper.Map<EventGetDTO>(@event);
         }
@@ -81,6 +78,44 @@ namespace ActivitIRLApi.Controllers
             }
 
             return _mapper.Map<List<EventGetPublicDTO>>(@event);
+        }
+
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<ActionResult<bool>> Signup(int id)
+        {
+            User user = GetCurrentUser();
+
+            User domainUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
+
+            Event @event = await _content.Events.Include(e => e.ListOfUsers).Include(a => a.CreatedBy).FirstOrDefaultAsync(u => u.EventId == id);
+
+
+            if(@event == null || user == null)
+            {
+                return NotFound();
+            }
+
+            if(!IsUserEligible(domainUser, @event))
+            {
+                return Unauthorized();
+            }
+
+            if(!@event.ListOfUsers.Contains(domainUser))
+            {
+                @event.ListOfUsers.Add(domainUser);
+                @event.NumberOfUsers = @event.ListOfUsers.Count();
+                await _content.SaveChangesAsync();
+
+            }
+            else
+            {
+                @event.ListOfUsers.Remove(domainUser);
+                @event.NumberOfUsers = @event.ListOfUsers.Count();
+                await _content.SaveChangesAsync();
+            }
+
+            return true;
         }
 
 
@@ -107,6 +142,31 @@ namespace ActivitIRLApi.Controllers
                 };
             }
             return null;
+        }
+
+        private bool IsUserEligible(User user, Event @event)
+        {
+            int userAge = GetAgeFromDateTime(user.DateOfBirth);
+            
+            if (userAge > @event.MaxAge || userAge < @event.MinAge || @event.NumberOfUsers >= @event.MaxUsers || @event.CreatedBy.EmailAddress == user.EmailAddress)
+            {
+                return false;
+            }
+            
+            return true;
+        }
+        // Inspiration from stackoverflow
+        private int GetAgeFromDateTime(DateTime dateOfBirth)
+        {
+            // Save today's date.
+            var today = DateTime.Today;
+
+            // Calculate the age.
+            var age = today.Year - dateOfBirth.Year;
+
+            // Go back to the year in which the person was born in case of a leap year
+            if (dateOfBirth.Date > today.AddYears(-age)) age--;
+            return age;
         }
     }
 }

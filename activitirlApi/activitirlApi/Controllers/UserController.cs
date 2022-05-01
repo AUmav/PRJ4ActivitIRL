@@ -34,7 +34,7 @@ namespace ActivitIRLApi.Controllers
         {
             User user = GetCurrentUser();
 
-            var domainUser = await _content.Users.FirstOrDefaultAsync(u => u.Alias == user.Alias);
+            var domainUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
 
             if (domainUser == null)
             {

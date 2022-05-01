@@ -16,6 +16,7 @@ namespace ActivitIRLApi.AutoMapper
             CreateMap<Event, EventGetPublicDTO>();
             CreateMap<EventCreateDTO, Event>();
             CreateMap<Event, EventGetSignedupDTO>();
+            CreateMap<User, EventUserDTO>();
 
         }
     }

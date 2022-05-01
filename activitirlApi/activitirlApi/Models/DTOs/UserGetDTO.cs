@@ -28,5 +28,7 @@ namespace ActivitIRLApi.Models.DTOs
         public string? ZipCode { get; set; }
         [MaxLength(50)]
         public string? Country { get; set; }
+        [MaxLength(10000)]
+        public byte[]? ProfilePicture { get; set; }
     }
 }

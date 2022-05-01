@@ -22,6 +22,11 @@ namespace ActivitIRLApi.Data
             builder.Entity<User>()
                 .HasIndex(u => u.Alias)
                 .IsUnique();
+            builder.Entity<Event>()
+                .HasOne(e => e.CreatedBy);
+            builder.Entity<Event>()
+                .HasMany<User>(e => e.ListOfUsers)
+                .WithMany(u => u.Events);
         }
     }
 }

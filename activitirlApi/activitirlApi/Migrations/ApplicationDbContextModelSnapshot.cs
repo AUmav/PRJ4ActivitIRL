@@ -97,16 +97,13 @@ namespace ActivitIRLApi.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime?>("DateOfBirth")
+                    b.Property<DateTime>("DateOfBirth")
                         .HasMaxLength(20)
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
                         .HasMaxLength(254)
                         .HasColumnType("nvarchar(254)");
-
-                    b.Property<int?>("EventId")
-                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .HasMaxLength(80)
@@ -134,6 +131,10 @@ namespace ActivitIRLApi.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("int");
 
+                    b.Property<byte[]>("ProfilePicture")
+                        .HasMaxLength(10000)
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -156,8 +157,6 @@ namespace ActivitIRLApi.Migrations
                     b.HasIndex("EmailAddress")
                         .IsUnique()
                         .HasFilter("[EmailAddress] IS NOT NULL");
-
-                    b.HasIndex("EventId");
 
                     b.ToTable("Users");
                 });
@@ -184,6 +183,9 @@ namespace ActivitIRLApi.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatedByUserId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -223,7 +225,24 @@ namespace ActivitIRLApi.Migrations
 
                     b.HasKey("EventId");
 
+                    b.HasIndex("CreatedByUserId");
+
                     b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("EventUser", b =>
+                {
+                    b.Property<int>("EventsEventId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ListOfUsersUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EventsEventId", "ListOfUsersUserId");
+
+                    b.HasIndex("ListOfUsersUserId");
+
+                    b.ToTable("EventUser");
                 });
 
             modelBuilder.Entity("ActivitIRLApi.Models.Entities.Comment", b =>
@@ -252,11 +271,28 @@ namespace ActivitIRLApi.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("ActivitIRLApi.Models.Entities.User", b =>
+            modelBuilder.Entity("ActivitIRLApi.Models.Event", b =>
+                {
+                    b.HasOne("ActivitIRLApi.Models.Entities.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("EventUser", b =>
                 {
                     b.HasOne("ActivitIRLApi.Models.Event", null)
-                        .WithMany("ListOfUsers")
-                        .HasForeignKey("EventId");
+                        .WithMany()
+                        .HasForeignKey("EventsEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ActivitIRLApi.Models.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("ListOfUsersUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ActivitIRLApi.Models.Entities.User", b =>
@@ -267,8 +303,6 @@ namespace ActivitIRLApi.Migrations
             modelBuilder.Entity("ActivitIRLApi.Models.Event", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("ListOfUsers");
                 });
 #pragma warning restore 612, 618
         }

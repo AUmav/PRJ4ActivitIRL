@@ -13,7 +13,7 @@ namespace ActivitIRLApi.Models.Entities
         [MaxLength(80)]
         public string? Gender { get; set; }
         [MaxLength(20)]
-        public DateTime? DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         [MaxLength(254)]
         public string? EmailAddress { get; set; }
         [MaxLength(255)]
@@ -36,7 +36,10 @@ namespace ActivitIRLApi.Models.Entities
         public int? UserId { get; set; } //Primary key
         [MaxLength(100)]
         public string Role { get; set; }
+        [MaxLength(10000)]
+        public byte[]? ProfilePicture { get; set; }
 
+        public List<Event>? Events { get; set; } // Foreign keys
 
         public List<Preference>? preferences { get; set; }
     }

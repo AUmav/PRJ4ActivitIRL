@@ -11,8 +11,6 @@ namespace ActivitIRLApi.Models
         public string? Description { get; set; }
         public int MaxUsers { get; set; }
 
-        //public int MinUsers; Måske den her?
-
         public string? StreetName { get; set; }
         public int ApartmentNumber { get; set; }
         public string? City { get; set; }
@@ -27,8 +25,8 @@ namespace ActivitIRLApi.Models
         public DateTime RegistrationDeadline { get; set; }
         public int NumberOfUsers { get; set; } // Derived. 
         public List<User>? ListOfUsers { get; set; } //Kunne ikke lave med UserId
-
-        public User? CreatedBy; // Foreign key
+        
+        public User CreatedBy; // Foreign key
         //picture JPEG
 
         public List<Comment>? Comments { get; set; } //Foreign key
