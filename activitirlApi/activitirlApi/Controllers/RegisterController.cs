@@ -31,7 +31,7 @@ namespace ActivitIRLApi.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<UserCreateDTO>> CreateUser([FromBody] UserCreateDTO userCreateDTOData)
+        public async Task<IActionResult> CreateUser([FromBody] UserCreateDTO userCreateDTOData)
         {
             userCreateDTOData.EmailAddress = userCreateDTOData.EmailAddress.ToLower();
 
@@ -41,11 +41,10 @@ namespace ActivitIRLApi.Controllers
             }
 
             User user = _mapper.Map<User>(userCreateDTOData);
-            // u.Alias == user.Alias ||
 
             if (_content.Users.Any(u =>  u.EmailAddress == user.EmailAddress))
             {
-                return Ok("Alias Or Email Exists");
+                return Ok("Email Exists");
             }
 
             _passwordHasher.CreatePasswordHash(userCreateDTOData.Password, out byte[] PWHash, out byte[] PWSalt);

@@ -52,10 +52,46 @@ namespace ActivitIRLApi.Controllers
             return NoContent();
         }
 
-        private bool UserExists(int? id)
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> ChangeUser([FromBody] UserGetDTO moddedUser)
         {
-            return _content.Users.Any(e => e.UserId == id);
+            User user = GetCurrentUser();
+
+            var domainUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
+
+            if (domainUser == null)
+            {
+                return NotFound();
+            }
+
+            ModUser(ref domainUser, moddedUser);
+
+            User lol = domainUser;
+
+            await _content.SaveChangesAsync();
+
+            return Ok("User Updated");
+
         }
+
+        private void ModUser(ref User user, UserGetDTO mods)
+        {
+            user.Alias = mods.Alias;
+            user.ApartmentNumber = int.Parse(mods.ApartmentNumber);
+            user.City = mods.City;
+            user.Country = mods.Country;
+            user.DateOfBirth = DateTime.Parse(mods.DateOfBirth);
+            user.FirstName = mods.FirstName;
+            user.Gender = mods.Gender;
+            user.LastName = mods.LastName;
+            user.PhoneNumber = int.Parse(mods.PhoneNumber);
+            user.ProfilePicture = mods.ProfilePicture;
+            user.StreetName = mods.StreetName;
+            user.ZipCode = int.Parse(mods.ZipCode);
+
+        }
+
 
         private User GetCurrentUser()
         {

@@ -12,7 +12,7 @@ namespace ActivitIRLApi.Models.Entities
         public string? LastName { get; set; }
         [MaxLength(80)]
         public string? Gender { get; set; }
-        [MaxLength(20)]
+        [MaxLength(100)]
         public DateTime DateOfBirth { get; set; }
         [MaxLength(254)]
         public string? EmailAddress { get; set; }

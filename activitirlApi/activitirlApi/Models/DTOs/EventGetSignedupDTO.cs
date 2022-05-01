@@ -22,6 +22,7 @@ namespace ActivitIRLApi.Models.DTOs
         public int? MinAge { get; set; }
         public int? MaxAge { get; set; }
         public int NumberOfUsers { get; set; }
+        public bool IsSignedup { get; set; }
 
         public DateTime? RegistrationDeadline { get; set; }
         

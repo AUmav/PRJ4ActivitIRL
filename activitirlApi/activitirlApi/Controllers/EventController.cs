@@ -53,20 +53,43 @@ namespace ActivitIRLApi.Controllers
             return CreatedAtAction("GetEvent", new { id = privateEvent.EventId }, privateEvent);
         }
 
-        // DELETE: api/Event/5
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<ActionResult<EventGetDTO>> GetEvent(int id)
+        [AllowAnonymous]
+        public async Task<IActionResult> GetEventSignedup(int id)
         {
+            User user = GetCurrentUser();
 
-            Event @event = await _content.Events.Include(e => e.CreatedBy).FirstOrDefaultAsync(u => u.EventId == id);
+            if(user == null)
+            {
+                Event eventPublic = await _content.Events.Include(e => e.CreatedBy).FirstOrDefaultAsync(u => u.EventId == id);
+               
+                if (eventPublic == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(_mapper.Map<EventGetDTO>(eventPublic));
+
+            }
+
+            User domainUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
+
+            Event @event = await _content.Events.Include(e => e.CreatedBy).Include(u => u.ListOfUsers).FirstOrDefaultAsync(u => u.EventId == id);
+           
             if (@event == null)
             {
                 return NotFound();
             }
 
-            return _mapper.Map<EventGetDTO>(@event);
+            EventGetSignedupDTO signedupEvent = _mapper.Map<EventGetSignedupDTO>(@event);
+
+            signedupEvent.IsSignedup =  @event.ListOfUsers.Contains(domainUser) ? true : false;
+
+            return Ok(signedupEvent);
+
         }
+
 
         [HttpGet]
         public async Task<ActionResult<List<EventGetPublicDTO>>> GetEventList()
@@ -133,13 +156,17 @@ namespace ActivitIRLApi.Controllers
             {
                 var userClaims = identity.Claims;
 
-                return new User
+                if (!(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value == null))
                 {
-                    EmailAddress = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
-                    Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value,
-                    Gender = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Gender)?.Value,
-                    DateOfBirth = DateTime.Parse(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.DateOfBirth)?.Value)
-                };
+                    return new User
+                    {
+                        EmailAddress = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
+                        Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value,
+                        Gender = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Gender)?.Value,
+                        DateOfBirth = DateTime.Parse(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.DateOfBirth)?.Value)
+                    };
+                }
+               
             }
             return null;
         }
