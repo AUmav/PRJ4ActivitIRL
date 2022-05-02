@@ -16,6 +16,9 @@ h3 {
     font-size: 0.8em;
     color: black;
 }
+.smallText > p{
+    display: inline-block;
+}
 
 .smallErrorText {
     font-size: 0.8em;

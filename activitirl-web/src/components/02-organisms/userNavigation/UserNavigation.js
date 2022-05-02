@@ -12,7 +12,6 @@ const UserNavigation = () => {
     const [isOpen, setIsOpen] = useState(false);
     
     let token = localStorage.getItem("loginToken")
-    console.log(token);
     let payload = jwtDecode(token);
     let email = payload["email"]; // get email from payload
 
