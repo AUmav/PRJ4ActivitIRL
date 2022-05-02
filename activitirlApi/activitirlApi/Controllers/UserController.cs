@@ -67,8 +67,6 @@ namespace ActivitIRLApi.Controllers
 
             ModUser(ref domainUser, moddedUser);
 
-            User lol = domainUser;
-
             await _content.SaveChangesAsync();
 
             return Ok("User Updated");

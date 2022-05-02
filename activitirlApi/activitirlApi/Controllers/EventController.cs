@@ -56,7 +56,7 @@ namespace ActivitIRLApi.Controllers
         [HttpGet("{id}")]
         [Authorize]
         [AllowAnonymous]
-        public async Task<IActionResult> GetEventSignedup(int id)
+        public async Task<IActionResult> GetEvent(int id)
         {
             User user = GetCurrentUser();
 

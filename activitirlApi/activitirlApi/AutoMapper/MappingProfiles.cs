@@ -9,7 +9,7 @@ namespace ActivitIRLApi.AutoMapper
     {
         public MappingProfiles()
         {
-            CreateMap<string, DateTime>().ConvertUsing(new DateTimeTypeConverter());
+            CreateMap<string, DateTime>().ConvertUsing(new DateTimeStringTypeConverter());
             CreateMap<UserCreateDTO, User>();
             CreateMap<User, UserGetDTO>();
             CreateMap<Event, EventGetDTO>();
@@ -17,11 +17,10 @@ namespace ActivitIRLApi.AutoMapper
             CreateMap<EventCreateDTO, Event>();
             CreateMap<Event, EventGetSignedupDTO>();
             CreateMap<User, EventUserDTO>();
-
         }
     }
 
-    public class DateTimeTypeConverter : ITypeConverter<string, DateTime>
+    public class DateTimeStringTypeConverter : ITypeConverter<string, DateTime>
     {
         public DateTime Convert(string source, DateTime destination, ResolutionContext context)
         {
