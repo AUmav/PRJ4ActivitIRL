@@ -10,7 +10,6 @@ import './App.css';
 import NavBar from './components/NavBar'
 import HomePage from "./components/04-pages/homePage/HomePage";
 import ActivityDetails from "./components/03-templates/ActivityDetails/ActivityDetails";
-//import ActivityDetails from "./components/03-templates/ActivityDetails";
 import LoginPage from "./components/04-pages/LoginPage";
 import CreateUserPage from "./components/04-pages/CreateUserPage";
 import CreateActivityForm from "./components/02-organisms/forms/createActivityForm/createActivityForm";
