@@ -103,6 +103,9 @@ namespace ActivitIRLApi.Controllers
             return _mapper.Map<List<EventGetPublicDTO>>(@event);
         }
 
+
+
+
         [HttpPut("{id}")]
         [Authorize]
         public async Task<ActionResult<bool>> Signup(int id)
@@ -139,13 +142,6 @@ namespace ActivitIRLApi.Controllers
             }
 
             return true;
-        }
-
-
-
-        private bool EventExists(int id)
-        {
-            return _content.Events.Any(e => e.EventId == id);
         }
 
         private User GetCurrentUser()
