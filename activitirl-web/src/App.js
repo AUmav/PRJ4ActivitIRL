@@ -17,12 +17,15 @@ import CreateActivityForm from "./components/02-organisms/forms/createActivityFo
 import CreateActivityPage from "./components/04-pages/CreateActivityPage";
 import UserPage from "./components/04-pages/UserPage";
 import UserPageEdit from "./components/04-pages/UserPageEdit";
+import CheckToken from "./CheckToken";
 
 
 function App() {
+
   return (
     <Router>
       <div className="App">
+        <CheckToken/>
         <NavBar/>
           <Routes>
             <Route path="/" element={<HomePage/>} />

@@ -1,10 +1,13 @@
 .dropDown{
     list-style: none;
     position: absolute;
-    width: 17ch;
+    width: 16.8ch;
     text-align: left;
     background-color: var(--secondary-color);
     margin-top: 10px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--primary-color);
 }
 .dropDown> a {
     color: var(--default-font-color);
@@ -15,6 +18,7 @@
 
 .dropDownItem{
     padding: 15px;
+    border-bottom: 1px solid var(--primary-color);
 }
 .dropDownItem:hover{
     background-color: var(--tertiary-color);
@@ -24,7 +28,8 @@
 
 .userHeader{
     text-align: left;
+    margin: 0;
     width: 150px;
     cursor: pointer;
-    color: var(--tertiary-color)
+    color: var(--tertiary-color);
 }

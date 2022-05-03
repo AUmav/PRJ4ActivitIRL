@@ -143,9 +143,19 @@ const UserPageEditDetails = () => {
     }
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return(                
+            <div className="userDetails">
+                <TitleText title="Mine oplysninger"/>
+                <p>Error: {error.message}</p>
+            </div>
+        );
     } else if (!isLoaded){
-        return <div>Loading...</div>
+        return (                
+            <div className="userDetails">
+                <TitleText title="Mine oplysninger"/>
+                <p>Loading...</p>
+            </div>
+        );
     } else {
         return(
             <div className="userDetails">

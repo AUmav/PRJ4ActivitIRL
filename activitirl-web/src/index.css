@@ -44,6 +44,8 @@ a {
 a:hover {
   color: var(--tertiary-color);
 }
+
+
 /*
 https://stackoverflow.com/questions/42188291/vertically-align-text-with-different-font-sizes-in-navigation-bar 
 http://jsfiddle.net/mdqf81da/ 
@@ -64,9 +66,18 @@ nav > ul > li {
   display: inline-block;
   padding-left: 20px;
 }
-nav > button.hamburger {
+.navigation-bar > button.hamburger {
   display: none;
 }
+
+.navbar-small{
+  display: none;
+}
+
+.menu-button{
+  display: none;
+}
+
 
 .activity-details{
   padding: 10px 20px;
@@ -83,6 +94,69 @@ nav > button.hamburger {
   object-fit: cover;
 }
 
-@media screen and (max-width : 760px){
+@media screen and (max-width : 640px){
+  .navbar-big {
+    display: none;
+  }
+  .navigation-bar > button.hamburger {
+    display: block;
+  }
+  .navbar-small {
+    display: block;
+
+  }
+  .navbar-small > nav > ul {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: var(--secondary-color);
+  }
+
+  .navbar-small > nav > ul > li{
+    padding: 10px;
+  }
+
+  .smth_item:hover{
+    background-color: var(--secondary-color);
+  }
+
+  .navbar-small > nav > ul > li > a {
+    color: var(--primary-color)
+  }
+
+  .navbar-small{
+    list-style: none;
+    text-align: left;
+    background-color: var(--secondary-color);
+    margin-top: 10px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+  }
+  .navbar-small> a {
+      color: var(--default-font-color);
+  }
+  .navbar-small > a:hover {
+      color: var(--primary-color)
+  }
+  .navbar-item{
+      flex: 1;
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid var(--primary-color);
+  }
+  .navbar-item:hover{
+      background-color: var(--tertiary-color);
+      cursor: pointer;
+  }
+  .menu-button{
+    display: block;
+    cursor: pointer;
+  }
+
+
 
 }

@@ -9,4 +9,4 @@ const ProfilePictureName = ({name}) => {
     )
 }
 
-export default ProfilePictureName
+export default ProfilePictureName;

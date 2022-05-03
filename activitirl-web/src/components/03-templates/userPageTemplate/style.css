@@ -1,3 +1,22 @@
+.centeringDiv{
+    display: inline-flex;
+    border-radius: 5px;
+}
 .userPage{
-    background-color: var(--primary-color);
+    margin: 20px;
+    display: inline-flex;
+    width: auto;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+@media screen and (max-width : 640px){
+    .centeringDiv{
+        display: flex;
+        width: 100%;
+    }
+    .userPage{
+        flex: 1;
+    }
+
 }

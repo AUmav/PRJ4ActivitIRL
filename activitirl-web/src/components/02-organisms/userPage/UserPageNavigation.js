@@ -5,7 +5,7 @@ const UserPageNavigation = () => {
         <div className="userPageNav">
             <ul>
                 <li>
-                    <Link to="/mypage">Mine profil</Link>
+                    <Link to="/mypage">Min profil</Link>
                 </li>
                 <li>
                     <Link to="/myactivities">Mine aktiviteter</Link>

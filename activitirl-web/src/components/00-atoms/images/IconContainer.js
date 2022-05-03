@@ -1,6 +1,6 @@
 const IconContainer = ({iconType}) => {
     return(
-        <span className="material-icons">{iconType}</span>
+        <span className="material-icons ">{iconType}</span>
     )
 }
 

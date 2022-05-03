@@ -1,3 +1,4 @@
+import CheckToken from "../../CheckToken";
 import CreateUserForm from "../02-organisms/forms/createUserForm/CreateUserForm";
 
 const CreateUserPage = () => {

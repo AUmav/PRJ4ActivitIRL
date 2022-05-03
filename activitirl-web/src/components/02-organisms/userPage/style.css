@@ -2,6 +2,8 @@
     background-color: var(--secondary-color);
     padding: 20px 50px 40px;
     text-align: left;
+    width: 100%;
+    border-radius: 0px 5px 5px 0px;
 }
 
 .userDetails > p {
@@ -12,12 +14,29 @@
 }
 
 .userPageNav {
-    background: var(--tertiary-color);
-    width: 30%;
+    background: var(--primary-color);
+    width: 250px;
     float: left;
+    height: 100%;
+    border-radius: 5px 0px 0px 5px;
+    padding-right: 40px;
+
+
+    text-align: left;
 }
 .userPageNav > ul {
+    padding-top: 40px;
     list-style: none;
     margin: 0;
 }
+.userPageNav > ul > li {
+    margin-bottom: 10px;
+}
 
+
+@media screen and (max-width : 640px){
+    .userPageNav{
+        display: none;
+    }
+
+}
