@@ -17,7 +17,8 @@ const ActivityDetails = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [event, setEvent] = useState([]);
 
-    let url = "https://prj4-api.azurewebsites.net/api/event/dummyevent"
+    let url = "https://prj4-api.azurewebsites.net/api/event/"
+    url += id;
     useEffect(() => {
         fetch(url, {
             method: 'GET',
@@ -29,13 +30,25 @@ const ActivityDetails = () => {
             (result) => {
                 setIsLoaded(true);
                 console.log("loaded")
+
+                // Parsing the dateTime strings
+                // For now using the date from the result object -> it loads faster, preventing errors
+                result.date = dateFormat(result.date);
+                result.registrationDeadline = dateFormat(result.registrationDeadline);
+                
                 setEvent(result);
+                console.log(result);
+
+                
+              
+
+
+
             },
             (error) => {
                 setIsLoaded(true);
                 setError(error);
                 console.log("error")
-
             }
         )
     }, [])
@@ -45,25 +58,30 @@ const ActivityDetails = () => {
         console.log("User joins event.");
     };
 
+    function dateFormat(date)
+    {
+        let dateArray = date.split('T');
+        let timeArray = dateArray[1].split(':');
+
+        let formattedDateTime = dateArray[0]+" - "+timeArray[0]+":"+timeArray[1];
+        console.log(formattedDateTime);
+        return formattedDateTime;
+    }
+
+  
     return(
         <div className="details-container">
-            {/* <p>{id}</p>
-            <p>{event.title}, {event.city}, {event.zipCode}, {event.activity}</p>
-            <p>hooray</p> */}
-
             <ImageContainer/>
 
             <div className="profile-title-flex">
                 <TitleText title={event.title} className="title-text"/>
-                <ProfilePictureName name="Jonas"></ProfilePictureName>
+                {/* <ProfilePictureName name={event.createdBy.firstName}></ProfilePictureName> */}
             </div>            
 
-            <ParameterSet activityParam={event.activity} cityParam={event.city} zipCodeParam={event.zipCode} dateParam="28. maj, kl 10:15"></ParameterSet>            
+            <ParameterSet activityParam={event.activity} cityParam={event.city} zipCodeParam={event.zipCode} dateParam={event.date}></ParameterSet>            
             <HeadlineDescriptionSet headline="Test af titel" 
-                description="Kom og spil fodbold! Vi er et par stykker der søger flere til at spille fodbold på 
-                en stor græsplæne der tilhøre fællesarealet, tæt på min lejlighed. Det kunne være fedt at være 
-                nok til to hele hold, så vi kunne spille imod hinanden."></HeadlineDescriptionSet>
-            <Limits ageLimit="18+" deadline="20. maj" participantLimit="15" numberOfParticipants="2"></Limits>
+                description={event.description}></HeadlineDescriptionSet>
+            <Limits ageLimitLower={event.minAge} ageLimitHigher={event.maxAge} deadline={event.registrationDeadline} participantLimit={event.maxUsers} numberOfParticipants={event.numberOfUsers}></Limits>
 
             <BigButton text="Tilmeld!" onPress={joinEvent}></BigButton>
         </div>

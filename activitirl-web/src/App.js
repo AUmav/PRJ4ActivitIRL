@@ -14,6 +14,7 @@ import LoginPage from "./components/04-pages/LoginPage";
 import CreateUserPage from "./components/04-pages/CreateUserPage";
 import CreateActivityForm from "./components/02-organisms/forms/createActivityForm/createActivityForm";
 import CreateActivityPage from "./components/04-pages/CreateActivityPage";
+import UserActivities from "./components/03-templates/UserActivities/UserActivities";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path="/activity/:id" element={<ActivityDetails/>}/>
             <Route path="/logout" element={<LogOut/>}/>
             <Route path="/activity/create" element={<CreateActivityPage/>}/>
+            <Route path="/myactivities" element={<UserActivities/>}></Route>
           </Routes>
       </div>
     </Router>

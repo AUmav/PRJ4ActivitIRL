@@ -23,6 +23,7 @@ const PostContainer = () => {
             (result) => {
                 setIsLoaded(true);
                 console.log("loaded")
+                console.log(url);
                 setItems(result);
             },
             (error) => {
