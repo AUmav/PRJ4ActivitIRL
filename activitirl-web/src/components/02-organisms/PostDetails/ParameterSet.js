@@ -1,7 +1,8 @@
 import ParameterIconSet from '../../01-molecules/Parameters/ParameterIconSet';
 import './style.css'
 
-const ParameterSet = ({activityParam, cityParam, zipCodeParam, dateParam}) => {
+const ParameterSet = ({activityParam, cityParam, zipCodeParam, dateParam}) => {  
+    
     return (
         <div className="parameters-container">
             <ParameterIconSet type="event" paramtext={activityParam}></ParameterIconSet>
