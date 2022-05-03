@@ -9,7 +9,6 @@ const PostContainer = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
 
-    //let url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=mar"
     let url = "https://prj4-api.azurewebsites.net/api/event"
     useEffect(() => {
         console.log("effect")

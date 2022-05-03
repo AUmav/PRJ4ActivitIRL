@@ -15,6 +15,8 @@ import CreateUserPage from "./components/04-pages/CreateUserPage";
 import CreateActivityForm from "./components/02-organisms/forms/createActivityForm/createActivityForm";
 import CreateActivityPage from "./components/04-pages/CreateActivityPage";
 import UserActivities from "./components/03-templates/UserActivities/UserActivities";
+import UserPage from "./components/04-pages/UserPage";
+import UserPageEdit from "./components/04-pages/UserPageEdit";
 
 
 function App() {
@@ -31,6 +33,9 @@ function App() {
             <Route path="/logout" element={<LogOut/>}/>
             <Route path="/activity/create" element={<CreateActivityPage/>}/>
             <Route path="/myactivities" element={<UserActivities/>}></Route>
+            <Route path="/mypage" element={<UserPage/>}/>
+            <Route path="/mypage/edit" element={<UserPageEdit/>}/>
+
           </Routes>
       </div>
     </Router>

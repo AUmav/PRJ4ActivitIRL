@@ -1,0 +1,12 @@
+.labelTextPair > p{
+    display: inline-block;
+    margin-left: 10px;
+}
+
+@media screen and (max-width:640px){
+    .labelTextPair > p{
+        margin-top: 5px;
+        margin-left: 0px;
+    }
+    
+}
