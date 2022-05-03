@@ -98,8 +98,11 @@ const UserPageEditDetails = () => {
             "firstName" : firstName,
             "lastName" : lastName,
             "dateOfBirth" : birthday,
-            
-            
+            "zipCode": zipCode,
+            "city" : city,
+            "streetName" : street,
+            "apartmentNumber" : streetNumber,
+                   
         }
 
         console.log(user);

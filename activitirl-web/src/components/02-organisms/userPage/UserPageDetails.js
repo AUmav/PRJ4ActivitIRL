@@ -13,6 +13,7 @@ import "./style.css"
 const UserPageDetails = () => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [birthday, setBirthday] = useState(null);
 
     const [user, setUser] = useState([]);
     
@@ -34,6 +35,7 @@ const UserPageDetails = () => {
                 setIsLoaded(true);
                 console.log("loaded")
                 setUser(result);
+                setBirthday(result.dateOfBirth.split(" ")[0]);
 
             },
             (error) => {
@@ -63,7 +65,7 @@ const UserPageDetails = () => {
                 <TitleText title="Mine oplysninger"/>
                 <LabelTextPair labelText="Fornavn" text={user.firstName}/>
                 <LabelTextPair labelText="Efternavn" text={user.lastName}/>
-                <LabelTextPair labelText="Fødseldag" text={user.dateOfBirth.split(" ")[0]}/>
+                <LabelTextPair labelText="Fødseldag" text={birthday}/>
                 <LabelTextPair labelText="Email" text={user.emailAddress}/>
                 <hr/>
                 <p>Adresse</p>
