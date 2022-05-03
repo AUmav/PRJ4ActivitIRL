@@ -7,6 +7,6 @@
         public string City { get; set; }
         public int ZipCode { get; set; }
         public string Activity { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
     }
 }

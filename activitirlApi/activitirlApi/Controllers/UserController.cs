@@ -12,6 +12,7 @@ using ActivitIRLApi.Models.DTOs;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using ActivitIRLApi.Validaion;
 
 namespace ActivitIRLApi.Controllers
 {
@@ -21,11 +22,13 @@ namespace ActivitIRLApi.Controllers
     {
         private readonly ApplicationDbContext _content;
         private readonly IMapper _mapper;
+        private readonly InputTypeValidation _typeValidater;
 
         public UserController(ApplicationDbContext content,IMapper mapper)
         {
             _content = content;
             _mapper = mapper;
+            _typeValidater = new InputTypeValidation();
         }
 
         [HttpGet]
@@ -44,17 +47,9 @@ namespace ActivitIRLApi.Controllers
             return _mapper.Map<UserGetDTO>(domainUser);
         }
 
-        [HttpDelete]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteUser(UserGetDTO userGetDTO)
-        {
-
-            return NoContent();
-        }
-
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> ChangeUser([FromBody] UserGetDTO moddedUser)
+        public async Task<IActionResult> ChangeUser([FromBody] UserPutDTO moddedUser)
         {
             User user = GetCurrentUser();
 
@@ -73,9 +68,31 @@ namespace ActivitIRLApi.Controllers
 
         }
 
-        private void ModUser(ref User user, UserGetDTO mods)
+        [HttpDelete("{email}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteUser(string email)
         {
-            user.Alias = mods.Alias;
+            if(_typeValidater.IsValidEmail(email))
+            {
+                return BadRequest("Invalid Email address!");
+            }
+
+            var domainUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == email);
+
+            if (domainUser == null)
+            {
+                return NotFound("Email not found!");
+            }
+
+            _content.Users.Remove(domainUser);
+
+            await _content.SaveChangesAsync();
+
+            return Ok($"User with the email = {email} deleted!");
+        }
+
+        private void ModUser(ref User user, UserPutDTO mods)
+        {
             user.ApartmentNumber = int.Parse(mods.ApartmentNumber);
             user.City = mods.City;
             user.Country = mods.Country;

@@ -103,10 +103,36 @@ namespace ActivitIRLApi.Controllers
             return _mapper.Map<List<EventGetPublicDTO>>(@event);
         }
 
-
-
-
         [HttpPut("{id}")]
+        [Authorize]
+        public async Task<IActionResult> ChangeEvnet(int id, [FromBody] EventPutDTO eventMod)
+        {
+            User user = GetCurrentUser();
+
+            User domainUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
+
+            Event @event = await _content.Events.Include(oc => oc.CreatedBy).FirstOrDefaultAsync(u => u.EventId == id);
+
+            if (@event == null || user == null)
+            {
+                return NotFound();
+            }
+
+            if(!(@event.CreatedBy == domainUser))
+            {
+                return Unauthorized();
+            }
+
+            ModEvent(ref @event, eventMod);
+
+            await _content.SaveChangesAsync();
+
+            return Ok("Event Updated");
+        }
+
+
+
+        [HttpPut("Register/{id}")]
         [Authorize]
         public async Task<ActionResult<bool>> Signup(int id)
         {
@@ -143,6 +169,29 @@ namespace ActivitIRLApi.Controllers
 
             return true;
         }
+
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteEvent(int id)
+        {
+
+            Event @event = await _content.Events.FirstOrDefaultAsync(u => u.EventId == id);
+
+
+            if (@event == null)
+            {
+                return NotFound("Event not found!");
+            }
+
+            _content.Events.Remove(@event);
+
+            await _content.SaveChangesAsync();
+
+            return Ok($"User with the id = {id} deleted!");
+        }
+
+
 
         private User GetCurrentUser()
         {
@@ -190,6 +239,22 @@ namespace ActivitIRLApi.Controllers
             // Go back to the year in which the person was born in case of a leap year
             if (dateOfBirth.Date > today.AddYears(-age)) age--;
             return age;
+        }
+
+        private void ModEvent(ref Event @event, EventPutDTO mods)
+        {
+            @event.Title = mods.Title;
+            @event.City = mods.City;
+            @event.Country = mods.Country;
+            @event.Date = DateTime.Parse(mods.Date);
+            @event.MinAge = mods.MinAge;
+            @event.MaxAge = mods.MaxAge;
+            @event.Description = mods.Description;
+            @event.StreetName = mods.StreetName;
+            @event.ZipCode = mods.ZipCode;
+            @event.State = mods.State;
+            @event.MaxUsers = mods.MaxUsers;
+            @event.Activity = mods.Activity;
         }
     }
 }

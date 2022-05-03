@@ -7,7 +7,7 @@ namespace ActivitIRLApi.Models.DTOs
     {
         public int EventId { get; set; }
         public string Title { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
         public string Activity { get; set; }
         public string Description { get; set; }
         public int? MaxUsers { get; set; }

@@ -17,6 +17,9 @@ namespace ActivitIRLApi.AutoMapper
             CreateMap<EventCreateDTO, Event>();
             CreateMap<Event, EventGetSignedupDTO>();
             CreateMap<User, EventUserDTO>();
+            CreateMap<DateTime, string>().ConvertUsing(new DateOnlyStringTypeConverter());
+
+
         }
     }
 
@@ -25,6 +28,14 @@ namespace ActivitIRLApi.AutoMapper
         public DateTime Convert(string source, DateTime destination, ResolutionContext context)
         {
             return System.Convert.ToDateTime(source);
+        }
+    }
+
+    public class DateOnlyStringTypeConverter : ITypeConverter<DateTime, string>
+    {
+        public string Convert(DateTime source, string destination, ResolutionContext context)
+        {
+            return DateOnly.FromDateTime(source).ToString();
         }
     }
 }
