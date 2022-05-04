@@ -74,15 +74,19 @@ const UserPageDetails = () => {
                 <LabelTextPair labelText="Email" text={user.emailAddress}/>
                 <hr/>
                 <p>Adresse</p>
-                {user.streetName === "" && <LabelTextPair labelText="Vejnavn" text={user.streetName} small={user.streetName === "" ? "true" : "false"} smallText="Ikke udfyldt"/>}
-                {user.apartmentNumber === "" && <LabelTextPair labelText="Vejnr." text={user.apartmentNumber} small={user.apartmentNumber !== "" ? "true" : "false"} smallText="Ikke udfyldt"/>}                
-                {user.zipCode === "" && <LabelTextPair labelText="Postnr." text={user.zipCode} small={user.zipCode !== "" ? "true" : "false"} smallText="Ikke udfyldt"/>}
-                {user.streetName === "" &&<LabelTextPair labelText="By" text={user.city} small={user.streetName !== "" ? "true" : "false"} smallText="Ikke udfyldt"/>}
+                {user.streetName === "" &&<LabelTextPair labelText="By"small={user.streetName === "" ? "true" : "false"} smallText="Ikke udfyldt"/>}
 
                 {user.streetName !== "" && <LabelTextPair labelText="Vejnavn" text={user.streetName}/>}
+
                 {user.apartmentNumber !== "" && <LabelTextPair labelText="Vejnr." text={user.apartmentNumber} />}
+                {user.apartmentNumber === "" && <LabelTextPair labelText="Vejnr." small={user.apartmentNumber === "" ? "true" : "false"} smallText="Ikke udfyldt"/>}                
+
                 {user.zipCode !== "" && <LabelTextPair labelText="Postnr." text={user.zipCode}/>}
+                {user.zipCode === "" && <LabelTextPair labelText="Postnr."  small={user.zipCode === "" ? "true" : "false"} smallText="Ikke udfyldt"/>}
+
                 {user.streetName !== "" &&<LabelTextPair labelText="By" text={user.city} />}
+                {user.streetName === "" && <LabelTextPair labelText="Vejnavn" small={user.streetName === "" ? "true" : "false"} smallText="Ikke udfyldt"/>}
+
 
                        
                 <div className="alignRight">
