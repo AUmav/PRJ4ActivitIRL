@@ -13,6 +13,7 @@ using ActivitIRLApi.Models.DTOs;
 using ActivitIRLApi.Models.Entities;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using ActivitIRLApi.Validaion;
 
 namespace ActivitIRLApi.Controllers
 {
@@ -22,11 +23,13 @@ namespace ActivitIRLApi.Controllers
     {
         private readonly ApplicationDbContext _content;
         private readonly IMapper _mapper;
+        private readonly IInputTypeValidation _typeValidater;
 
         public EventController(ApplicationDbContext content, IMapper mapper)
         {
             _content = content;
             _mapper = mapper;
+            _typeValidater = new InputTypeValidation();
         }
 
        
@@ -42,7 +45,23 @@ namespace ActivitIRLApi.Controllers
 
             domainEvent.NumberOfUsers = 1.ToString();
 
-            domainEvent.CreatedAt = DateTime.Now.ToString();   
+            domainEvent.CreatedAt = DateTime.Now.ToString();
+
+            if (CreateDTO.Date != null)
+            {
+                if (!_typeValidater.IsDateValid(CreateDTO.Date))
+                {
+                    return BadRequest("Date Not Valid");
+                }
+            }
+
+            if (CreateDTO.RegistrationDeadline != null)
+            {
+                if (!_typeValidater.IsValidRegistrationDate(CreateDTO.RegistrationDeadline, CreateDTO.Date))
+                {
+                    return BadRequest("RegistrationDeadline Not Valid");
+                }
+            }
 
             _content.Events.Add(_mapper.Map<Event>(domainEvent));
 
@@ -121,6 +140,22 @@ namespace ActivitIRLApi.Controllers
             if(!(@event.CreatedBy == domainUser))
             {
                 return Unauthorized();
+            }
+
+            if(eventMod.Date != null)
+            {
+                if(!_typeValidater.IsDateValid(eventMod.Date))
+                {
+                    return BadRequest("Date Not Valid");
+                }
+            }
+
+            if (eventMod.RegistrationDeadline != null)
+            {
+                if (!_typeValidater.IsValidRegistrationDate(eventMod.RegistrationDeadline, eventMod.Date))
+                {
+                    return BadRequest("RegistrationDeadline Not Valid");
+                }
             }
 
             ModEvent(ref @event, eventMod);
@@ -226,7 +261,7 @@ namespace ActivitIRLApi.Controllers
             
             return true;
         }
-        // Inspiration from stackoverflow
+        // Credit to stackoverflow
         private int GetAgeFromDateTime(DateTime dateOfBirth)
         {
             // Save today's date.
@@ -255,5 +290,6 @@ namespace ActivitIRLApi.Controllers
             @event.MaxUsers = mods.MaxUsers;
             @event.Activity = mods.Activity;
         }
+
     }
 }

@@ -39,9 +39,9 @@ namespace ActivitIRLApi.Controllers
             {
                 return Ok("Invalid Email Format");
             }
-            if(!_typeValidater.IsValidDateOfBirth(userCreateDTOData.DateOfBirth))
+            if(!_typeValidater.IsDateOfBirthValid(userCreateDTOData.DateOfBirth))
             {
-                return Ok("Invalid DateOfBirth Format");
+                return Ok("Invalid DateOfBirth");
             }
             User user = _mapper.Map<User>(userCreateDTOData);
 
