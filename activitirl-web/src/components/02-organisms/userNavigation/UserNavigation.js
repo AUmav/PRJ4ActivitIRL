@@ -1,15 +1,18 @@
 import jwtDecode from "jwt-decode"
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {Link} from "react-router-dom"
 import ProfilePictureName from "../../01-molecules/Profile/ProfilePictureName";
+import ProfilePictureNameNavigation from "../../01-molecules/Profile/ProfilePictureNameNavigation";
 import "./style.css"
 
 
 // Skal nok laves om til atomer osv 
 
 // https://andela.com/insights/react-js-tutorial-on-creating-a-custom-select-dropdown/
-const UserNavigation = () => {
+const UserNavigation = ({name}) => {
     const [isOpen, setIsOpen] = useState(false);
+
+    const menu = useRef(null);
     
     let token = localStorage.getItem("loginToken")
     let payload = jwtDecode(token);
@@ -18,11 +21,35 @@ const UserNavigation = () => {
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     }
+    
+    const closeOpenMenu = (event) => {
+        if(menu.current && isOpen && !menu.current.contains(event.target)){
+            setIsOpen(false);
+        }
+    }
+
+    let url = "https://prj4-api.azurewebsites.net/api/user"
+    useEffect(() => {
+        document.addEventListener('mousedown', (event) => {
+            console.log("clicked smth");
+            closeOpenMenu(event);
+        });
+
+        return () => {
+            document.removeEventListener('mousedown', (event) => {
+                console.log("removed click event listener");
+                closeOpenMenu(event);
+            });
+          };
+    }, []);
+    
+
+    // https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
 
     return(
-        <div>
+        <div ref={menu}>
             <div className="userHeader" onClick={toggleMenu}>
-                {email}
+                <ProfilePictureNameNavigation name={name}/>
             </div>
             {isOpen && 
                 <div className="dropDown" onClick={toggleMenu}>

@@ -85,6 +85,7 @@ const CreateUserForm = () => {
                     if(result !== undefined){
                         console.log("user creation succesful");
                         alert("User succesfully created");
+                        window.location.replace("/login");
 
                     }
                 },

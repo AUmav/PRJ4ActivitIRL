@@ -18,12 +18,15 @@ import UserActivities from "./components/03-templates/UserActivities/UserActivit
 import UserPage from "./components/04-pages/UserPage";
 import UserPageEdit from "./components/04-pages/UserPageEdit";
 import AlterActivityPage from "./components/04-pages/AlterActivityPage";
+import CheckToken from "./CheckToken";
 
 
 function App() {
+
   return (
     <Router>
       <div className="App">
+        <CheckToken/>
         <NavBar/>
           <Routes>
             <Route path="/" element={<HomePage/>} />

@@ -157,7 +157,7 @@ const CreateActivityForm = () => {
                     <LabelInputSet labelText="Dato*" name="eventDate" type="datetime-local" value={eventDate} placeholderText="YYYY-MM-DD" onChange={handleEventDateChange}/>
                     {submitted && !eventDate && <SmallErrorText text="Indtast venligst en dato"/>}
 
-                    <LabelInputTextAreaSet labelText="Beskrivelse*" rows="15" name="description" value={description} placeholderText="Beskrivelse" onChange={handleDescriptionChange}/>
+                    <LabelInputTextAreaSet labelText="Beskrivelse*" rows="10" name="description" value={description} placeholderText="Beskrivelse" onChange={handleDescriptionChange}/>
                     {submitted && !description && <SmallErrorText text="Indtast venligst en beskrivelse"/>}
 
                     <LabelInputSet labelText="Sidste frist (tilmelding)" name="registrationDeadline" type="datetime-local" value={registrationDeadline} placeholderText="YYYY-MM-DD" onChange={handleRegistrationDeadline}/>

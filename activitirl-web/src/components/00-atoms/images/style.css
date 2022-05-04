@@ -1,1 +1,14 @@
 /* Styling the shape of the icon - small/round*/
+.icon-styling{
+    color: var(--secondary-color);
+    font-size: 36px;
+}
+.icon-styling:hover{
+    color: var(--tertiary-color);
+    cursor: pointer;
+}
+
+.proper-align{
+    display: flex;
+    flex-direction: column;
+}

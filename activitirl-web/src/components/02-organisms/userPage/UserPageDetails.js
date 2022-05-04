@@ -41,11 +41,6 @@ const UserPageDetails = () => {
             (error) => {
                 setIsLoaded(true);
                 setError(error);
-                if (error.message === "Unexpected end of JSON input"){
-                    alert("Log ind igen");
-                    localStorage.removeItem("loginToken");
-                    window.location.replace("/login");
-                }
                 console.log("error")
             }
         )
@@ -56,9 +51,19 @@ const UserPageDetails = () => {
     }
 
     if (error) {
-        return <div>Error: {error.message}</div>
+        return(                
+            <div className="userDetails">
+                <TitleText title="Mine oplysninger"/>
+                <p>Error: {error.message}</p>
+            </div>
+        )
     } else if (!isLoaded){
-        return <div>Loading...</div>
+        return (                
+            <div className="userDetails">
+                <TitleText title="Mine oplysninger"/>
+                <p>Loading...</p>
+            </div>
+        )
     } else {
         return(
             <div className="userDetails">
