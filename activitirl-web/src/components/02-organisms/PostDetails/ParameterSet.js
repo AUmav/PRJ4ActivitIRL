@@ -1,12 +1,15 @@
 import ParameterIconSet from '../../01-molecules/Parameters/ParameterIconSet';
 import './style.css'
 
-const ParameterSet = ({activityParam, cityParam, zipCodeParam, dateParam}) => {  
+const ParameterSet = ({activityParam, cityParam, zipCodeParam, dateParam, adressParam}) => {  
     
     return (
         <div className="parameters-container">
             <ParameterIconSet type="event" paramtext={activityParam}></ParameterIconSet>
-            <ParameterIconSet type="room" paramtext={cityParam+", "+zipCodeParam}></ParameterIconSet>
+            {adressParam == undefined 
+                ? <ParameterIconSet type="room" paramtext={cityParam+", "+zipCodeParam}></ParameterIconSet>
+                : <ParameterIconSet type="room" paramtext={cityParam+", "+zipCodeParam+" - "+adressParam}></ParameterIconSet>
+            }            
             <ParameterIconSet type="schedule" paramtext={dateParam}></ParameterIconSet>
         </div>
     )   

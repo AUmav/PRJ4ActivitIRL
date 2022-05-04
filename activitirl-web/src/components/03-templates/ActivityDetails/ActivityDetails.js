@@ -36,7 +36,10 @@ const ActivityDetails = () => {
     useEffect(() => {
         fetch(url, {
             method: 'GET',
-            //credentials: 'include',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + token,
+                "Content-Type": "application/json"
+            })
 
         })
         .then(res => res.json())
@@ -48,7 +51,7 @@ const ActivityDetails = () => {
 
                 // Parsing the dateTime strings
                 // For now using the date from the result object -> it loads faster, preventing errors
-                //result.date = dateFormat(result.date);
+                result.date = dateFormat(result.date);
                 result.registrationDeadline = dateFormat(result.registrationDeadline);
                 
                 setEvent(result);
@@ -72,6 +75,23 @@ const ActivityDetails = () => {
         }
         if(token)
         {
+            let urlRegister = "https://prj4-api.azurewebsites.net/api/event/"+"Register/"+id;
+            fetch(urlRegister, {
+                method: "PUT",
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + token,
+                    "Content-Type": "application/json"
+                })
+            })
+            .then(response => {
+                if(!response.ok){
+                    alert("Something went wrong");
+                }
+                else{
+                    return response.json();
+                }
+            })
+
             alert("Du er nu tilmeldt denne aktivitet!");
             console.log("User joins event.");
         }        
@@ -100,7 +120,7 @@ const ActivityDetails = () => {
                             {/* <ProfilePictureName name={event.createdBy.firstName}></ProfilePictureName> */}
                         </div>            
             
-                        <ParameterSet activityParam={event.activity} cityParam={event.city} zipCodeParam={event.zipCode} dateParam={event.date}></ParameterSet>            
+                        <ParameterSet activityParam={event.activity} cityParam={event.city} zipCodeParam={event.zipCode} dateParam={event.date} adressParam={event.streetName+" "+event.apartmentNumber}></ParameterSet>            
                         <HeadlineDescriptionSet headline="Test af titel" 
                             description={event.description}></HeadlineDescriptionSet>
                         <Limits ageLimitLower={event.minAge} ageLimitHigher={event.maxAge} deadline={event.registrationDeadline} participantLimit={event.maxUsers} numberOfParticipants={event.numberOfUsers}></Limits>
@@ -110,7 +130,7 @@ const ActivityDetails = () => {
                         </Link>
                         
                         
-                        <BigButton text="Slet Opslag" onPress={joinEvent}></BigButton> 
+                        <BigButton text="Slet Opslag"></BigButton> 
                                                                         
                     </div>
                 )
