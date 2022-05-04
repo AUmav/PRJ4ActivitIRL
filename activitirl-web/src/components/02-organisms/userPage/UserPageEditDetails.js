@@ -52,7 +52,7 @@ const UserPageEditDetails = () => {
                 setStreetNumber(result.apartmentNumber);
                 setCity(result.city);
                 setZipCode(result.zipCode);
-                setBirthday(result.dateOfBirth); 
+                setBirthday(result.dateOfBirth.split(" ")[0]); 
                 setEmail(result.emailAddress)   
             },
             (error) => {
@@ -160,7 +160,7 @@ const UserPageEditDetails = () => {
             <form onSubmit={handleSubmit}>
                 <LabelInputSet labelText="Fornavn" name="firstName" type="text" value={firstName} placeholderText="Fornavn" onChange={handleFirstNameChange}/>
                 <LabelInputSet labelText="Efternavn" name="lastName" type="text" value={lastName} placeholderText="Efternavn" onChange={handleLastNameChange}/>
-                <LabelTextPair labelText="Email" text={birthday}/>
+                <LabelTextPair labelText="Fødselsdag" text={birthday}/>
                 <LabelTextPair labelText="Email" text={email}/>
 
                 <hr/>

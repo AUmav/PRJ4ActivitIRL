@@ -67,7 +67,8 @@ const CreateUserForm = () => {
                 method: "POST",
                 body: JSON.stringify(user),
                 headers: new Headers({
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
                 })
             })
             .then(response => {
@@ -75,7 +76,7 @@ const CreateUserForm = () => {
                     alert("Couldn't create user");
                 }
                 else{
-                    return response;
+                    return response.json();
                 }
             })
             .then(
@@ -83,10 +84,23 @@ const CreateUserForm = () => {
                     console.log("result", result);
 
                     if(result !== undefined){
-                        console.log("user creation succesful");
-                        alert("User succesfully created");
-                        window.location.replace("/login");
-
+                        if(result === "Invalid DateOfBirth" )
+                        {
+                            alert("Du skal være mindst 1 år for at oprette en bruger");
+                        }
+                        else if ( result === "Email Exists")
+                        {
+                            alert("Bruger med denne email findes allerede");
+                        }
+                        else if (result === "Invalid Email Format")
+                        {
+                            alert("Forkert email format");
+                        }
+                        else {
+                            console.log("user creation succesful");
+                            alert("User succesfully created");
+                            window.location.replace("/login");
+                        }
                     }
                 },
                 (error) => {
