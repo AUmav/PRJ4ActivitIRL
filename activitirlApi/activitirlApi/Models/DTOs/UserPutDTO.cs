@@ -11,7 +11,7 @@ namespace ActivitIRLApi.Models.DTOs
         [MaxLength(80)]
         public string? Gender { get; set; }
         [MaxLength(20)]
-        public string DateOfBirth { get; set; }
+        public string? DateOfBirth { get; set; }
         [MaxLength(50)]
         public string? PhoneNumber { get; set; }
         [MaxLength(50)]

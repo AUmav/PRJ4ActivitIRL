@@ -40,9 +40,9 @@ namespace ActivitIRLApi.Controllers
 
             domainEvent.CreatedBy = _content.Users.FirstOrDefault(u => u.EmailAddress == user.EmailAddress);
 
-            domainEvent.NumberOfUsers = 1;
+            domainEvent.NumberOfUsers = 1.ToString();
 
-            domainEvent.CreatedAt = DateTime.Now;   
+            domainEvent.CreatedAt = DateTime.Now.ToString();   
 
             _content.Events.Add(_mapper.Map<Event>(domainEvent));
 
@@ -84,7 +84,7 @@ namespace ActivitIRLApi.Controllers
 
             EventGetSignedupDTO signedupEvent = _mapper.Map<EventGetSignedupDTO>(@event);
 
-            signedupEvent.IsSignedup =  @event.ListOfUsers.Contains(domainUser) ? true : false;
+            signedupEvent.IsSignedup =  @event.ListOfUsers.Contains(domainUser) ? true.ToString() : false.ToString();
 
             return Ok(signedupEvent);
 
@@ -156,14 +156,14 @@ namespace ActivitIRLApi.Controllers
             if(!@event.ListOfUsers.Contains(domainUser))
             {
                 @event.ListOfUsers.Add(domainUser);
-                @event.NumberOfUsers = @event.ListOfUsers.Count();
+                @event.NumberOfUsers = @event.ListOfUsers.Count().ToString();
                 await _content.SaveChangesAsync();
 
             }
             else
             {
                 @event.ListOfUsers.Remove(domainUser);
-                @event.NumberOfUsers = @event.ListOfUsers.Count();
+                @event.NumberOfUsers = @event.ListOfUsers.Count().ToString();
                 await _content.SaveChangesAsync();
             }
 
@@ -207,8 +207,7 @@ namespace ActivitIRLApi.Controllers
                     {
                         EmailAddress = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
                         Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value,
-                        Gender = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Gender)?.Value,
-                        DateOfBirth = DateTime.Parse(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.DateOfBirth)?.Value)
+                        DateOfBirth = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.DateOfBirth)?.Value
                     };
                 }
                
@@ -218,9 +217,9 @@ namespace ActivitIRLApi.Controllers
 
         private bool IsUserEligible(User user, Event @event)
         {
-            int userAge = GetAgeFromDateTime(user.DateOfBirth);
+            int userAge = GetAgeFromDateTime(DateTime.Parse(user.DateOfBirth));
             
-            if (userAge > @event.MaxAge || userAge < @event.MinAge || @event.NumberOfUsers >= @event.MaxUsers || @event.CreatedBy.EmailAddress == user.EmailAddress)
+            if (userAge > int.Parse(@event.MaxAge) || userAge < int.Parse(@event.MinAge) || int.Parse(@event.NumberOfUsers) >= int.Parse(@event.MaxUsers) || @event.CreatedBy.EmailAddress == user.EmailAddress)
             {
                 return false;
             }
@@ -243,10 +242,10 @@ namespace ActivitIRLApi.Controllers
 
         private void ModEvent(ref Event @event, EventPutDTO mods)
         {
-            @event.Title = mods.Title;
-            @event.City = mods.City;
-            @event.Country = mods.Country;
-            @event.Date = DateTime.Parse(mods.Date);
+            @event.Title = mods.Title == null ? @event.Title : mods.Title;
+            @event.City = mods.City == null ? @event.City : mods.City;
+            @event.Country = mods.Country == null ? @event.Country : mods.Country;
+            @event.Date = mods.Date == null ? @event.Date : mods.Date;
             @event.MinAge = mods.MinAge;
             @event.MaxAge = mods.MaxAge;
             @event.Description = mods.Description;

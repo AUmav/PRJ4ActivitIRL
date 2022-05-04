@@ -16,5 +16,11 @@ namespace ActivitIRLApi.Validaion
                 return false;
             }
         }
+
+        public bool IsValidDateOfBirth(string date)
+        {
+            DateOnly ignoreMe;
+            return DateOnly.TryParse(date, out ignoreMe);
+        }
     }
 }

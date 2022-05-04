@@ -13,23 +13,23 @@ namespace ActivitIRLApi.Models.Entities
         [MaxLength(80)]
         public string? Gender { get; set; }
         [MaxLength(100)]
-        public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
         [MaxLength(254)]
-        public string? EmailAddress { get; set; }
+        public string EmailAddress { get; set; }
         [MaxLength(255)]
         public byte[] PWHash { get; set; }
         [MaxLength(255)]
         public byte[] PWSalt { get; set; }
         [MaxLength(50)]
-        public int? PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         [MaxLength(50)]
         public string? StreetName { get; set; }
         [MaxLength(10)]
-        public int? ApartmentNumber { get; set; }
+        public string? ApartmentNumber { get; set; }
         [MaxLength(50)]
         public string? City { get; set; }
         [MaxLength(50)]
-        public int? ZipCode { get; set; }
+        public string? ZipCode { get; set; }
         [MaxLength(50)]
         public string? Country { get; set; }
         [Key]
@@ -41,6 +41,6 @@ namespace ActivitIRLApi.Models.Entities
 
         public List<Event>? Events { get; set; } // Foreign keys
 
-        public List<Preference>? preferences { get; set; }
+        public List<Preference>? Preferences { get; set; }
     }
 }

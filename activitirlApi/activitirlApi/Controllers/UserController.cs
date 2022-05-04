@@ -93,21 +93,18 @@ namespace ActivitIRLApi.Controllers
 
         private void ModUser(ref User user, UserPutDTO mods)
         {
-            user.ApartmentNumber = int.Parse(mods.ApartmentNumber);
-            user.City = mods.City;
-            user.Country = mods.Country;
-            user.DateOfBirth = DateTime.Parse(mods.DateOfBirth);
-            user.FirstName = mods.FirstName;
-            user.Gender = mods.Gender;
-            user.LastName = mods.LastName;
-            user.PhoneNumber = int.Parse(mods.PhoneNumber);
-            user.ProfilePicture = mods.ProfilePicture;
-            user.StreetName = mods.StreetName;
-            user.ZipCode = int.Parse(mods.ZipCode);
-
+            user.ApartmentNumber = mods.ApartmentNumber == null ? user.ApartmentNumber : mods.ApartmentNumber;
+            user.City = mods.City == null ? user.City : mods.City;
+            user.Country = mods.Country == null ? user.Country : mods.Country;
+            user.DateOfBirth = mods.DateOfBirth == null ? user.DateOfBirth : mods.DateOfBirth;  
+            user.FirstName = mods.FirstName == null ? user.FirstName : mods.FirstName;
+            user.Gender = mods.Gender == null ? user.Gender : mods.Gender; 
+            user.LastName = mods.LastName == null ? user.LastName : mods.LastName;
+            user.PhoneNumber = mods.PhoneNumber == null ? user.PhoneNumber : mods.PhoneNumber;
+            user.ProfilePicture = mods.ProfilePicture == null ? user.ProfilePicture : mods.ProfilePicture;
+            user.StreetName = mods.StreetName == null ? user.StreetName : mods.StreetName;
+            user.ZipCode = mods.ZipCode == null ? user.ZipCode : mods.ZipCode;
         }
-
-
         private User GetCurrentUser()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -120,8 +117,7 @@ namespace ActivitIRLApi.Controllers
                 {
                     EmailAddress = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
                     Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value,
-                    Gender = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Gender)?.Value,
-                    DateOfBirth = DateTime.Parse(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.DateOfBirth)?.Value)
+                    DateOfBirth = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.DateOfBirth)?.Value
                 };
             }
             return null;

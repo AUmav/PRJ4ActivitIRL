@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ActivitIRLApi.Migrations
 {
-    public partial class _01052022 : Migration
+    public partial class _04052022 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,15 +19,15 @@ namespace ActivitIRLApi.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: true),
                     Gender = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", maxLength: 20, nullable: false),
-                    EmailAddress = table.Column<string>(type: "nvarchar(254)", maxLength: 254, nullable: true),
+                    DateOfBirth = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    EmailAddress = table.Column<string>(type: "nvarchar(254)", maxLength: 254, nullable: false),
                     PWHash = table.Column<byte[]>(type: "varbinary(255)", maxLength: 255, nullable: false),
                     PWSalt = table.Column<byte[]>(type: "varbinary(255)", maxLength: 255, nullable: false),
-                    PhoneNumber = table.Column<int>(type: "int", maxLength: 50, nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     StreetName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ApartmentNumber = table.Column<int>(type: "int", maxLength: 10, nullable: true),
+                    ApartmentNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ZipCode = table.Column<int>(type: "int", maxLength: 50, nullable: true),
+                    ZipCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Role = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ProfilePicture = table.Column<byte[]>(type: "varbinary(max)", maxLength: 10000, nullable: true)
@@ -43,23 +43,22 @@ namespace ActivitIRLApi.Migrations
                 {
                     EventId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Activity = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Activity = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MaxUsers = table.Column<int>(type: "int", nullable: false),
+                    MaxUsers = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StreetName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ApartmentNumber = table.Column<int>(type: "int", nullable: false),
+                    ApartmentNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ZipCode = table.Column<int>(type: "int", nullable: false),
+                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsHidden = table.Column<bool>(type: "bit", nullable: false),
-                    MinAge = table.Column<int>(type: "int", nullable: false),
-                    MaxAge = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RegistrationDeadline = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NumberOfUsers = table.Column<int>(type: "int", nullable: false),
+                    MinAge = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaxAge = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RegistrationDeadline = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumberOfUsers = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedByUserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -98,7 +97,7 @@ namespace ActivitIRLApi.Migrations
                     CommentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Comments = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Created = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedByUserId = table.Column<int>(type: "int", nullable: false),
                     CreatedInEventId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -179,8 +178,7 @@ namespace ActivitIRLApi.Migrations
                 name: "IX_Users_EmailAddress",
                 table: "Users",
                 column: "EmailAddress",
-                unique: true,
-                filter: "[EmailAddress] IS NOT NULL");
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

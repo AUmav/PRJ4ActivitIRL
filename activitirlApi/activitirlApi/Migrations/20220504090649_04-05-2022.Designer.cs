@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ActivitIRLApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220501114212_01-05-2022")]
-    partial class _01052022
+    [Migration("20220504090649_04-05-2022")]
+    partial class _04052022
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,8 +36,9 @@ namespace ActivitIRLApi.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Created")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CreatedByUserId")
                         .HasColumnType("int");
@@ -87,9 +88,9 @@ namespace ActivitIRLApi.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("ApartmentNumber")
+                    b.Property<string>("ApartmentNumber")
                         .HasMaxLength(10)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("City")
                         .HasMaxLength(50)
@@ -99,11 +100,13 @@ namespace ActivitIRLApi.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasMaxLength(20)
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DateOfBirth")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasMaxLength(254)
                         .HasColumnType("nvarchar(254)");
 
@@ -129,9 +132,9 @@ namespace ActivitIRLApi.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varbinary(255)");
 
-                    b.Property<int?>("PhoneNumber")
+                    b.Property<string>("PhoneNumber")
                         .HasMaxLength(50)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<byte[]>("ProfilePicture")
                         .HasMaxLength(10000)
@@ -146,9 +149,9 @@ namespace ActivitIRLApi.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("ZipCode")
+                    b.Property<string>("ZipCode")
                         .HasMaxLength(50)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("UserId");
 
@@ -157,8 +160,7 @@ namespace ActivitIRLApi.Migrations
                         .HasFilter("[Alias] IS NOT NULL");
 
                     b.HasIndex("EmailAddress")
-                        .IsUnique()
-                        .HasFilter("[EmailAddress] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -172,10 +174,12 @@ namespace ActivitIRLApi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventId"), 1L, 1);
 
                     b.Property<string>("Activity")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ApartmentNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("ApartmentNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
@@ -183,35 +187,36 @@ namespace ActivitIRLApi.Migrations
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("CreatedAt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CreatedByUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsHidden")
-                        .HasColumnType("bit");
+                    b.Property<string>("MaxAge")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MaxAge")
-                        .HasColumnType("int");
+                    b.Property<string>("MaxUsers")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MaxUsers")
-                        .HasColumnType("int");
+                    b.Property<string>("MinAge")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MinAge")
-                        .HasColumnType("int");
+                    b.Property<string>("NumberOfUsers")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumberOfUsers")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("RegistrationDeadline")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("RegistrationDeadline")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
@@ -220,10 +225,12 @@ namespace ActivitIRLApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ZipCode")
-                        .HasColumnType("int");
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("EventId");
 
@@ -269,7 +276,7 @@ namespace ActivitIRLApi.Migrations
             modelBuilder.Entity("ActivitIRLApi.Models.Entities.Preference", b =>
                 {
                     b.HasOne("ActivitIRLApi.Models.Entities.User", null)
-                        .WithMany("preferences")
+                        .WithMany("Preferences")
                         .HasForeignKey("UserId");
                 });
 
@@ -299,7 +306,7 @@ namespace ActivitIRLApi.Migrations
 
             modelBuilder.Entity("ActivitIRLApi.Models.Entities.User", b =>
                 {
-                    b.Navigation("preferences");
+                    b.Navigation("Preferences");
                 });
 
             modelBuilder.Entity("ActivitIRLApi.Models.Event", b =>
