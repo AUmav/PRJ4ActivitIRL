@@ -281,14 +281,14 @@ namespace ActivitIRLApi.Controllers
             @event.City = mods.City == null ? @event.City : mods.City;
             @event.Country = mods.Country == null ? @event.Country : mods.Country;
             @event.Date = mods.Date == null ? @event.Date : mods.Date;
-            @event.MinAge = mods.MinAge;
-            @event.MaxAge = mods.MaxAge;
-            @event.Description = mods.Description;
-            @event.StreetName = mods.StreetName;
-            @event.ZipCode = mods.ZipCode;
-            @event.State = mods.State;
-            @event.MaxUsers = mods.MaxUsers;
-            @event.Activity = mods.Activity;
+            @event.MinAge = mods.MinAge == null ? @event.MinAge : mods.MinAge;
+            @event.MaxAge = mods.MaxAge == null ? @event.MaxAge : mods.MaxAge;
+            @event.Description = mods.Description == null ? @event.Description : mods.Description;
+            @event.StreetName = mods.StreetName == null ? @event.StreetName : mods.StreetName;
+            @event.ZipCode = mods.ZipCode == null ? @event.ZipCode : mods.ZipCode;
+            @event.State = mods.State == null ? @event.State : mods.State;
+            @event.MaxUsers = mods.MaxUsers == null ? @event.MaxUsers : mods.MaxUsers;
+            @event.Activity = mods.Activity == null ? @event.Activity : mods.Activity;
         }
 
     }
