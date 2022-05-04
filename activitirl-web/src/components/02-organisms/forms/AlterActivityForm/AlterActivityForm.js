@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 import SubmitButton from '../../../00-atoms/buttons/SubmitButton';
 import TitleText from '../../../00-atoms/text/TitleText';
 import '../style.css'
@@ -16,6 +17,7 @@ const AlterActivityForm = () => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [event, setEvent] = useState([]);
+    const [userEmail, setUserEmail] = useState(null);
 
     const [activity, setActivity] = useState("");
     const [title, setTitle] = useState("");
@@ -38,7 +40,10 @@ const AlterActivityForm = () => {
     useEffect(() => {
         fetch(url, {
             method: 'GET',
-            //credentials: 'include',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + token,
+                "Content-Type": "application/json"
+            })
 
         })
         .then(res => res.json())
@@ -52,13 +57,13 @@ const AlterActivityForm = () => {
 
                 /* result.date = dateFormat(result.date);
                 result.registrationDeadline = dateFormat(result.registrationDeadline); */
-                
+                setUserEmail(result.createdBy.emailAddress);
                 setActivity(result.activity);
                 setTitle(result.title);
                 setZipCode(result.zipCode);
                 setCity(result.city);
-                setStreet(""); //change when using the correct endpoint
-                setStreetNumber(""); // again change
+                setStreet(result.streetName); //change when using the correct endpoint
+                setStreetNumber(result.apartmentNumber); // again change
                 setEventDate(result.date);
                 setRegistrationDeadline(result.registrationDeadline);
                 setDescription(result.description);
@@ -121,9 +126,11 @@ const AlterActivityForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        console.log("Entered function to PUT");
+
         checkDataValid();
         if(dataValid){
-            let url = "https://prj4-api.azurewebsites.net/api/event"
+            //let url = "https://prj4-api.azurewebsites.net/api/event"
             let event = {
                 "activity" : activity,
                 "title" : title,
@@ -132,18 +139,19 @@ const AlterActivityForm = () => {
                 "streetName" : street,
                 "apartmentNumber" : streetNumber,
                 "date" : eventDate,
-                "registrationDeadline" : registrationDeadline === "" ? null : registrationDeadline,
+                /* "registrationDeadline" : registrationDeadline === "" ? null : registrationDeadline, */
                 "description" : description,
-                "minAge" : ageRangeLower === "" ? null : ageRangeLower,
-                "maxAge" : ageRangeUpper === "" ? null : ageRangeUpper,
+                /* "minAge" : ageRangeLower === "" ? null : ageRangeLower,
+                "maxAge" : ageRangeUpper === "" ? null : ageRangeUpper, */
                 "country" : "Danmark"
+
             }
             
             console.log(event);
 
             // Skal laves om til en PUT
             fetch(url, {
-                    method: "POST",
+                    method: "PUT",
                     body: JSON.stringify(event),
                     headers: new Headers({
                         'Authorization': 'Bearer ' + token,
@@ -179,7 +187,12 @@ const AlterActivityForm = () => {
     }
 
     if(token){
-        return (
+        
+        let payload = jwtDecode(token);
+        let email = payload["email"];
+        
+        if(email == userEmail)
+        { return (
             <div className='activityForm'>
                 <TitleText title="Rediger opslag"/>
 
@@ -222,7 +235,14 @@ const AlterActivityForm = () => {
                 </form>
 
             </div>
-        )
+        )}
+        else{
+            return (
+                <div>
+                    <h1>Du har ikke oprettet denne aktivitet!</h1>
+                </div>
+            )
+        }
     }
     else{
         return (

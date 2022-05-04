@@ -12,7 +12,6 @@ import HomePage from "./components/04-pages/homePage/HomePage";
 import ActivityDetails from "./components/03-templates/ActivityDetails/ActivityDetails";
 import LoginPage from "./components/04-pages/LoginPage";
 import CreateUserPage from "./components/04-pages/CreateUserPage";
-import CreateActivityForm from "./components/02-organisms/forms/createActivityForm/createActivityForm";
 import CreateActivityPage from "./components/04-pages/CreateActivityPage";
 import UserActivities from "./components/03-templates/UserActivities/UserActivities";
 import UserPage from "./components/04-pages/UserPage";
