@@ -92,7 +92,6 @@ const UserPageEditDetails = () => {
         let user = {
             "firstName" : firstName,
             "lastName" : lastName,
-            "dateOfBirth" : birthday,
             "zipCode": zipCode,
             "city" : city,
             "streetName" : street,
