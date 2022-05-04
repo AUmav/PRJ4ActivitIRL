@@ -52,7 +52,7 @@ const UserPageEditDetails = () => {
                 setStreetNumber(result.apartmentNumber);
                 setCity(result.city);
                 setZipCode(result.zipCode);
-                setBirthday(result.dateOfBirth.split(" ")[0]); 
+                setBirthday(result.dateOfBirth); 
                 setEmail(result.emailAddress)   
             },
             (error) => {
@@ -69,10 +69,6 @@ const UserPageEditDetails = () => {
     
     const handleLastNameChange = (event) => {
         setLastName(event.target.value);
-    }
-
-    const handleBirthdayChange = (event) => {
-        setBirthday(event.target.value);
     }
 
     const handleZipCodeChange = (event) => {
@@ -92,12 +88,10 @@ const UserPageEditDetails = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // SKIFT URL
-        let url = "https://prj4-api.azurewebsites.net/api/register"
+        let url = "https://prj4-api.azurewebsites.net/api/user"
         let user = {
-            "emailAddress" : email,
             "firstName" : firstName,
             "lastName" : lastName,
-            "dateOfBirth" : birthday,
             "zipCode": zipCode,
             "city" : city,
             "streetName" : street,
@@ -110,7 +104,9 @@ const UserPageEditDetails = () => {
                 method: "PUT",
                 body: JSON.stringify(user),
                 headers: new Headers({
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + token,
+
                 })
             })
             .then(response => {

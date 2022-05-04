@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
 import jwtDecode from "jwt-decode"
 import { useState, useEffect } from "react";
-import {Link} from "react-router-dom"
+import {Link, useSearchParams} from "react-router-dom"
 import Button from "../../00-atoms/buttons/Button";
 import TitleText from "../../00-atoms/text/TitleText";
 import LabelTextPair from "../../01-molecules/textPair/LabelTextPair";
@@ -74,11 +74,21 @@ const UserPageDetails = () => {
                 <LabelTextPair labelText="Email" text={user.emailAddress}/>
                 <hr/>
                 <p>Adresse</p>
-                <LabelTextPair labelText="Vejnavn" text={user.streetName} small={user.streetName !== "" ? "true" : "false"} smallText="Ikke udfyldt"/>
-                <LabelTextPair labelText="Vejnr." text={user.apartmentNumber} small={user.apartmentNumber !== "" ? "true" : "false"} smallText="Ikke udfyldt"/>
-                <LabelTextPair labelText="Postnr." text={user.zipCode} small={user.zipCode !== "" ? "true" : "false"} smallText="Ikke udfyldt"/>
-                <LabelTextPair labelText="By" text={user.city} small={user.streetName !== "" ? "true" : "false"} smallText="Ikke udfyldt"/>
+                {user.streetName === "" &&<LabelTextPair labelText="By"small={user.streetName === "" ? "true" : "false"} smallText="Ikke udfyldt"/>}
 
+                {user.streetName !== "" && <LabelTextPair labelText="Vejnavn" text={user.streetName}/>}
+
+                {user.apartmentNumber !== "" && <LabelTextPair labelText="Vejnr." text={user.apartmentNumber} />}
+                {user.apartmentNumber === "" && <LabelTextPair labelText="Vejnr." small={user.apartmentNumber === "" ? "true" : "false"} smallText="Ikke udfyldt"/>}                
+
+                {user.zipCode !== "" && <LabelTextPair labelText="Postnr." text={user.zipCode}/>}
+                {user.zipCode === "" && <LabelTextPair labelText="Postnr."  small={user.zipCode === "" ? "true" : "false"} smallText="Ikke udfyldt"/>}
+
+                {user.streetName !== "" &&<LabelTextPair labelText="By" text={user.city} />}
+                {user.streetName === "" && <LabelTextPair labelText="Vejnavn" small={user.streetName === "" ? "true" : "false"} smallText="Ikke udfyldt"/>}
+
+
+                       
                 <div className="alignRight">
                     <Button text="Rediger" onPress={edit}/>
                 </div>
