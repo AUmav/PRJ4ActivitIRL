@@ -92,21 +92,25 @@ const NavBar = () => {
             <div className="navbar-small">
                 {/* If not logged in*/}
                 {!token && isOpen &&
-                        <nav>
-                            <ul>
-                                <div className="smth_item">
-                                    <li>
-                                        <Link to="/faq">FAQ</Link>
-                                    </li>
+                        <div className="navbar-small" onClick={toggleMenu}>
+                            <Link to="/join">
+                                <div className="navbar-item">
+                                    <li>Opret bruger</li>
                                 </div>
-                                <li>
-                                    <Link to="/join">Opret bruger</Link>
-                                </li>
-                                <li>
-                                    <Link to="/login">Log ind</Link>
-                                </li>
-                            </ul>
-                        </nav>
+                            </Link>
+                            <Link to="/login">
+                                <div className="navbar-item">
+                                    <li>Log ind</li>
+                                </div>
+                            </Link>
+                            <Link to="/FAQ">
+                                <div className="navbar-item">
+                                    <li>FAQ</li>
+                                </div>
+                            </Link>
+                        </div>
+
+
                     }
 
                         
