@@ -8,6 +8,7 @@ using Moq;
 using FluentAssertions;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ActivitIRLApi_Test
 {
@@ -19,6 +20,35 @@ namespace ActivitIRLApi_Test
         }
 
         public TestDatabaseFixture Fixture { get; }
+
+        //Tests:
+
+        [Fact]
+        public void GetUser()
+        {
+            //Arrange
+            //create db context
+            using var context = Fixture.CreateContext();
+
+            //auto mapper configuration
+            var mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new UserTestMappingProfile());
+            });
+            var mapper = mockMapper.CreateMapper();
+
+            UserController controller = new UserController(context, mapper: mapper);
+
+            //Act
+
+            var result = controller.GetUser();
+
+
+
+            //Assert
+
+            //Assert.Equal(context.Users, )
+        }
 
 
     }
@@ -50,9 +80,6 @@ namespace ActivitIRLApi_Test
             //Can't convert from list type to EfCore type right now..
             //Maybe implement repository design pattern to mock EF Core LINQ queries?
             dbContextMock.Setup(x => x.Users).Returns(value: users);
-
-
-
 
             //dbContextMock.Setup(_ => _.GetUser()).ReturnsAsync(users.GetUsers());
             //var uut = new UserController(dbContextMock.Object, mapper.Object);

@@ -1,10 +1,4 @@
 ﻿using ActivitIRLApi.Models.Entities;
-using ActivitIRLApi.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ActivitIRLApi.Data;
 
@@ -29,8 +23,10 @@ namespace ActivitIRLApi_Test
                         context.Database.EnsureCreated();
 
                         context.AddRange(
-                            new User { UserId = 1, FirstName = "Jens", LastName = "Jensen"},
-                            new User { UserId = 2, FirstName = "Lars", LastName = "Larsen" });
+                            new User { UserId = 1, FirstName = "Jens", LastName = "Jensen", 
+                                EmailAddress = "Jens@gmail.com"},
+                            new User { UserId = 2, FirstName = "Lars", LastName = "Larsen",
+                                EmailAddress = "Lars@gmail.com"});
                         context.SaveChanges();
                     }
 
