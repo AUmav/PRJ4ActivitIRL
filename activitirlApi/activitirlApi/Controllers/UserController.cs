@@ -24,11 +24,11 @@ namespace ActivitIRLApi.Controllers
         private readonly IMapper _mapper;
         private readonly IInputTypeValidation _typeValidater;
 
-        public UserController(ApplicationDbContext content,IMapper mapper)
+        public UserController(ApplicationDbContext content, IMapper mapper, IInputTypeValidation typeValidater)
         {
             _content = content;
             _mapper = mapper;
-            _typeValidater = new InputTypeValidation();
+            _typeValidater = typeValidater;
         }
 
         [HttpGet]
@@ -37,14 +37,14 @@ namespace ActivitIRLApi.Controllers
         {
             User user = GetCurrentUser();
 
-            var domainUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
+            var fullUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
 
-            if (domainUser == null)
+            if (fullUser == null)
             {
                 return NotFound();
             }
 
-            return _mapper.Map<UserGetDTO>(domainUser);
+            return _mapper.Map<UserGetDTO>(fullUser);
         }
 
         [HttpPut]
@@ -53,14 +53,14 @@ namespace ActivitIRLApi.Controllers
         {
             User user = GetCurrentUser();
 
-            var domainUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
+            var fullUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
 
-            if (domainUser == null)
+            if (fullUser == null)
             {
                 return NotFound();
             }
 
-            ModUser(ref domainUser, moddedUser);
+            ModUser(ref fullUser, moddedUser);
 
             await _content.SaveChangesAsync();
 
@@ -77,14 +77,14 @@ namespace ActivitIRLApi.Controllers
                 return BadRequest("Invalid Email address!");
             }
 
-            var domainUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == email);
+            var fullUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == email);
 
-            if (domainUser == null)
+            if (fullUser == null)
             {
                 return NotFound("Email not found!");
             }
 
-            _content.Users.Remove(domainUser);
+            _content.Users.Remove(fullUser);
 
             await _content.SaveChangesAsync();
 

@@ -25,11 +25,11 @@ namespace ActivitIRLApi.Controllers
         private readonly IMapper _mapper;
         private readonly IInputTypeValidation _typeValidater;
 
-        public EventController(ApplicationDbContext content, IMapper mapper)
+        public EventController(ApplicationDbContext content, IMapper mapper, IInputTypeValidation typeValidater)
         {
             _content = content;
             _mapper = mapper;
-            _typeValidater = new InputTypeValidation();
+            _typeValidater = typeValidater;
         }
 
        
@@ -47,12 +47,9 @@ namespace ActivitIRLApi.Controllers
 
             domainEvent.CreatedAt = DateTime.Now.ToString();
 
-            if (CreateDTO.Date != null)
+            if (!_typeValidater.IsDateValid(CreateDTO.Date))
             {
-                if (!_typeValidater.IsDateValid(CreateDTO.Date))
-                {
-                    return BadRequest("Date Not Valid");
-                }
+                return BadRequest("Date Not Valid");
             }
 
             if (CreateDTO.RegistrationDeadline != null)
@@ -92,7 +89,7 @@ namespace ActivitIRLApi.Controllers
 
             }
 
-            User domainUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
+            User fullUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
 
             Event @event = await _content.Events.Include(e => e.CreatedBy).Include(u => u.ListOfUsers).FirstOrDefaultAsync(u => u.EventId == id);
            
@@ -103,7 +100,7 @@ namespace ActivitIRLApi.Controllers
 
             EventGetSignedupDTO signedupEvent = _mapper.Map<EventGetSignedupDTO>(@event);
 
-            signedupEvent.IsSignedup =  @event.ListOfUsers.Contains(domainUser) ? true.ToString() : false.ToString();
+            signedupEvent.IsSignedup =  @event.ListOfUsers.Contains(fullUser) ? true.ToString() : false.ToString();
 
             return Ok(signedupEvent);
 
@@ -128,7 +125,7 @@ namespace ActivitIRLApi.Controllers
         {
             User user = GetCurrentUser();
 
-            User domainUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
+            User fullUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
 
             Event @event = await _content.Events.Include(oc => oc.CreatedBy).FirstOrDefaultAsync(u => u.EventId == id);
 
@@ -137,7 +134,7 @@ namespace ActivitIRLApi.Controllers
                 return NotFound();
             }
 
-            if(!(@event.CreatedBy == domainUser))
+            if(!(@event.CreatedBy == fullUser))
             {
                 return Unauthorized();
             }
@@ -173,7 +170,7 @@ namespace ActivitIRLApi.Controllers
         {
             User user = GetCurrentUser();
 
-            User domainUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
+            User fullUser = await _content.Users.FirstOrDefaultAsync(u => u.EmailAddress == user.EmailAddress);
 
             Event @event = await _content.Events.Include(e => e.ListOfUsers).Include(a => a.CreatedBy).FirstOrDefaultAsync(u => u.EventId == id);
 
@@ -183,24 +180,22 @@ namespace ActivitIRLApi.Controllers
                 return NotFound();
             }
 
-            if(!IsUserEligible(domainUser, @event))
+            if(!IsUserEligible(fullUser, @event))
             {
                 return Unauthorized();
             }
 
-            if(!@event.ListOfUsers.Contains(domainUser))
+            if(!@event.ListOfUsers.Contains(fullUser))
             {
-                @event.ListOfUsers.Add(domainUser);
-                @event.NumberOfUsers = @event.ListOfUsers.Count().ToString();
-                await _content.SaveChangesAsync();
-
+                @event.ListOfUsers.Add(fullUser);
             }
             else
             {
-                @event.ListOfUsers.Remove(domainUser);
-                @event.NumberOfUsers = @event.ListOfUsers.Count().ToString();
-                await _content.SaveChangesAsync();
+                @event.ListOfUsers.Remove(fullUser);
             }
+
+            @event.NumberOfUsers = (@event.ListOfUsers.Count() + 1).ToString();
+            await _content.SaveChangesAsync();
 
             return true;
         }

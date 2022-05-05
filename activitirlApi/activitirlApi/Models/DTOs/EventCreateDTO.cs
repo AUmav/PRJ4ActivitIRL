@@ -23,6 +23,6 @@ namespace ActivitIRLApi.Models.DTOs
         [MaxLength(10000)]
         public byte[]? EventPicture { get; set; }
 
-        public String? RegistrationDeadline { get; set; }
+        public string? RegistrationDeadline { get; set; }
     }
 }

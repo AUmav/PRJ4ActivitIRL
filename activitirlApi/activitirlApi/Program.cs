@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ActivitIRLApi.Validaion;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -21,7 +22,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddAutoMapper(typeof(Program));
 
-// https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-6.0
+builder.Services.AddScoped<IInputTypeValidation, InputTypeValidation>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,

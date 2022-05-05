@@ -23,6 +23,7 @@ namespace ActivitIRLApi.Authentication
         public JWTAuthenticationManager(IConfiguration config)
         {
             _config = config;
+
         }
 
         public string Authenticate(User user) 

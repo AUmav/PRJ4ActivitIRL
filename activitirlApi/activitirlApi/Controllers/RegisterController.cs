@@ -19,14 +19,14 @@ namespace ActivitIRLApi.Controllers
         private readonly ApplicationDbContext _content;
         private readonly IPasswordHashManager _passwordHasher;
         private readonly IMapper _mapper;
-        private readonly InputTypeValidation _typeValidater;
+        private readonly IInputTypeValidation _typeValidater;
 
-        public RegisterController(ApplicationDbContext content, IMapper mapper)
+        public RegisterController(ApplicationDbContext content, IMapper mapper, IInputTypeValidation typeValidater)
         {
             _content = content;
             _mapper = mapper;
             _passwordHasher = new PasswordHashManager();
-            _typeValidater = new InputTypeValidation();
+            _typeValidater = typeValidater;
         }
 
         [AllowAnonymous]
