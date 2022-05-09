@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ActivitIRLApi.Validaion;
+using ActivitIRLApi.Authentication;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -23,6 +24,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddScoped<IInputTypeValidation, InputTypeValidation>();
+builder.Services.AddScoped<IJWTAuthenticationManager, JWTAuthenticationManager>();
+builder.Services.AddScoped<IPasswordHashManager, PasswordHashManager>();
 
 builder.Services.AddCors(options =>
 {

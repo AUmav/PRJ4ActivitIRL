@@ -17,15 +17,15 @@ namespace ActivitIRLApi.Controllers
     public class RegisterController : ControllerBase
     {
         private readonly ApplicationDbContext _content;
-        private readonly IPasswordHashManager _passwordHasher;
+        private readonly IPasswordHashManager _passwordManager;
         private readonly IMapper _mapper;
         private readonly IInputTypeValidation _typeValidater;
 
-        public RegisterController(ApplicationDbContext content, IMapper mapper, IInputTypeValidation typeValidater)
+        public RegisterController(ApplicationDbContext content, IMapper mapper, IInputTypeValidation typeValidater, IPasswordHashManager passwordManager)
         {
             _content = content;
             _mapper = mapper;
-            _passwordHasher = new PasswordHashManager();
+            _passwordManager = passwordManager;
             _typeValidater = typeValidater;
         }
 
@@ -50,7 +50,7 @@ namespace ActivitIRLApi.Controllers
                 return Ok("Email Exists");
             }
 
-            _passwordHasher.CreatePasswordHash(userCreateDTOData.Password, out byte[] PWHash, out byte[] PWSalt);
+            _passwordManager.CreatePasswordHash(userCreateDTOData.Password, out byte[] PWHash, out byte[] PWSalt);
 
             user.PWHash = PWHash;
 

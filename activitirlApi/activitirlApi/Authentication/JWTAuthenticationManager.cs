@@ -13,6 +13,7 @@ namespace ActivitIRLApi.Authentication
     public interface IJWTAuthenticationManager
     {
         string Authenticate(User user);
+        void Init(IConfiguration config);
     }
 
     public class JWTAuthenticationManager : IJWTAuthenticationManager
@@ -20,10 +21,9 @@ namespace ActivitIRLApi.Authentication
 
         private IConfiguration _config;
 
-        public JWTAuthenticationManager(IConfiguration config)
+        public void Init(IConfiguration config)
         {
             _config = config;
-
         }
 
         public string Authenticate(User user) 
