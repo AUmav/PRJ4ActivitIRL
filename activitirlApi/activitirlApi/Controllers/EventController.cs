@@ -59,6 +59,10 @@ namespace ActivitIRLApi.Controllers
                     return BadRequest("RegistrationDeadline Not Valid");
                 }
             }
+            else
+            {
+                domainEvent.RegistrationDeadline = CreateDTO.Date;
+            }
 
             _content.Events.Add(_mapper.Map<Event>(domainEvent));
 

@@ -94,8 +94,9 @@ namespace ActivitIRLApi.Validaion
             {
                 return false;
             }
+           
 
-            if(DateOnly.FromDateTime(_registrationDate) > _date)
+            if(DateOnly.FromDateTime(_registrationDate) <= _date)
             {
                 return false;
             }
