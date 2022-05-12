@@ -14,7 +14,6 @@ import jwtDecode from "jwt-decode"
 // https://stackoverflow.com/questions/68828342/react-dynamic-route-for-webpage
 const ActivityDetails = () => {
     // Using the token to check if the current user has created the event
-    // **** FIX DETTE
     let token = localStorage.getItem("loginToken");   
     let email = "" ;
     if (token)
@@ -24,11 +23,13 @@ const ActivityDetails = () => {
     }
     
     const [userEmail, setUserEmail] = useState(null);
-
     const {id} = useParams();
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [event, setEvent] = useState([]);
+
+    
+    let baseMapsUrl = "https://www.google.com/maps/place/"
     
 
     let url = "https://prj4-api.azurewebsites.net/api/event/"
@@ -53,6 +54,7 @@ const ActivityDetails = () => {
                 // For now using the date from the result object -> it loads faster, preventing errors
                 result.date = dateFormat(result.date);
                 result.registrationDeadline = dateFormat(result.registrationDeadline);
+                //result.registrationDeadline = dateFormat(result.registrationDeadline);
                 
                 setEvent(result);
                 console.log(result);
@@ -99,18 +101,37 @@ const ActivityDetails = () => {
 
     function dateFormat(date)
     {
-        let dateArray = date.split('T');
-        let timeArray = dateArray[1].split(':');
+        let dateTime = new Date(date);
+        let tempDate = dateTime.getDate();
+        let tempMonth = dateTime.getMonth();
+        let tempYear = dateTime.getFullYear();
+        let tempHours = dateTime.getHours();
+        let tempMinutes = dateTime.getMinutes();
 
-        let formattedDateTime = dateArray[0]+" - "+timeArray[0]+":"+timeArray[1];
+        // The getMonth function starts at zero, and so to get the correct month must be incremented
+        // The function does not add a zero before the number.. this is also manually added
+        tempMonth++;
+        if(tempMonth<10)
+        {
+            tempMonth = "0"+tempMonth;        }
+
+
+        let formattedDateTime = tempDate + "-" + tempMonth + "-" + tempYear + " kl. " + tempHours + ":" + tempMinutes;
         console.log(formattedDateTime);
         return formattedDateTime;
     }
 
-    if(token && (email == userEmail)) 
+    
+    if(token && (email === userEmail)) 
     {
-        if(email == userEmail)
+        if(email === userEmail)
             {
+                // Creating the url to google maps -> url encoding the adress + appending to base url
+                // https://www.google.com/maps/place/
+                
+                let tempAdress = event.city + ", " + event.zipCode + " " + event.streetName + " " + event.apartmentNumber;
+                let adressUrl = baseMapsUrl + encodeURIComponent(tempAdress);
+    
                 return(
                     <div className="details-container">
                         <ImageContainer/>
@@ -120,7 +141,7 @@ const ActivityDetails = () => {
                             {/* <ProfilePictureName name={event.createdBy.firstName}></ProfilePictureName> */}
                         </div>            
             
-                        <ParameterSet activityParam={event.activity} cityParam={event.city} zipCodeParam={event.zipCode} dateParam={event.date} adressParam={event.streetName+" "+event.apartmentNumber}></ParameterSet>            
+                        <ParameterSet urlParam={adressUrl} activityParam={event.activity} cityParam={event.city} zipCodeParam={event.zipCode} dateParam={event.date} adressParam={event.streetName+" "+event.apartmentNumber}></ParameterSet>            
                         <HeadlineDescriptionSet headline="Test af titel" 
                             description={event.description}></HeadlineDescriptionSet>
                         <Limits ageLimitLower={event.minAge} ageLimitHigher={event.maxAge} deadline={event.registrationDeadline} participantLimit={event.maxUsers} numberOfParticipants={event.numberOfUsers}></Limits>
@@ -139,6 +160,12 @@ const ActivityDetails = () => {
     }
     else
     { 
+        // Creating the url to google maps -> url encoding the adress + appending to base url
+        // https://www.google.com/maps/place/
+        
+        let tempAdress = event.city + ", " + event.zipCode;
+        let adressUrl = baseMapsUrl + encodeURIComponent(tempAdress);
+        
         return(
             <div className="details-container">
                 <ImageContainer/>
@@ -148,7 +175,7 @@ const ActivityDetails = () => {
                     {/* <ProfilePictureName name={event.createdBy.firstName}></ProfilePictureName> */}
                 </div>            
     
-                <ParameterSet activityParam={event.activity} cityParam={event.city} zipCodeParam={event.zipCode} dateParam={event.date}></ParameterSet>            
+                <ParameterSet urlParam={adressUrl} activityParam={event.activity} cityParam={event.city} zipCodeParam={event.zipCode} dateParam={event.date}></ParameterSet>            
                 <HeadlineDescriptionSet headline="Test af titel" 
                     description={event.description}></HeadlineDescriptionSet>
                 <Limits ageLimitLower={event.minAge} ageLimitHigher={event.maxAge} deadline={event.registrationDeadline} participantLimit={event.maxUsers} numberOfParticipants={event.numberOfUsers}></Limits>
