@@ -81,12 +81,12 @@ namespace ActivitIRLApi.Validaion
 
             DateTime _registrationDate = DateTime.Parse(registrationDate);
 
-            if (!IsValidDateOnly(date))
+            if (!IsValidDateTime(date))
             {
                 return false;
             }
 
-            DateOnly _date = DateOnly.Parse(date);
+            DateTime _date = DateTime.Parse(date);
 
             var today = DateTime.Today;
 
@@ -96,7 +96,7 @@ namespace ActivitIRLApi.Validaion
             }
            
 
-            if(DateOnly.FromDateTime(_registrationDate) <= _date)
+            if(_registrationDate > _date)
             {
                 return false;
             }

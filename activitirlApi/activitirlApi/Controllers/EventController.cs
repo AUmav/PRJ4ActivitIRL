@@ -197,7 +197,6 @@ namespace ActivitIRLApi.Controllers
             return true;
         }
 
-
         [HttpDelete("{id}")]
         [Authorize]
         public async Task<IActionResult> DeleteEvent(int id)
