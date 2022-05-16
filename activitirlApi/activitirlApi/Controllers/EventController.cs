@@ -203,8 +203,7 @@ namespace ActivitIRLApi.Controllers
         {
             User user = GetCurrentUser();
 
-            Event @event = await _content.Events.FirstOrDefaultAsync(u => u.EventId == id);
-
+            Event @event = await _content.Events.Include(p => p.CreatedBy).FirstOrDefaultAsync(u => u.EventId == id);
 
             if (@event == null)
             {

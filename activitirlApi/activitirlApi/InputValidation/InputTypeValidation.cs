@@ -13,14 +13,12 @@ namespace ActivitIRLApi.Validaion
         public bool IsDateValid(string date);
     }
 
-
     public class InputTypeValidation : IInputTypeValidation
     {
         public bool IsValidPassword(string password)
         {
             return true;
         }
-
 
         public bool IsValidEmail(string email)
         {
