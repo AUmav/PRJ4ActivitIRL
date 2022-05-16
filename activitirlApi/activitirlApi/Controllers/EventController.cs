@@ -219,7 +219,7 @@ namespace ActivitIRLApi.Controllers
 
             await _content.SaveChangesAsync();
 
-            return Ok($"User with the id = {id} deleted!");
+            return Ok($"Event with the id = {id} deleted!");
         }
 
 
