@@ -1,19 +1,14 @@
 ﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using ActivitIRLApi.Data;
 using ActivitIRLApi.Models;
-using AutoMapper;
 using ActivitIRLApi.Models.DTOs;
 using ActivitIRLApi.Models.Entities;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
 using ActivitIRLApi.Validaion;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ActivitIRLApi.Controllers
 {
@@ -166,8 +161,6 @@ namespace ActivitIRLApi.Controllers
             return Ok("Event Updated");
         }
 
-
-
         [HttpPut("Register/{id}")]
         [Authorize]
         public async Task<ActionResult<bool>> Signup(int id)
@@ -206,9 +199,10 @@ namespace ActivitIRLApi.Controllers
 
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> DeleteEvent(int id)
         {
+            User user = GetCurrentUser();
 
             Event @event = await _content.Events.FirstOrDefaultAsync(u => u.EventId == id);
 
@@ -216,6 +210,11 @@ namespace ActivitIRLApi.Controllers
             if (@event == null)
             {
                 return NotFound("Event not found!");
+            }
+
+            if(!(@event.CreatedBy.EmailAddress == user.EmailAddress))
+            {
+                return Unauthorized();
             }
 
             _content.Events.Remove(@event);
