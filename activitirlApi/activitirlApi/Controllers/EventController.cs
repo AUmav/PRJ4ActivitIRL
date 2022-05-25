@@ -18,9 +18,9 @@ namespace ActivitIRLApi.Controllers
     {
         private readonly ApplicationDbContext _content;
         private readonly IMapper _mapper;
-        private readonly IInputTypeValidation _typeValidater;
+        private readonly IInputTypeValidationManager _typeValidater;
 
-        public EventController(ApplicationDbContext content, IMapper mapper, IInputTypeValidation typeValidater)
+        public EventController(ApplicationDbContext content, IMapper mapper, IInputTypeValidationManager typeValidater)
         {
             _content = content;
             _mapper = mapper;
@@ -171,7 +171,6 @@ namespace ActivitIRLApi.Controllers
 
             Event @event = await _content.Events.Include(e => e.ListOfUsers).Include(a => a.CreatedBy).FirstOrDefaultAsync(u => u.EventId == id);
 
-
             if(@event == null || user == null)
             {
                 return NotFound();
@@ -221,8 +220,6 @@ namespace ActivitIRLApi.Controllers
 
             return Ok($"Event with the id = {id} deleted!");
         }
-
-
 
         private User GetCurrentUser()
         {

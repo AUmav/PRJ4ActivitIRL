@@ -23,7 +23,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddAutoMapper(typeof(Program));
 
-builder.Services.AddScoped<IInputTypeValidation, InputTypeValidation>();
+builder.Services.AddScoped<IInputTypeValidationManager, InputTypeValidationManager>();
 builder.Services.AddScoped<IJWTAuthenticationManager, JWTAuthenticationManager>();
 builder.Services.AddScoped<IPasswordHashManager, PasswordHashManager>();
 

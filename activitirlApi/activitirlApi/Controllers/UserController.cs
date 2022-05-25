@@ -22,9 +22,9 @@ namespace ActivitIRLApi.Controllers
     {
         private readonly ApplicationDbContext _content;
         private readonly IMapper _mapper;
-        private readonly IInputTypeValidation _typeValidater;
+        private readonly IInputTypeValidationManager _typeValidater;
 
-        public UserController(ApplicationDbContext content, IMapper mapper, IInputTypeValidation typeValidater)
+        public UserController(ApplicationDbContext content, IMapper mapper, IInputTypeValidationManager typeValidater)
         {
             _content = content;
             _mapper = mapper;

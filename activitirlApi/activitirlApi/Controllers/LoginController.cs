@@ -16,10 +16,10 @@ namespace ActivitIRLApi.Controllers
         private readonly ApplicationDbContext _content;
         private readonly IPasswordHashManager _passwordManager;
         private readonly IJWTAuthenticationManager _jWTAuthenticationManager;
-        private readonly IInputTypeValidation _typeValidater;
+        private readonly IInputTypeValidationManager _typeValidater;
         
 
-        public LoginController(ApplicationDbContext content, IConfiguration config, IInputTypeValidation typeValidater, IPasswordHashManager passwordManager, IJWTAuthenticationManager jWTAuthenticationManager)
+        public LoginController(ApplicationDbContext content, IConfiguration config, IInputTypeValidationManager typeValidater, IPasswordHashManager passwordManager, IJWTAuthenticationManager jWTAuthenticationManager)
         {
             _config = config;
             _content = content;

@@ -2,7 +2,7 @@
 
 namespace ActivitIRLApi.Validaion
 {
-    public interface IInputTypeValidation
+    public interface IInputTypeValidationManager
     {
         public bool IsValidEmail(string email);
         public bool IsValidPassword(string password);
@@ -13,7 +13,7 @@ namespace ActivitIRLApi.Validaion
         public bool IsDateValid(string date);
     }
 
-    public class InputTypeValidation : IInputTypeValidation
+    public class InputTypeValidationManager : IInputTypeValidationManager
     {
         public bool IsValidPassword(string password)
         {
