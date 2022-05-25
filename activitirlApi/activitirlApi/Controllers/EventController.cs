@@ -164,7 +164,7 @@ namespace ActivitIRLApi.Controllers
 
         [HttpPut("Register/{id}")]
         [Authorize]
-        public async Task<ActionResult<bool>> Signup(int id)
+        public async Task<ActionResult<EventGetSignedupDTO>> Signup(int id)
         {
             User user = GetCurrentUser();
 
@@ -194,7 +194,11 @@ namespace ActivitIRLApi.Controllers
             @event.NumberOfUsers = (@event.ListOfUsers.Count() + 1).ToString();
             await _content.SaveChangesAsync();
 
-            return true;
+            EventGetSignedupDTO signedupEvent = _mapper.Map<EventGetSignedupDTO>(@event);
+
+            signedupEvent.IsSignedup = @event.ListOfUsers.Contains(fullUser) ? true.ToString() : false.ToString();
+
+            return Ok(signedupEvent);
         }
 
         [HttpDelete("{id}")]
