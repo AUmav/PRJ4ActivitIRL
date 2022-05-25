@@ -26,13 +26,14 @@ namespace ActivitIRLApi.Controllers
             _mapper = mapper;
             _typeValidater = typeValidater;
         }
-
        
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<EventGetSignedupDTO>> CreateEvent([FromBody] EventCreateDTO CreateDTO)
         {
             Event domainEvent = _mapper.Map<Event>(CreateDTO);
+
+            _typeValidater.ParseMaxMinAgeMaxUser(ref domainEvent);
 
             User user = GetCurrentUser();
 
@@ -251,7 +252,7 @@ namespace ActivitIRLApi.Controllers
             {
                 return false;
             }
-            
+
             return true;
         }
         // Credit to stackoverflow

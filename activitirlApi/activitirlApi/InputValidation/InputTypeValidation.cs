@@ -1,4 +1,5 @@
 ﻿using System.Net.Mail;
+using ActivitIRLApi.Models;
 
 namespace ActivitIRLApi.Validaion
 {
@@ -11,10 +12,31 @@ namespace ActivitIRLApi.Validaion
         public bool IsDateOfBirthValid(string dateOfBirth);
         public bool IsValidRegistrationDate(string registrationDate, string date);
         public bool IsDateValid(string date);
+        public void ParseMaxMinAgeMaxUser(ref Event @event);
     }
+
 
     public class InputTypeValidationManager : IInputTypeValidationManager
     {
+
+        public void ParseMaxMinAgeMaxUser(ref Event @event)
+        {
+            if(@event.MinAge == null)
+            {
+                @event.MinAge = "0";
+            }
+
+            if (@event.MaxAge == null)
+            {
+                @event.MinAge = "999999999";
+            }
+
+            if (@event.MaxUsers == null)
+            {
+                @event.MinAge = "999999999";
+            }
+        }
+
         public bool IsValidPassword(string password)
         {
             return true;
