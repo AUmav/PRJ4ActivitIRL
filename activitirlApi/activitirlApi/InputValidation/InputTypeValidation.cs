@@ -28,12 +28,12 @@ namespace ActivitIRLApi.Validaion
 
             if (@event.MaxAge == null)
             {
-                @event.MinAge = "999999999";
+                @event.MaxAge = "999999999";
             }
 
             if (@event.MaxUsers == null)
             {
-                @event.MinAge = "999999999";
+                @event.MaxUsers = "999999999";
             }
         }
 
