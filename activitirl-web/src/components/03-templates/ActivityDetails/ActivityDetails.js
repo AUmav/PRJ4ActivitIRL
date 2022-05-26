@@ -27,6 +27,7 @@ const ActivityDetails = () => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [event, setEvent] = useState([]);
+    const [signedUp, setSignedUp] = useState(false);   
 
     
     let baseMapsUrl = "https://www.google.com/maps/place/"
@@ -57,8 +58,19 @@ const ActivityDetails = () => {
                 //result.registrationDeadline = dateFormat(result.registrationDeadline);
                 
                 setEvent(result);
-                console.log(result);
-                setUserEmail(result.createdBy.emailAddress);        
+                setUserEmail(result.createdBy.emailAddress);  
+
+                // For some reason the value of IsSignedup is returned with capital letters, 
+                // even though it is a boolean... 
+
+                if(result.isSignedup === "True")
+                {
+                    setSignedUp(true);  
+                }
+                else
+                {
+                    setSignedUp(false);  
+                }
 
             },
             (error) => {
@@ -90,12 +102,24 @@ const ActivityDetails = () => {
                     alert("Something went wrong");
                 }
                 else{
+                    
+                    if(signedUp === false)
+                    {
+                        alert("Du er nu tilmeldt denne aktivitet!");
+                    }
+                    else
+                    {
+                        alert("Du er nu afmeldt denne aktivitet!");
+                    }
+
+                    window.location.reload(false);
                     return response.json();
+                    
                 }
             })
 
-            alert("Du er nu tilmeldt denne aktivitet!");
-            console.log("User joins event.");
+            /* alert("Du er nu tilmeldt denne aktivitet!");
+            console.log("User joins event."); */
         }        
     };
 
@@ -117,7 +141,7 @@ const ActivityDetails = () => {
 
 
         let formattedDateTime = tempDate + "-" + tempMonth + "-" + tempYear + " kl. " + tempHours + ":" + tempMinutes;
-        console.log(formattedDateTime);
+        
         return formattedDateTime;
     }
 
@@ -174,13 +198,20 @@ const ActivityDetails = () => {
                     <TitleText title={event.title} className="title-text"/>
                     {/* <ProfilePictureName name={event.createdBy.firstName}></ProfilePictureName> */}
                 </div>            
-    
-                <ParameterSet urlParam={adressUrl} activityParam={event.activity} cityParam={event.city} zipCodeParam={event.zipCode} dateParam={event.date}></ParameterSet>            
+
+                {signedUp === true
+                    ? <ParameterSet urlParam={adressUrl} activityParam={event.activity} cityParam={event.city} zipCodeParam={event.zipCode} dateParam={event.date} adressParam={event.streetName+" "+event.apartmentNumber}></ParameterSet>            
+                    : <ParameterSet urlParam={adressUrl} activityParam={event.activity} cityParam={event.city} zipCodeParam={event.zipCode} dateParam={event.date}></ParameterSet>            
+                }
                 <HeadlineDescriptionSet headline="Test af titel" 
                     description={event.description}></HeadlineDescriptionSet>
                 <Limits ageLimitLower={event.minAge} ageLimitHigher={event.maxAge} deadline={event.registrationDeadline} participantLimit={event.maxUsers} numberOfParticipants={event.numberOfUsers}></Limits>
-    
-                <BigButton text="Tilmeld!" onPress={joinEvent}></BigButton> 
+
+                {signedUp === true
+                    ? <BigButton text="Afmeld!" onPress={joinEvent}></BigButton> 
+                    : <BigButton text="Tilmeld!" onPress={joinEvent}></BigButton> 
+                }
+                
                 
             </div>
         )
