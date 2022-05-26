@@ -21,6 +21,7 @@ const CreateActivityForm = () => {
     const [registrationDeadline, setRegistrationDeadline] = useState("");
     const [ageRangeLower, setAgeRangeLower] = useState("");
     const [ageRangeUpper, setAgeRangeUpper] = useState("");
+    const [participantLimit, setParticipantLimit] = useState("");
     const [description, setDescription] = useState("");
     const [submitted, setSubmitted] = useState(false);
 
@@ -60,6 +61,10 @@ const CreateActivityForm = () => {
         setDescription(event.target.value);
     }
     
+    const handleParticipantLimitChnage = (event) => {
+        setParticipantLimit(event.target.value);
+    }
+
     const checkDataValid = () => {
         if ((zipCode.length === 4) && title && activity && city && street && streetNumber && eventDate && description){
             setDataValid(true);
@@ -87,6 +92,7 @@ const CreateActivityForm = () => {
                 "description" : description,
                 "minAge" : ageRangeLower === "" ? null : ageRangeLower,
                 "maxAge" : ageRangeUpper === "" ? null : ageRangeUpper,
+                "maxUsers" : participantLimit === "" ? null : participantLimit,
                 "country" : "Danmark"
             }
             
@@ -165,6 +171,7 @@ const CreateActivityForm = () => {
                     <LabelInputSetShort labelText="Aldersgrænse (Nedre)" name="ageRangeLower" type="number" value={ageRangeLower} placeholderText="18" onChange={handleAgeRangeLowerChange}/>
                     <LabelInputSetShort labelText="Aldersgrænse (Øvre)" name="ageRangeUpper" type="number" value={ageRangeUpper} placeholderText="18" onChange={handleAgeRangeUpperChange}/>
 
+                    <LabelInputSetShort labelText="Deltager-begrænsning" name="ageRangeLower" type="number" value={participantLimit} placeholderText="20" onChange={handleParticipantLimitChnage}/>
 
                     <div className='alignRight'>
                         <SubmitButton text="Opret opslag"/>
