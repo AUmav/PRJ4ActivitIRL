@@ -7,8 +7,8 @@ const ParameterSet = ({activityParam, cityParam, zipCodeParam, dateParam, adress
         <div className="parameters-container">
             <ParameterIconSet type="event" paramtext={activityParam}></ParameterIconSet>
             {adressParam == undefined 
-                ? <a href={urlParam}><ParameterIconSet type="room" paramtext={cityParam+", "+zipCodeParam}></ParameterIconSet></a>
-                : <a href={urlParam}><ParameterIconSet type="room" paramtext={cityParam+", "+zipCodeParam+" - "+adressParam}></ParameterIconSet></a>
+                ? <a href={urlParam} target="_blank"><ParameterIconSet type="room" paramtext={cityParam+", "+zipCodeParam}></ParameterIconSet></a>
+                : <a href={urlParam} target="_blank"><ParameterIconSet type="room" paramtext={cityParam+", "+zipCodeParam+" - "+adressParam}></ParameterIconSet></a>
             }            
             <ParameterIconSet type="schedule" paramtext={dateParam}></ParameterIconSet>
         </div>

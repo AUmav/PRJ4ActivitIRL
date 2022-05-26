@@ -99,6 +99,31 @@ const ActivityDetails = () => {
         }        
     };
 
+    const deleteEvent = () => {
+        fetch(url, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + token,
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+
+        })
+        .then(res => res.json())
+        .then(
+            (result) => {
+                if (result !== undefined){
+
+                }
+
+            },
+            (error) => {
+                setError(error);
+                console.log("error")
+            }
+        )
+    }
+
     function dateFormat(date)
     {
         let dateTime = new Date(date);
@@ -151,7 +176,7 @@ const ActivityDetails = () => {
                         </Link>
                         
                         
-                        <BigButton text="Slet Opslag"></BigButton> 
+                        <BigButton text="Slet Opslag" onPress={deleteEvent}></BigButton> 
                                                                         
                     </div>
                 )
