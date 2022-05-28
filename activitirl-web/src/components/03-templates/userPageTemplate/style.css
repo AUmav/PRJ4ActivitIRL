@@ -10,7 +10,7 @@
     border-radius: 5px;
 }
 
-@media screen and (max-width : 640px){
+@media screen and (max-width : 768px){
     .centeringDiv{
         display: flex;
         width: 100%;

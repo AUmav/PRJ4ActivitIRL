@@ -234,7 +234,7 @@ const AlterActivityForm = () => {
 
 
                     <div className='alignRight'>
-                        <SubmitButton text="Rediger opslag"/>
+                        <SubmitButton text="Gem ændringer"/>
                     </div>
                 </form>
 

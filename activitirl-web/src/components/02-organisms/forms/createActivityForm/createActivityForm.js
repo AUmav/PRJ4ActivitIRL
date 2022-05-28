@@ -179,7 +179,7 @@ const CreateActivityForm = () => {
                     <LabelInputSetShort labelText="Deltager-begrænsning" name="ageRangeLower" type="number" value={participantLimit} placeholderText="20" onChange={handleParticipantLimitChnage}/>
 
                     <div className='alignRight'>
-                        {!posting && <SubmitButton text="Opret opslag"/>}
+                        {!posting && <SubmitButton text="Opret"/>}
                     </div>
                 </form>
 

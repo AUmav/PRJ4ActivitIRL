@@ -3,7 +3,7 @@
     margin-left: 10px;
 }
 
-@media screen and (max-width:640px){
+@media screen and (max-width:768px){
     .labelTextPair > p{
         margin-top: 5px;
         margin-left: 0px;
