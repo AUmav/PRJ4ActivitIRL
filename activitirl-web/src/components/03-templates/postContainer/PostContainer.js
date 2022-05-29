@@ -23,17 +23,17 @@ const PostContainer = () => {
                 setIsLoaded(true);
                 console.log("loaded")
                 console.log(url);
+                //console.log(result);
                 setItems(result);
             },
             (error) => {
                 setIsLoaded(true);
                 setError(error);
                 console.log("error")
-
             }
         )
     }, [])
-    //console.log(items);
+    /* console.log(items); */
 
     if (error) {
         return <div>Error: {error.message}</div>

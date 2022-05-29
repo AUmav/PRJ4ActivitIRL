@@ -112,14 +112,12 @@ const ActivityDetails = () => {
                         alert("Du er nu afmeldt denne aktivitet!");
                     }
 
-                    window.location.reload(false);
+                    setSignedUp(!signedUp);
+                    //window.location.reload(false);
                     return response.json();
                     
                 }
             })
-
-            /* alert("Du er nu tilmeldt denne aktivitet!");
-            console.log("User joins event."); */
         }        
     };
 

@@ -4,7 +4,7 @@ import './style.css'
 const ParameterSet = ({activityParam, cityParam, zipCodeParam, dateParam, adressParam, urlParam}) => {  
     
     return (
-        <div className="parameters-container">
+        <div className="parameters-container parameters-text">
             <ParameterIconSet type="event" paramtext={activityParam}></ParameterIconSet>
             {adressParam == undefined 
                 ? <a href={urlParam}><ParameterIconSet type="room" paramtext={cityParam+", "+zipCodeParam}></ParameterIconSet></a>
@@ -21,4 +21,4 @@ export default ParameterSet;
 <ParameterIconSet type="event" paramtext="Fodbold"></ParameterIconSet>
 <ParameterIconSet type="room" paramtext="Aarhus V, 8210"></ParameterIconSet>
 <ParameterIconSet type="schedule" paramtext="28. maj, kl 10:15"></ParameterIconSet>
-</div> */}
+</div> */} 

@@ -2,6 +2,7 @@ import TitleText from "../../00-atoms/text/TitleText"
 
 const ActivityFewDetails = ({data}) => {
      
+    //console.log(data);
     
 
     function dateFormat(date)
@@ -22,12 +23,12 @@ const ActivityFewDetails = ({data}) => {
 
 
         let formattedDateTime = tempDate + "-" + tempMonth + "-" + tempYear + " kl. " + tempHours + ":" + tempMinutes;
-        console.log(formattedDateTime);
+        //console.log(formattedDateTime);
         return formattedDateTime;
     }
 
     let dateTime = dateFormat(data.date);
-    console.log(data);
+    /* console.log(data); */
 
 
     return (

@@ -1,10 +1,9 @@
 /* Styling the shape of the icon - small/round*/
 .icon-styling{
-    color: var(--secondary-color);
+    color: var(--primary-color);
     font-size: 36px;
 }
 .icon-styling:hover{
-    color: var(--tertiary-color);
     cursor: pointer;
 }
 

@@ -9,3 +9,17 @@
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.parameters-text{
+    color: var(--primary-color);
+}
+
+a:link 
+{
+    color: var(--primary-color);
+}
+
+a:hover{
+    color: rgb(19, 65, 42);
+}
+
