@@ -26,7 +26,9 @@ namespace ActivitIRLApi_Test
                             new User { UserId = 1, FirstName = "Jens", LastName = "Jensen", 
                                 EmailAddress = "Jens@gmail.com"},
                             new User { UserId = 2, FirstName = "Lars", LastName = "Larsen",
-                                EmailAddress = "Lars@gmail.com"});
+                                EmailAddress = "Lars@gmail.com"},
+                            new Comment { CommentId = 1, Comments = "Test comment 1"},
+                            new Comment { CommentId = 2, Comments = "Test comment 2"});
                         context.SaveChanges();
                     }
 

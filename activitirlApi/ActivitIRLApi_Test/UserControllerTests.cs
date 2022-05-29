@@ -9,6 +9,7 @@ using FluentAssertions;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using EntityFramework.Testing;
 
 namespace ActivitIRLApi_Test
 {
@@ -43,7 +44,7 @@ namespace ActivitIRLApi_Test
 
             var result = controller.GetUser();
 
-
+            //..finish rest of test..
 
             //Assert
 
