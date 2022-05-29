@@ -177,7 +177,7 @@ const UserPageEditDetails = () => {
                         {submitted && !city && <SmallErrorText text="Indtast venligst en by"/>}
                     </div>
                 <div className='alignRight'>
-                    <SubmitButton text="Bekræft"/>
+                    <SubmitButton text="Gem ændringer"/>
                 </div>
             </form>
             <Button text="Tilbage" onPress={cancel}/>

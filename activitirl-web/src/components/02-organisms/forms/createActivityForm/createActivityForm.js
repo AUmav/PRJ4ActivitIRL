@@ -24,7 +24,7 @@ const CreateActivityForm = () => {
     const [participantLimit, setParticipantLimit] = useState("");
     const [description, setDescription] = useState("");
     const [submitted, setSubmitted] = useState(false);
-
+    const [posting, setPosting] = useState(false);
     const [dataValid, setDataValid] = useState(false);
 
     const handleActivityChange = (event) => {
@@ -76,6 +76,7 @@ const CreateActivityForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setPosting(true);
 
         checkDataValid();
         if(dataValid){
@@ -88,7 +89,7 @@ const CreateActivityForm = () => {
                 "streetName" : street,
                 "apartmentNumber" : streetNumber,
                 "date" : eventDate,
-                "registrationDeadline" : registrationDeadline === "" ? null : registrationDeadline,
+                "registrationDeadline" : registrationDeadline === "" ? eventDate : registrationDeadline,
                 "description" : description,
                 "minAge" : ageRangeLower === "" ? null : ageRangeLower,
                 "maxAge" : ageRangeUpper === "" ? null : ageRangeUpper,
@@ -109,6 +110,7 @@ const CreateActivityForm = () => {
                 .then(response => {
                     if(!response.ok){
                         alert("Something went wrong");
+                        setPosting(false);
                     }
                     else{
                         return response.json();
@@ -118,19 +120,22 @@ const CreateActivityForm = () => {
                     (result) => {
                         setSubmitted(true);
                         console.log("result", result);
+                        setPosting(false);
 
                         if(result !== undefined){
-                            
+                            window.location.replace("/activity/" + result.eventId);
                         }
                     },
                     (error) => {
                         setSubmitted(true);
+                        setPosting(false);
                         alert("Error: " + error)
                     }
                 )
         }
         else {
             setSubmitted(true);
+            setPosting(false);
         }
     }
 
@@ -174,7 +179,7 @@ const CreateActivityForm = () => {
                     <LabelInputSetShort labelText="Deltager-begrænsning" name="ageRangeLower" type="number" value={participantLimit} placeholderText="20" onChange={handleParticipantLimitChnage}/>
 
                     <div className='alignRight'>
-                        <SubmitButton text="Opret opslag"/>
+                        {!posting && <SubmitButton text="Opret"/>}
                     </div>
                 </form>
 

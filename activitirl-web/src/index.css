@@ -94,7 +94,7 @@ nav > ul > li {
   object-fit: cover;
 }
 
-@media screen and (max-width : 640px){
+@media screen and (max-width : 768px){
   .navbar-big {
     display: none;
   }

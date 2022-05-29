@@ -16,6 +16,7 @@ const CreateUserForm = () => {
     const [email, setEmail] = useState("");
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
+    const [posting, setPosting] = useState(false);
 
     const handleFirstNameChange = (event) => {
         setFirstName(event.target.value);
@@ -44,6 +45,7 @@ const CreateUserForm = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
+        setPosting(true);
 
         if (password1 !== password2) {
             alert("Passwords don't match");
@@ -74,6 +76,7 @@ const CreateUserForm = () => {
             .then(response => {
                 if(!response.ok){
                     alert("Couldn't create user");
+                    setPosting(false);
                 }
                 else{
                     return response.json();
@@ -82,6 +85,7 @@ const CreateUserForm = () => {
             .then(
                 (result) => {
                     console.log("result", result);
+                    setPosting(false);
 
                     if(result !== undefined){
                         if(result === "Invalid DateOfBirth" )
@@ -105,6 +109,7 @@ const CreateUserForm = () => {
                 },
                 (error) => {
                     alert("Error: " + error)
+                    setPosting(false);
                 }
             )
         }
@@ -123,7 +128,7 @@ const CreateUserForm = () => {
                 <LabelInputSet labelText="" name="password2" type="password" value={password2} placeholderText="Gentag password" onChange={handlePwChange2}/>
 
                 <div className='alignRight'>
-                    <SubmitButton text="Opret"/>
+                    {!posting && <SubmitButton text="Opret"/>}
                 </div>
             </form>
 

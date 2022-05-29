@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import SubmitButton from '../../../00-atoms/buttons/SubmitButton';
@@ -155,7 +155,8 @@ const AlterActivityForm = () => {
                     body: JSON.stringify(event),
                     headers: new Headers({
                         'Authorization': 'Bearer ' + token,
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
                     })
                 })
                 .then(response => {
@@ -172,7 +173,10 @@ const AlterActivityForm = () => {
                         console.log("result", result);
 
                         if(result !== undefined){
-                            
+                            if(result === "Event Updated"){
+                                alert('Event updated');
+                                window.location.replace("/activity/" + id);
+                            }
                         }
                     },
                     (error) => {
@@ -230,7 +234,7 @@ const AlterActivityForm = () => {
 
 
                     <div className='alignRight'>
-                        <SubmitButton text="Rediger opslag"/>
+                        <SubmitButton text="Gem ændringer"/>
                     </div>
                 </form>
 
