@@ -74,7 +74,7 @@ namespace ActivitIRLApi_Test
         [Test]
         public async Task PostComment_ReturnsTrue()
         {
-            var result = new Comment { CommentId = 4, Comments = "lmao" };
+            var result = new Comment { CommentId = 4, Comments = "Test4" };
 
             await _commentController.PostComment(result);
 
