@@ -12,6 +12,7 @@ using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 
 //Had a bunch of trouble with testing against production database. Testing against in memory database instead.
+
 //https://stackoverflow.com/questions/23363073/tests-not-running-in-test-explorer
 //Worked by installing NUnit3 test adapter package in all projects, in solution.
 
@@ -65,10 +66,29 @@ namespace ActivitIRLApi_Test
             Assert.AreEqual(comment.Id, id);
         }
 
-        [Test]
-        public void PutComment_ReturnsTrue(int id, Comment comment)
+        //[TestCase(null)]
+        //public void GetComment_IsNull_ReturnsTrue(int id) ////Virker ikke korrekt. Skal nok bare slettes.
+        //{
+        //    var comment = _commentController.GetComment(id);
+
+        //    Assert.That(comment.Id, Is.EqualTo(null));
+        //}
+
+        //[TestCase(null)]
+        //public void PutComment_ReturnsTrue(int id)    ////Der burde også laves en test her.
+        //{
+            
+        //}
+
+        [TestCase(1)]
+        public void PutComment_ReturnsBadRequest(int id)
         {
 
+            var result = new Comment { CommentId = 5, Comments = "sui" };
+
+            var comments = _commentController.PutComment(id, result);
+
+            Assert.AreNotSame(result, comments);
         }
 
         [Test]
