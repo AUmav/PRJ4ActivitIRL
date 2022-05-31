@@ -10,8 +10,10 @@ using NUnit.Framework;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
+using System.Web.Http;
+using Microsoft.AspNetCore.Http;
 
-//Had a bunch of trouble with testing against production database. Testing against in memory database instead.
+//Testing against in memory database.
 
 //https://stackoverflow.com/questions/23363073/tests-not-running-in-test-explorer
 //Worked by installing NUnit3 test adapter package in all projects, in solution.
@@ -66,29 +68,24 @@ namespace ActivitIRLApi_Test
             Assert.AreEqual(comment.Id, id);
         }
 
-        //[TestCase(null)]
-        //public void GetComment_IsNull_ReturnsTrue(int id) ////Virker ikke korrekt. Skal nok bare slettes.
-        //{
-        //    var comment = _commentController.GetComment(id);
+        [TestCase(null)]
+        public void GetCommentId_IsNull_ReturnsTrue(int id)
+        {
+            var comment = _commentController.GetComment(id);
 
-        //    Assert.That(comment.Id, Is.EqualTo(null));
-        //}
+            var notFoundObjectResult = new NotFoundObjectResult(comment);
 
-        //[TestCase(null)]
-        //public void PutComment_ReturnsTrue(int id)    ////Der burde også laves en test her.
-        //{
-            
-        //}
+            Assert.AreEqual(comment, notFoundObjectResult.Value);
+        }
 
         [TestCase(1)]
-        public void PutComment_ReturnsBadRequest(int id)
+        public void PutComment_Returns400(int id)
         {
+            var comment = new Comment { CommentId = 5, Comments = "sui" };
 
-            var result = new Comment { CommentId = 5, Comments = "sui" };
+            var result = _commentController.PutComment(id, comment);
 
-            var comments = _commentController.PutComment(id, result);
-
-            Assert.AreNotSame(result, comments);
+            Assert.AreEqual(typeof(BadRequestResult), result?.Result.GetType());
         }
 
         [Test]
@@ -112,6 +109,16 @@ namespace ActivitIRLApi_Test
             var dbEntry = _dbContext.Comments;
 
             Assert.AreEqual(2, dbEntry.Count());
+        }
+
+        [TestCase(null)]
+        public void DeleteComment_IsNull_ReturnsTrue(int id)
+        {
+            var comment = _commentController.DeleteComment(id);
+
+            var notFoundObjectResult = new NotFoundObjectResult(comment);
+
+            Assert.AreEqual(comment, notFoundObjectResult.Value);
         }
 
         [TestCase(1)]
